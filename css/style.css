@@ -175,7 +175,7 @@ body {
   min-height: 130vh;
   display: flex;
   align-items: center;
-  background-image: url("../img/jewelry-bg.jpg");
+  background-image: url("../img/jj1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -198,7 +198,7 @@ body {
   position: absolute;
   /* background-color: salmon; */
   inset: 0;
-  -webkit-mask-image: url("../img/jewelry-bg.svg");
+  -webkit-mask-image: url("../img/jj1.svg");
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: cover;
   -webkit-mask-position: center;
