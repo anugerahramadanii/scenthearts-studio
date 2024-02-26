@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scenthearts Studio</title>
+
+    <!-- <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" /> -->
+    <!-- <link href="/src/main/resources/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" /> -->
+    <link href="/fontawesome/css/all.min.css" rel="stylesheet" />
+    <!-- <link href="/src/main/resources/static/fontawesome/css/all.min.css" rel="stylesheet" /> -->
+    <link href="/jqueryui/jquery-ui.min.css" rel="stylesheet" />
+    <!-- <link href="/src/main/resources/static/jqueryui/jquery-ui.min.css" rel="stylesheet" /> -->
+
+    <!--CSS -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/style.css" /> -->
+    <!-- Alpine js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!--Feather Icons-->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <!-- <script src="/src/main/resources/static/js/jquery-3.7.1.min.js"></script> -->
+    <!-- <script src="/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <!-- <script src="/src/main/resources/static/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <script src="/jqueryui/jquery-ui.min.js"></script>
+    <!-- <script src="/src/main/resources/static/jqueryui/jquery-ui.min.js"></script> -->
+    <!--Fonts-->
+    <link href="/fontawesome/css/all.min.css" rel="stylesheet" />
+    <!-- <link href="/src/main/resources/static/fontawesome/css/all.min.css" rel="stylesheet" /> -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div th:fragment="header">
+      <!-- <div id="ui-modal-login"></div> -->
+      <!--Navbar-->
+      <nav id="navbarr" class="navbarr" x-data>
+        <a href="/" class="navbar-logo"><span>Scenthearts </span>Studio</a>
+        <div class="navbarr-nav">
+          <a href="/">Home</a>
+          <a href="/about">About Us</a>
+          <a href="#category">Category</a>
+          <a href="#products">Product</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="navbar-extra">
+          <a href="#" id="search-button"><i data-feather="search"></i></a>
+          <a href="#" id="shopping-cart-button">
+            <i data-feather="shopping-cart"></i>
+            <span class="quantity-badge" x-show="$store.shoppingCart.quantity" x-text="$store.shoppingCart.quantity">10</span>
+          </a>
+          <a href="/login" id="user-button"><i data-feather="user"></i></a>
+          <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+        </div>
+        <!-- Search Form start -->
+        <div class="search-form">
+          <input type="search" id="search-box" placeholder="search here..." />
+          <label for="search-box"><i data-feather="search"></i></label>
+        </div>
+        <!-- Search Form end -->
+
+        <!-- Shopping Cart Start -->
+        <div class="shopping-cart">
+          <template x-for="item in $store.shoppingCart.items" x-key="item.id">
+            <div class="cart-item">
+              <img :src="`http://localhost:8080/images/products/${item.img}`" :alt="item.name" />
+              <div class="item-detail">
+                <h3 x-text="item.name"></h3>
+                <div class="item-price">
+                  <span x-text="rupiah(item.price)"></span> &times;
+                  <button id="remove" @click="$store.shoppingCart.remove(item.id)">&minus;</button>
+                  <span x-text="item.quantity"></span>
+                  <button id="add" @click="$store.shoppingCart.add(item)">&plus;</button> &equals;
+                  <span x-text="rupiah(item.total)"></span>
+                </div>
+              </div>
+            </div>
+          </template>
+          <h4 x-show="!$store.shoppingCart.items.length">Cart is Empty!</h4>
+          <h4 x-show="$store.shoppingCart.items.length">Total : <span x-text="rupiah($store.shoppingCart.total)"></span></h4>
+
+          <div class="form-container" x-show="$store.shoppingCart.items.length">
+            <form action="" class="form-detail-customer" id="checkoutForm">
+              <p class="title-detail-customer">Detail Customer</p>
+              <div class="input-group-detail-customer">
+                <input id="fullname" name="fullname" required="" class="input-detail-customer" type="text" />
+                <label class="label" for="input">Fullname</label>
+              </div>
+              <div class="input-group-detail-customer">
+                <input id="email" name="email" required="" class="input-detail-customer" type="text" />
+                <label class="label" for="input">Email</label>
+              </div>
+              <div class="input-group-detail-customer">
+                <input id="phone" name="phone" required="" class="input-detail-customer" type="text" />
+                <label class="label" for="input">Phone</label>
+              </div>
+
+              <div class="form-button">
+                <button id="checkout-button" class="checkout-button">
+                  <span class="IconContainer">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="#fff" class="cart">
+                      <path
+                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"
+                      ></path>
+                    </svg>
+                  </span>
+                  <p class="text-checkout">Checkout</p>
+                </button>
+              </div>
+            </form>
+            <!-- <form action="" id="checkoutForm">
+              <h5>Customer Detail</h5>
+              <label for="name">
+                <span>Name</span>
+                <input type="text" name="name" id="name" />
+              </label>
+              <label for="email">
+                <span>Email</span>
+                <input type="text" name="email" id="email" />
+              </label>
+              <label for="phone">
+                <span>Phone</span>
+                <input type="numnber" name="phone" id="phone" autocomplete="off" />
+              </label>
+
+              <button id="checkout-button" class="checkout-button" type="submit" value="checkout">Checkout</button>
+            </form> -->
+          </div>
+          <!-- <div class="cart-item">
+            <img src="http://localhost:8080/images/products/j1.jpg" alt="" />
+            <div class="item-detail">
+              <h3>Product 1</h3>
+              <div class="item-price">IDR 30K</div>
+            </div>
+            <i data-feather="trash-2" class="remove-item"></i>
+          </div> -->
+        </div>
+        <!-- Shopping Cart End -->
+      </nav>
+      <!--End Navbar-->
+
+      <!--Feather Icons-->
+      <script>
+        feather.replace();
+      </script>
+
+      <!--My Javascript-->
+      <!-- <script src="/js/script.js"></script> -->
+      <!-- <script src="/js/app.js"></script> -->
+    </div>
+  </body>
+</html>

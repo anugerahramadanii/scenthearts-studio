@@ -15,6 +15,7 @@
     <!--CSS -->
     <link rel="stylesheet" href="/css/style.css" />
     <!-- <link rel="stylesheet" href="/src/main/resources/static/css/style.css" /> -->
+
     <!-- Alpine js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -33,29 +34,41 @@
   </head>
   <body>
     <nav th:replace="/fragments/header.html :: header"></nav>
-    <!--Login section start-->
-    <section id="login" class="login">
-      <form class="form-login">
-        <p class="title-login">Login</p>
+    <!--register section start-->
+    <section id="register" class="register">
+      <form class="form-regist">
+        <p class="title-regist">Register</p>
+        <p class="message">Signup now and get full access to our app.</p>
+        <div class="row">
+          <label>
+            <input required="" placeholder="" type="text" class="input" />
+            <span>Firstname</span>
+          </label>
 
-        <div class="input-group-login">
           <label>
-            <input required="" placeholder="" type="email" class="input-form" />
-            <span>Email</span>
-          </label>
-          <label>
-            <input required="" placeholder="" type="password" class="input-form" />
-            <span>Password</span>
+            <input required="" placeholder="" type="text" class="input" />
+            <span>Lastname</span>
           </label>
         </div>
-        <div class="input-group-login-button">
-          <button class="submit-login">Submit</button>
-        </div>
-        <p class="signin"><a href="#">Forgot password?</a></p>
-        <p class="signin">Don't have an account? <a href="/register">Sign up</a></p>
+
+        <label>
+          <input required="" placeholder="" type="email" class="input" />
+          <span>Email</span>
+        </label>
+
+        <label>
+          <input required="" placeholder="" type="password" class="input" />
+          <span>Password</span>
+        </label>
+        <label>
+          <input required="" placeholder="" type="password" class="input" />
+          <span>Confirm password</span>
+        </label>
+        <button class="btn-submit-regist">Submit</button>
+        <p class="sign-up">Already have an acount ? <a href="/login">Signin</a></p>
       </form>
     </section>
-    <!--Login section end-->
+    <!--register section end-->
     <footer th:replace="/fragments/footer.html :: footer"></footer>
 
     <!--Feather Icons-->

@@ -15,18 +15,18 @@ public class MainController {
         return "about/about-us.html";
     }
 
-    @RequestMapping("/category")
-    public String redirectToCategoryPage() {
-        return "redirect:/category"; // Mengarahkan ke halaman kategori
+    @RequestMapping("/login")
+    public String loadLogin() {
+        return "login/login.html";
     }
 
-    @RequestMapping("/products")
-    public String redirectToProductsPage() {
-        return "redirect:/products"; // Mengarahkan ke halaman produk
+    @RequestMapping("/register")
+    public String loadRegister() {
+        return "login/register.html";
     }
 
-    @RequestMapping("/contact")
-    public String redirectToContactPage() {
-        return "redirect:/contact"; // Mengarahkan ke halaman kontak
+    @RequestMapping("/categories/rings")
+    public String loadRings() {
+        return "categories/ring.html";
     }
 }
