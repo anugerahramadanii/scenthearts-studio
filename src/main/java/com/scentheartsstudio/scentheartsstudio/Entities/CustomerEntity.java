@@ -8,19 +8,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "m_admin")
-public class AdminEntity extends BaseProperties {
-
+@Table(name = "m_customer")
+public class CustomerEntity extends BaseProperties {
     @Id
-    @Column(nullable = false)
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private Long biodata_id;
-
-    @Column(length = 10)
-    private String code;
 
     public Long getId() {
         return this.id;
@@ -36,14 +32,6 @@ public class AdminEntity extends BaseProperties {
 
     public void setBiodata_id(Long biodata_id) {
         this.biodata_id = biodata_id;
-    }
-
-    public String getCode() {
-        return this.code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
 }

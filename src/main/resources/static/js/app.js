@@ -41,10 +41,10 @@ document.addEventListener("alpine:init", () => {
     },
     remove(id) {
       // get item yang ingin diremove berdasarkan id
-      const carItem = this.items.find((item) => item.id === id);
+      const cartItem = this.items.find((item) => item.id === id);
 
       // jika item lebih dari satu
-      if (carItem.quantity > 1) {
+      if (cartItem.quantity > 1) {
         // telusuri 1 1
         this.items = this.items.map((item) => {
           // jika bukan barang yang diklik
@@ -58,7 +58,7 @@ document.addEventListener("alpine:init", () => {
             return item;
           }
         });
-      } else if (carItem.quantity === 1) {
+      } else if (cartItem.quantity === 1) {
         // jika barangnya sisa 1
         this.items = this.items.filter((item) => item.id !== id);
         this.quantity--;

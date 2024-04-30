@@ -1,6 +1,7 @@
 package com.scentheartsstudio.scentheartsstudio.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -25,8 +26,22 @@ public class MainController {
         return "login/register.html";
     }
 
+    // @RequestMapping("/categories/allproducts")
+    // public String loadAllProducts() {
+    // return "categories/sidebar-all-products.html";
+    // }
+
+    @RequestMapping("/categories/allproducts")
+    public String loadAllProducts(Model model) {
+        String templatePath = "all-products.html";
+        model.addAttribute("contentCategories", templatePath);
+        return "categories/sidebar-all-products.html";
+    }
+
     @RequestMapping("/categories/rings")
-    public String loadRings() {
-        return "categories/ring.html";
+    public String loadAllRings(Model model) {
+        String templatePath = "rings.html";
+        model.addAttribute("contentCategories", templatePath);
+        return "categories/sidebar-all-products.html";
     }
 }

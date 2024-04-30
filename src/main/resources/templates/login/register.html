@@ -51,20 +51,30 @@
           </label>
         </div>
 
+        <div class="row">
+          <label>
+            <input required="" placeholder="" type="text" class="input" />
+            <span>Email</span>
+          </label>
+
+          <button id="btn-send-otp" class="btn-otp">Send OTP</button>
+        </div>
+
         <label>
           <input required="" placeholder="" type="email" class="input" />
-          <span>Email</span>
+          <span>Email OTP</span>
         </label>
 
         <label>
-          <input required="" placeholder="" type="password" class="input" />
+          <input id="input-pass-register" required="" placeholder="" type="password" class="input" />
           <span>Password</span>
         </label>
         <label>
-          <input required="" placeholder="" type="password" class="input" />
+          <input id="input-pass-register-confirm" required="" placeholder="" type="password" class="input" />
           <span>Confirm password</span>
+          <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
         </label>
-        <button class="btn-submit-regist">Submit</button>
+        <a class="btn-submit-regist" href="#open-modal">Submit</a>
         <p class="sign-up">Already have an acount ? <a href="/login">Signin</a></p>
       </form>
     </section>

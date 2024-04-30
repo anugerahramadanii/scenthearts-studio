@@ -35,8 +35,49 @@
   <body>
     <nav th:replace="/fragments/header.html :: header"></nav>
     <!--Login section start-->
-    <section id="ring" class="rings">
-      <h1>Hello Word</h1>
+    <section id="all-products" class="all-products">
+      <div class="container-all-products">
+        <div class="sidebar-all-products">
+          <!-- Contenedor -->
+          <div class="row">
+            <ul id="accordion" class="accordion">
+              <li>
+                <div class="link"><i class="fa-solid fa-list"></i>Category<i class="fa fa-chevron-down"></i></div>
+                <ul class="submenu">
+                  <li><a href="/categories/allproducts">All Products</a></li>
+                  <li><a href="/categories/rings">Rings</a></li>
+                  <li><a href="#">Necklaces and pendants</a></li>
+                  <li><a href="#">Earrings</a></li>
+                  <li><a href="#">Bracelets</a></li>
+                  <li><a href="#">Broochs</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul id="accordion" class="accordion">
+              <li>
+                <div class="link"><i class="fa-solid fa-sliders"></i>Price<i class="fa fa-chevron-down"></i></div>
+                <ul class="submenu">
+                  <div class="price-range-block">
+                    <div id="slider-range" class="price-filter-range" name="rangeInput" style="margin-left: 10px"></div>
+                    <div style="margin-bottom: 10px">
+                      <input type="number" min="0" max="9900" oninput="validity.valid||(value='0');" id="min_price" class="price-range-field" />
+                      <input type="number" min="0" max="10000" oninput="validity.valid||(value='10000');" id="max_price" class="price-range-field" />
+                    </div>
+
+                    <button class="price-range-search" id="price-range-submit">Search</button>
+
+                    <div id="searchResults" class="search-results-block"></div>
+                  </div>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="content-all-products">
+          <div th:replace="@{'/categories/' + ${contentCategories}} :: category-content"></div>
+        </div>
+      </div>
+      <!-- <div id="ui-all-content"></div> -->
     </section>
     <!--Login section end-->
     <footer th:replace="/fragments/footer.html :: footer"></footer>
@@ -48,6 +89,7 @@
 
     <!--My Javascript-->
     <script src="/js/script.js"></script>
+    <script src="/js/app.js"></script>
     <!-- <script src="/src/main/resources/static/js/script.js"></script> -->
   </body>
 </html>

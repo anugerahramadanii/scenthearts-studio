@@ -1,0 +1,24 @@
+package com.scentheartsstudio.scentheartsstudio.Repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import com.scentheartsstudio.scentheartsstudio.Entities.TokenEntity;
+
+@Repository
+public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
+
+        @Query(nativeQuery = true, value = "with myTable as\r\n" + //
+                        "(select email, token from t_token where email ilike :email and is_delete = false order by id desc limit 1)\r\n"
+                        + //
+                        "select exists(select * from myTable where token ilike :token)")
+        public Boolean isTokenCorrect(@Param("email") String email, @Param("token") String token);
+
+        @Query(nativeQuery = true, value = "with myTable as\r\n" + //
+                        "(select email, token, expired_on from t_token where email ilike :email and is_delete = false order by id desc limit 1)\r\n"
+                        + //
+                        "select exists(select * from myTable where expired_on < now())")
+        public Boolean isTokenExpired(@Param("email") String email);
+}
