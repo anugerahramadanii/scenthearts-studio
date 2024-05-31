@@ -18,9 +18,6 @@ public class ProductEntity extends BaseProperties {
     @Column(nullable = false)
     private Long category_id;
 
-    @Column(nullable = false, length = 10)
-    private String initial;
-
     @Column(nullable = false, length = 50)
     private String name;
 
@@ -28,7 +25,11 @@ public class ProductEntity extends BaseProperties {
     private String description;
 
     @Column(nullable = false, length = 18, precision = 2)
-    private Double price;
+    private Double real_price;
+
+
+    @Column(nullable = false, length = 18, precision = 2)
+    private Double discount_price;
 
     @Column(nullable = false, length = 18, precision = 2)
     private Double stock;
@@ -52,14 +53,6 @@ public class ProductEntity extends BaseProperties {
         this.category_id = category_id;
     }
 
-    public String getInitial() {
-        return this.initial;
-    }
-
-    public void setInitial(String initial) {
-        this.initial = initial;
-    }
-
     public String getName() {
         return this.name;
     }
@@ -76,12 +69,20 @@ public class ProductEntity extends BaseProperties {
         this.description = description;
     }
 
-    public Double getPrice() {
-        return this.price;
+   public Double getReal_price() {
+        return this.real_price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setReal_price(Double real_price) {
+        this.real_price = real_price;
+    }
+
+    public Double getDiscount_price() {
+        return this.discount_price;
+    }
+
+    public void setDiscount_price(Double discount_price) {
+        this.discount_price = discount_price;
     }
 
     public Double getStock() {

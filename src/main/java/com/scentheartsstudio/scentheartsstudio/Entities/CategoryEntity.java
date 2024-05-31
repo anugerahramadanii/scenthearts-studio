@@ -15,9 +15,6 @@ public class CategoryEntity extends BaseProperties {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 10)
-    private String initial;
-
     @Column(nullable = false, length = 50)
     private String name;
 
@@ -30,14 +27,6 @@ public class CategoryEntity extends BaseProperties {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getInitial() {
-        return this.initial;
-    }
-
-    public void setInitial(String initial) {
-        this.initial = initial;
     }
 
     public String getName() {

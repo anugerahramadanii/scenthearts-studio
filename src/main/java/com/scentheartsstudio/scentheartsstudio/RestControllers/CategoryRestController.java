@@ -1,7 +1,8 @@
 package com.scentheartsstudio.scentheartsstudio.RestControllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.scentheartsstudio.scentheartsstudio.DTO.PostCategoryDTO;
+import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
+import org.springframework.web.bind.annotation.*;
 
 import com.scentheartsstudio.scentheartsstudio.DTO.InterCategoryDTO;
 import com.scentheartsstudio.scentheartsstudio.Services.CategoryService;
@@ -10,9 +11,6 @@ import com.scentheartsstudio.scentheartsstudio.utils.Resp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api")
@@ -31,5 +29,40 @@ public class CategoryRestController {
         response.setData(data);
         return response;
     }
+
+    @PostMapping("category/insert")
+    public Resp<String> insertCategory(@RequestBody PostCategoryDTO postCategoryDTO) {
+        try {
+            cs.insertCategory(postCategoryDTO);
+            Resp<String> response = new Resp<>();
+            response.setCode(200);
+            response.setMessage("OK");
+            return response;
+        } catch (CustomException e) {
+            Resp<String> response = new Resp<>();
+            response.setCode(e.getCode());
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
+
+    @PutMapping("category/update")
+    public Resp<String> updateCategory(@RequestBody PostCategoryDTO postCategoryDTO) {
+        try {
+            cs.updateCategory(postCategoryDTO);
+            Resp<String> response = new Resp<>();
+            response.setCode(200);
+            response.setMessage("OK");
+            return response;
+        } catch (CustomException e) {
+            Resp<String> response = new Resp<>();
+            response.setCode(e.getCode());
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
+
+
+
 
 }

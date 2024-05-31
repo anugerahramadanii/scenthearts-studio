@@ -16,11 +16,11 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
     @Query(nativeQuery = true, value = "select * from t_category where is_delete = false")
     public List<InterCategoryDTO> getAllCategories();
 
-    // cek initial sudah ada atau belum
-    @Query(nativeQuery = true, value = "select exists (select * from t_category where initial ilike :initial and is_delete = false)")
-    public Boolean isInitialExists(@Param("initial") String initial);
-
     // cek name sudah ada atau belum
     @Query(nativeQuery = true, value = "select exists (select * from t_category where name ilike :name and is_delete = false)")
     public Boolean isNameExists(@Param("name") String name);
+
+    @Query(nativeQuery = true,
+    value = "SELECT EXISTS (SELECT * FROM t_category where name ilike :name and name not ilike :oldName and is_delete = false)")
+    public Boolean isNameExistsUpdate(@Param("name") String name, @Param("oldName") String oldName);
 }

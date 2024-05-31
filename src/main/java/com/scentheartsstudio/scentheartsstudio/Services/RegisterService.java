@@ -42,12 +42,12 @@ public class RegisterService {
     public void registerUser(RegisterDTO registerDTO) throws CustomException {
 
         Boolean isTokenCorrect = tr.isTokenCorrect(registerDTO.getEmail(), registerDTO.getOtp());
-        if (isTokenCorrect == false) {
+        if (!isTokenCorrect) {
             throw new CustomException(452, "Code OTP Wrong!!!");
         }
 
         Boolean isTokenExpired = tr.isTokenExpired(registerDTO.getEmail());
-        if (isTokenExpired == true) {
+        if (isTokenExpired) {
             throw new CustomException(453, "Code OTP Expired!!!");
         }
 
