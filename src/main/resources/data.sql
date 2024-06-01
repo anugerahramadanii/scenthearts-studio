@@ -1,11 +1,11 @@
 -- Insert into m_biodata
-INSERT INTO m_biodata (firstname, lastname, mobile_phone, created_by, created_on)
+INSERT INTO m_biodata (firstname, lastname, mobile_phone, image_path, created_by, created_on)
 VALUES
-('John', 'Doe', '082134237421', 1, NOW()), -- admin
-('Jane', 'Smith', '081234567890', 1, NOW()),
-('Michael', 'Johnson', '085678912345', 1, NOW()),
-('Emily', 'Brown', '087654321098', 1, NOW()),
-('Daniel', 'Lee', '089876543210', 1, NOW());
+('John', 'Doe', '082134237421', '/images/profileeee.jpg', 1, NOW()), -- admin
+('Jane', 'Smith', '081234567890', '/images/cat.jpg', 1, NOW()),
+('Michael', 'Johnson', '085678912345', null, 1, NOW()),
+('Emily', 'Brown', '087654321098', 1, null, NOW()),
+('Daniel', 'Lee', '089876543210', 1, null, NOW());
 
 -- Insert into m_user
 INSERT INTO m_user (biodata_id, role_id, email, password, login_attempt, is_locked, last_login, created_by, created_on)
@@ -26,18 +26,17 @@ VALUES
 -- ('john@gmail.com', 1, '123456', '2024-04-05', null, 'OTP', 1, NOW());
 
 -- Insert data dummy untuk kategori perhiasan
-INSERT INTO t_category (initial, name, active, created_by, created_on) VALUES
-('CN', 'Cincin', TRUE, 1, NOW()),
-('KL', 'Kalung', TRUE, 1, NOW()),
-('GL', 'Gelang', TRUE, 1, NOW()),
-('AA', 'Anting-anting', TRUE, 1, NOW()),
-('LL', 'Liontin', TRUE, 1, NOW()),
-('BR', 'Bros', TRUE, 1, NOW());
+INSERT INTO t_category (name, active, created_by, created_on) VALUES
+('Cincin', TRUE, 1, NOW()),
+('Kalung', TRUE, 1, NOW()),
+('Gelang', TRUE, 1, NOW()),
+('Anting-anting', TRUE, 1, NOW()),
+('Liontin', TRUE, 1, NOW()),
+('Bros', TRUE, 1, NOW());
 -- Insert data dummy untuk produk perhiasan
-INSERT INTO t_product (category_id, initial, name, description, price, stock, active, created_by, created_on) VALUES
-(1, 'JWL01P01', 'Cincin Berlian Emas Putih', 'Cincin berlian dengan desain elegan, terbuat dari emas putih 18 karat.', 50000, 10, TRUE, 1, NOW()),
-(2, 'JWL02P01', 'Kalung Berlian Mutiara', 'Kalung berlian mutiara dengan tali rantai perak sterling.', 800000, 5, TRUE, 1, NOW()),
-(3, 'JWL03P01', 'Gelang Perak Modern', 'Gelang perak dengan desain modern dan elegan.', 150000, 15, TRUE, 1, NOW()),
-(4, 'JWL04P01', 'Anting-anting Berlian Mewah', 'Anting-anting berlian dengan desain mewah dan berkilauan.', 350000, 8, TRUE, 1, NOW()),
-(5, 'JWL05P01', 'Liontin Berlian 18 Karat', 'Liontin berlian dengan emas 18 karat dan desain klasik.', 450000, 12, TRUE, 1, NOW()),
-(6, 'JWL06P01', 'Bros Bunga Mawar', 'Bros bunga mawar dengan bahan perak sterling dan desain yang elegan.', 200000, 20, TRUE, 1, NOW());
+INSERT INTO t_product (category_id, name, description, real_price, discount_price, stock, active, created_by, created_on) VALUES
+(1, 'Cincin Berlian Emas Kuning', 'Cincin berlian dengan desain klasik, terbuat dari emas kuning 18 karat.', 450000, 50000 ,10, TRUE, 1, NOW()),
+(2, 'Kalung Berlian Safir', 'Kalung berlian safir dengan tali rantai emas putih 18 karat.', 1200000, 45000, 5, TRUE, 1, NOW()),
+(3, 'Gelang Perak Etnik', 'Gelang perak dengan desain etnik dan motif tradisional.', 100000, 40000, 15, TRUE, 1, NOW()),
+(4, 'Anting-anting Mutiara Elegan', 'Anting-anting mutiara dengan desain elegan dan timeless.', 250000, 60000, 8, TRUE, 1, NOW()),
+(5, 'Liontin Berlian Berlian', 'Liontin berlian dengan desain modern dan berlian yang berkilauan.', 550000, 150000, 12, TRUE, 1, NOW());

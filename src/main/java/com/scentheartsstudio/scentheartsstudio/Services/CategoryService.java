@@ -52,4 +52,13 @@ public class CategoryService {
         cr.save(categoryEntity);
     }
 
+    public void deleteCategory(PostCategoryDTO postCategoryDTO) {
+        CategoryEntity categoryEntity= cr.getReferenceById(postCategoryDTO.getId());
+
+        categoryEntity.setIs_delete(true);
+        categoryEntity.setDeleted_by(1L);
+        categoryEntity.setDeleted_on(new Date());
+        cr.delete(categoryEntity);
+    }
+
 }

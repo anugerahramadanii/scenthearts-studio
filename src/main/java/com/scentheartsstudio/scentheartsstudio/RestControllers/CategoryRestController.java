@@ -62,7 +62,13 @@ public class CategoryRestController {
         }
     }
 
-
-
+    @DeleteMapping("category/delete")
+    public Resp<String> deleteCategory(@RequestBody PostCategoryDTO postCategoryDTO) {
+        cs.deleteCategory(postCategoryDTO);
+        Resp<String> response = new Resp<>();
+        response.setCode(200);
+        response.setMessage("OK");
+        return response;
+    }
 
 }

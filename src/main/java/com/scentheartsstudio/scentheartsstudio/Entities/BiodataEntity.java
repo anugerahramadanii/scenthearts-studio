@@ -1,11 +1,6 @@
 package com.scentheartsstudio.scentheartsstudio.Entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "m_biodata")
@@ -24,6 +19,13 @@ public class BiodataEntity extends BaseProperties {
 
     @Column(length = 15)
     private String mobile_phone;
+
+    @Lob
+    private byte[] image;
+
+    @Column(length = 255)
+    private String image_path;
+
 
     // @Column(length = 255)
     // private String address;
@@ -68,4 +70,20 @@ public class BiodataEntity extends BaseProperties {
     // this.address = address;
     // }
 
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
 }
