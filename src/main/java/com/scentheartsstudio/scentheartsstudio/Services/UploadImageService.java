@@ -7,6 +7,7 @@ import com.scentheartsstudio.scentheartsstudio.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,6 +30,11 @@ public class UploadImageService {
 	public String uploadImageProfile(Long userId, MultipartFile file) throws IOException {
 		String path =new FileSystemResource("").getFile().getAbsolutePath();
 		path += "\\uploads\\";
+
+		String fileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
+		if(fileExtension == null || !fileExtension.equalsIgnoreCase("jpg") || !fileExtension.equalsIgnoreCase("png") || !fileExtension.equalsIgnoreCase("jpeg")){
+				return "Images file must be JPG/JPEG or PNG";
+		}
 
 		String fileName = "profile-user-" + userId + ".jpg";
 		Path newPath = Paths.get(path + fileName);

@@ -14,4 +14,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query(nativeQuery = true, value = "select exists (select * from m_user where email ilike :email and is_delete = false and (is_locked = false or is_locked is null))")
     public Boolean isEmailExists(@Param("email") String email);
+
 }

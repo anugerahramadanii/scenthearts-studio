@@ -13,12 +13,10 @@ with myTable as
 select exists(select * from myTable where expired_on < now())
 
 
-select firstname, lastname, mobile_phone, r.id as role_id, r.name as role, email
+select b.firstname, b,lastname, b.mobile_phone, b.image_path, u.email
 from m_biodata b 
 inner join m_user u on
 b.id = u.biodata_id
-inner join m_role r on
-r.id = u.role_id
 where u.id = 1 	
 
 select * from t_token

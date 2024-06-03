@@ -1,11 +1,11 @@
 -- Insert into m_biodata
 INSERT INTO m_biodata (firstname, lastname, mobile_phone, image_path, created_by, created_on)
 VALUES
-('John', 'Doe', '082134237421', '/images/profileeee.jpg', 1, NOW()), -- admin
-('Jane', 'Smith', '081234567890', '/images/cat.jpg', 1, NOW()),
+('John', 'Doe', '082134237421', '/images/profile/profileeee.jpg', 1, NOW()), -- admin
+('Jane', 'Smith', '081234567890', '/images/profile/cat.jpg', 1, NOW()),
 ('Michael', 'Johnson', '085678912345', null, 1, NOW()),
-('Emily', 'Brown', '087654321098', 1, null, NOW()),
-('Daniel', 'Lee', '089876543210', 1, null, NOW());
+('Emily', 'Brown', '087654321098', null,1 , NOW()),
+('Daniel', 'Lee', '089876543210', null, 1, NOW());
 
 -- Insert into m_user
 INSERT INTO m_user (biodata_id, role_id, email, password, login_attempt, is_locked, last_login, created_by, created_on)
@@ -19,7 +19,7 @@ VALUES
 INSERT INTO m_role (name, code, created_by, created_on)
 VALUES
 ('Admin', 'admin', 1, now()),
-('Buyer', 'buyer', 1, now());
+('Customer', 'customer', 1, now());
 
 -- INSERT INTO t_token (email, user_id, token, expired_on, is_expired_ used_for, created_by, created_on)
 -- VALUES
@@ -33,6 +33,7 @@ INSERT INTO t_category (name, active, created_by, created_on) VALUES
 ('Anting-anting', TRUE, 1, NOW()),
 ('Liontin', TRUE, 1, NOW()),
 ('Bros', TRUE, 1, NOW());
+
 -- Insert data dummy untuk produk perhiasan
 INSERT INTO t_product (category_id, name, description, real_price, discount_price, stock, active, created_by, created_on) VALUES
 (1, 'Cincin Berlian Emas Kuning', 'Cincin berlian dengan desain klasik, terbuat dari emas kuning 18 karat.', 450000, 50000 ,10, TRUE, 1, NOW()),

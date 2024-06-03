@@ -14,6 +14,7 @@ public class UserService {
     @Autowired
     private UserRepository ur;
 
+    //Login
     public LoginDTO loginService(String email, String password) throws CustomException {
         UserEntity dataUser = ur.getEmailAndPasswordUser(email, password);
 
