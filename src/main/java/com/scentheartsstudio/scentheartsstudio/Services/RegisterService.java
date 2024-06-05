@@ -104,7 +104,7 @@ public class RegisterService {
 
         TokenEntity tokenEntity = new TokenEntity();
         tokenEntity.setEmail(email);
-        tokenEntity.setUser_id(2L);
+//        tokenEntity.setUser_id(2L);
         tokenEntity.setExpired_on(expiredOn);
         tokenEntity.setToken(token);
         tokenEntity.setUsed_for(usedFor);
@@ -114,8 +114,9 @@ public class RegisterService {
         tr.save(tokenEntity);
 
         String subject = "Register OTP";
-        String msgBody = "Token OTP anda adalah " + token + " ! Jangan beritahukan ke siapa-siapa!";
+        String msgBody = "Token OTP anda adalah " + token + " ! Jangan beritahukan ke siapa-siapa!" +
+                "Token expired in +" + expiredOn;
         es.sendEmail(email, subject, msgBody);
-
+//        System.out.println("email sent");
     }
 }
