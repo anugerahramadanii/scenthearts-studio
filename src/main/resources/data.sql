@@ -1,9 +1,9 @@
 -- Insert into m_biodata
 INSERT INTO m_biodata (firstname, lastname, mobile_phone, image_path, created_by, created_on)
 VALUES
-('John', 'Doe', '082134237421', '/images/profile/profileeee.jpg', 1, NOW()), -- admin
+('John', 'Doe', '082134237421', null, 1, NOW()), -- admin
 ('Jane', 'Smith', '081234567890', '/images/profile/cat.jpg', 1, NOW()),
-('Michael', 'Johnson', '085678912345', null, 1, NOW()),
+('Michael', 'Johnson', '085678912345', '/images/profile/profileeee.jpg', 1, NOW()),
 ('Emily', 'Brown', '087654321098', null,1 , NOW()),
 ('Daniel', 'Lee', '089876543210', null, 1, NOW());
 

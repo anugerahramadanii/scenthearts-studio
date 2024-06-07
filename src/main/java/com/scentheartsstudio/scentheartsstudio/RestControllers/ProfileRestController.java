@@ -26,9 +26,6 @@ public class ProfileRestController {
 	@Autowired
 	private UploadImageService uis;
 
-//	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(ProfileRestController.class);
-
-
 	@GetMapping("/profile")
 	public Resp<InterProfileDTO> getProfileByUserId(@RequestParam("user_id") Long user_id) {
 		Resp<InterProfileDTO> response = new Resp<>();
@@ -84,17 +81,14 @@ public class ProfileRestController {
 		Resp<String> response = new Resp<>();
 		response.setCode(200);
 		response.setMessage("OK");
-
 		try {
 			uis.uploadImageProfile(userId, file);
 		}catch (CustomException e){
-//			e.printStackTrace();
-//			logger.error("CustomException occurred", e);
+			e.printStackTrace();
 			response.setCode(e.getCode());
 			response.setMessage(e.getMessage());
 		}catch (IOException e) {
 			e.printStackTrace();
-//			logger.error("CustomException occurred", e);
 			response.setCode(455);
 			response.setMessage("Failed to upload image");
 	}
