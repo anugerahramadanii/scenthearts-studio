@@ -8,7 +8,6 @@ import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UploadImageService {
+public class UploadImageProfileService {
 
 	private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpg", "image/jpeg", "image/png");
 	private static final long MAX_FILE_SIZE = 1024 * 1024 * 2;
@@ -44,7 +43,7 @@ public class UploadImageService {
 			throw new CustomException(413, "File size must be less than 2MB");
 		}
 
-		String fileExtension;
+		String fileExtension = "";
 		if (mimeType.contains("image/jpg")){
 			fileExtension = ".jpg";
 		} else if(mimeType.contains("image/jpeg")){
@@ -72,6 +71,7 @@ public class UploadImageService {
 		biodataEntity.setImage_path(resultUpload);
 		biodataEntity.setModified_by(userId);
 		biodataEntity.setModified_on(new Date());
+		
 		br.save(biodataEntity);
 		return resultUpload;
 	}

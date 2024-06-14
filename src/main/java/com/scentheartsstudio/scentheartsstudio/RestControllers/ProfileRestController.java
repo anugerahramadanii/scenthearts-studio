@@ -3,15 +3,11 @@ package com.scentheartsstudio.scentheartsstudio.RestControllers;
 import com.scentheartsstudio.scentheartsstudio.DTO.InterProfileDTO;
 import com.scentheartsstudio.scentheartsstudio.DTO.PostProfileDTO;
 import com.scentheartsstudio.scentheartsstudio.Services.ProfileService;
-import com.scentheartsstudio.scentheartsstudio.Services.UploadImageService;
+import com.scentheartsstudio.scentheartsstudio.Services.UploadImageProfileService;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import com.scentheartsstudio.scentheartsstudio.utils.Resp;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,7 +20,7 @@ public class ProfileRestController {
 	private ProfileService ps;
 
 	@Autowired
-	private UploadImageService uis;
+	private UploadImageProfileService uis;
 
 	@GetMapping("/profile")
 	public Resp<InterProfileDTO> getProfileByUserId(@RequestParam("user_id") Long user_id) {

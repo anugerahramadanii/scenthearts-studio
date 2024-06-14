@@ -51,18 +51,20 @@ public class RegisterService {
             throw new CustomException(453, "Code OTP Expired!!!");
         }
 
+        String passwordUser = registerDTO.getPassword();
+        String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
+
+        if (!passwordUser.matches(regexPassword)){
+            throw new CustomException(455, "Minimal 8 karakter, Setidaknya satu huruf besar, Setidaknya satu huruf kecil, Setidaknya satu digit, Setidaknya satu karakter spesial");
+        }
+
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(registerDTO.getEmail());
-        userEntity.setPassword(registerDTO.getPassword());
-        userEntity.setRole_id(registerDTO.getRole_id());
+        userEntity.setPassword(passwordUser);
         userEntity.setCreated_by(1L);
         userEntity.setCreated_on(new Date());
+        userEntity.setRole_id(2L); //Customer
 
-        if (registerDTO.getRole_id() == null) {
-            userEntity.setRole_id(2L);
-        } else {
-            userEntity.setRole_id(registerDTO.getRole_id());
-        }
         userEntity = ur.save(userEntity);
 
         BiodataEntity biodataEntity = new BiodataEntity();
@@ -74,21 +76,16 @@ public class RegisterService {
 
         biodataEntity = br.save(biodataEntity);
 
-        if (registerDTO.getRole_id() == 1) {
-            AdminEntity adminEntity = new AdminEntity();
-            adminEntity.setBiodata_id(biodataEntity.getId());
-            adminEntity.setCreated_by(1L);
-            adminEntity.setCreated_on(new Date());
-            ar.save(adminEntity);
-        } else {
-            CustomerEntity customerEntity = new CustomerEntity();
-            customerEntity.setBiodata_id(biodataEntity.getId());
-            customerEntity.setCreated_by(1L);
-            customerEntity.setCreated_on(new Date());
-            cr.save(customerEntity);
-        }
+        CustomerEntity customerEntity = new CustomerEntity();
+        customerEntity.setBiodata_id(biodataEntity.getId());
+        customerEntity.setCreated_by(1L);
+        customerEntity.setCreated_on(new Date());
 
+        cr.save(customerEntity);
+
+        // update biodata.id di table m_user
         userEntity.setBiodata_id(biodataEntity.getId());
+
         ur.save(userEntity);
     }
 
@@ -104,7 +101,7 @@ public class RegisterService {
 
         TokenEntity tokenEntity = new TokenEntity();
         tokenEntity.setEmail(email);
-//        tokenEntity.setUser_id(2L);
+        tokenEntity.setUser_id(2L);
         tokenEntity.setExpired_on(expiredOn);
         tokenEntity.setToken(token);
         tokenEntity.setUsed_for(usedFor);
@@ -115,8 +112,8 @@ public class RegisterService {
 
         String subject = "Register OTP";
         String msgBody = "Token OTP anda adalah " + token + " ! Jangan beritahukan ke siapa-siapa!" +
-                "Token expired in +" + expiredOn;
+                "Token expired in " + expiredOn;
         es.sendEmail(email, subject, msgBody);
-//        System.out.println("email sent");
     }
+
 }

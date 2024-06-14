@@ -13,11 +13,13 @@ with myTable as
 select exists(select * from myTable where expired_on < now())
 
 
-select b.firstname, b,lastname, b.mobile_phone, b.image_path, u.email
+select b.firstname, u.password, b,lastname, b.mobile_phone, b.image, b.image_path, u.email
 from m_biodata b 
 inner join m_user u on
 b.id = u.biodata_id
-where u.id = 1 	
+where u.id = 2
+
+select password from m_user where id = 1 and is_delete = false
 
 select * from t_token
 
@@ -26,3 +28,5 @@ select * from t_category where is_delete = false
 select exists (select * from t_category where initial ilike 'AA' and is_delete = false)
 
 select * from t_product
+
+select id from m_user where id = 1 and is_delete = false

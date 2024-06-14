@@ -1,6 +1,7 @@
 package com.scentheartsstudio.scentheartsstudio.RestControllers;
 
 import com.scentheartsstudio.scentheartsstudio.DTO.PostCategoryDTO;
+import com.scentheartsstudio.scentheartsstudio.Services.UploadImageCategoryService;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,9 +9,11 @@ import com.scentheartsstudio.scentheartsstudio.DTO.InterCategoryDTO;
 import com.scentheartsstudio.scentheartsstudio.Services.CategoryService;
 import com.scentheartsstudio.scentheartsstudio.utils.Resp;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
@@ -18,6 +21,9 @@ public class CategoryRestController {
 
     @Autowired
     private CategoryService cs;
+
+    @Autowired
+    private UploadImageCategoryService uics;
 
     @GetMapping("/category")
     public Resp<List<InterCategoryDTO>> getAllCategories() {
@@ -32,18 +38,16 @@ public class CategoryRestController {
 
     @PostMapping("category/insert")
     public Resp<String> insertCategory(@RequestBody PostCategoryDTO postCategoryDTO) {
+        Resp<String> response = new Resp<>();
+        response.setCode(200);
+        response.setMessage("OK");
         try {
             cs.insertCategory(postCategoryDTO);
-            Resp<String> response = new Resp<>();
-            response.setCode(200);
-            response.setMessage("OK");
-            return response;
         } catch (CustomException e) {
-            Resp<String> response = new Resp<>();
             response.setCode(e.getCode());
             response.setMessage(e.getMessage());
-            return response;
         }
+        return response;
     }
 
     @PutMapping("category/update")
@@ -71,4 +75,22 @@ public class CategoryRestController {
         return response;
     }
 
+    @PostMapping("category/image")
+    public Resp<String> uploadImage(@RequestParam("categoryId") Long categoryId
+            , @RequestParam("user_id") Long userId
+            ,@RequestParam("file") MultipartFile file) {
+        Resp<String>response = new Resp<>();
+        response.setCode(200);
+        response.setMessage("OK");
+        try {
+            uics.uploadImage(categoryId,userId,file);
+        }catch (CustomException e) {
+            response.setCode(e.getCode());
+            response.setMessage(e.getMessage());
+        } catch (IOException e) {
+            response.setCode(455);
+            response.setMessage("Failed to upload images!");
+        }
+        return response;
+    }
 }

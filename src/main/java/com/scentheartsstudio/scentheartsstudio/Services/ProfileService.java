@@ -12,7 +12,6 @@ import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import com.scentheartsstudio.scentheartsstudio.utils.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 
@@ -102,12 +101,17 @@ public class ProfileService {
 		if (!postProfileDTO.getOld_password().equals(userEntity.getPassword())){
 			throw new CustomException(454, "Old Password Wrong!!");
 		}
+		String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
+
+		if (!postProfileDTO.getNew_password().matches(regexPassword)){
+			throw new CustomException(455, "Minimal 8 karakter, Setidaknya satu huruf besar, Setidaknya satu huruf kecil, Setidaknya satu digit, Setidaknya satu karakter spesial");
+		}
+
 		//Update new password
 		userEntity.setPassword(postProfileDTO.getNew_password());
 		userEntity.setModified_by(postProfileDTO.getUser_id());
 		userEntity.setModified_on(new Date());
 		ur.save(userEntity);
 	}
-
 
 }

@@ -23,4 +23,8 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
     @Query(nativeQuery = true,
     value = "SELECT EXISTS (SELECT * FROM t_category where name ilike :name and name not ilike :oldName and is_delete = false)")
     public Boolean isNameExistsUpdate(@Param("name") String name, @Param("oldName") String oldName);
+
+    @Query(nativeQuery = true,
+    value = "select id from m_user where id = :userId and is_delete = false")
+    public Long getUserId(@Param("userId") Long user_id);
 }

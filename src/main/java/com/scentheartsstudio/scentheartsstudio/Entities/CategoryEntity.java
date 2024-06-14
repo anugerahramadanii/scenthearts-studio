@@ -18,6 +18,9 @@ public class CategoryEntity extends BaseProperties {
     @Column(nullable = false, length = 50)
     private String name;
 
+    @Column(length = 255)
+    private String image_path;
+
     @Column(nullable = false)
     private Boolean active;
 
@@ -36,6 +39,15 @@ public class CategoryEntity extends BaseProperties {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getImage_path() {
+        return this.image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
 
     public Boolean isActive() {
         return this.active;

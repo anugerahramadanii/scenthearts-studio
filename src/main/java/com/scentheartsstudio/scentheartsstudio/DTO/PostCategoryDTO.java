@@ -3,6 +3,7 @@ package com.scentheartsstudio.scentheartsstudio.DTO;
 public class PostCategoryDTO {
 private Long id;
 private String name;
+private String image_path;
 private Boolean active;
 private Long user_id;
 
@@ -20,6 +21,14 @@ public String getName() {
 
 public void setName(String name) {
     this.name = name;
+}
+
+public String getImage_path() {
+    return this.image_path;
+}
+
+public void setImage_path(String image_path) {
+    this.image_path = image_path;
 }
 
 public Boolean getActive() {
