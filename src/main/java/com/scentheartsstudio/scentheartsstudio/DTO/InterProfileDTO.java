@@ -13,7 +13,7 @@ public interface InterProfileDTO {
 
     public String getEmail();
 
-    public byte[] getImage();
+//    public byte[] getImage();
 
     public String getImage_path();
 

@@ -80,7 +80,6 @@ public class ProfileRestController {
 		try {
 			uis.uploadImageProfile(userId, file);
 		}catch (CustomException e){
-			e.printStackTrace();
 			response.setCode(e.getCode());
 			response.setMessage(e.getMessage());
 		}catch (IOException e) {

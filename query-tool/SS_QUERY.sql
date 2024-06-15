@@ -25,6 +25,8 @@ select * from t_token
 
 select * from t_category where is_delete = false
 
+select id from t_category where id = 1 and is_delete = false
+
 select exists (select * from t_category where initial ilike 'AA' and is_delete = false)
 
 select * from t_product

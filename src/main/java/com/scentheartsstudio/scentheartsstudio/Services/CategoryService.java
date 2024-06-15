@@ -34,27 +34,32 @@ public class CategoryService {
         return cr.getAllCategories();
     }
 
-    // masih ERROR
-    public void insertCategory(PostCategoryDTO postCategoryDTO) throws CustomException {
+    public void insertCategory(PostCategoryDTO postCategoryDTO, MultipartFile file) throws CustomException, IOException {
         Boolean isNameExists = cr.isNameExists(postCategoryDTO.getName());
         if (isNameExists) {
-            throw new CustomException(453, "Category Name Already Exists");
+            throw new CustomException(453, "Category Name " + postCategoryDTO.getName() + " Already Exists");
         }
 
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setName(postCategoryDTO.getName());
         categoryEntity.setActive(postCategoryDTO.getActive());
-        categoryEntity.setCreated_by(1L);
+        categoryEntity.setCreated_by(postCategoryDTO.getUser_id());
         categoryEntity.setCreated_on(new Date());
+        cr.save(categoryEntity);
+
+        Long categoryId = categoryEntity.getId();
+
+        String image = uploadImage(categoryId, file);
+        categoryEntity.setImage_path(image);
         cr.save(categoryEntity);
     }
 
-    public void updateCategory(PostCategoryDTO postCategoryDTO) throws CustomException {
+    public void updateCategory(PostCategoryDTO postCategoryDTO, MultipartFile file) throws CustomException, IOException {
         CategoryEntity categoryEntity = cr.getReferenceById(postCategoryDTO.getId());
 
         Boolean isNameExistUpdate = cr.isNameExistsUpdate(postCategoryDTO.getName(), categoryEntity.getName());
         if(isNameExistUpdate){
-            throw new CustomException(453, "Name " + postCategoryDTO.getName() + " Category Name Already Exists");
+            throw new CustomException(453, "Category Name " + postCategoryDTO.getName() + "  Already Exists");
         }
 
         categoryEntity.setId(postCategoryDTO.getId());
@@ -62,6 +67,11 @@ public class CategoryService {
         categoryEntity.setActive(postCategoryDTO.getActive());
         categoryEntity.setModified_by(1L);
         categoryEntity.setModified_on(new Date());
+
+        if (file != null && !file.isEmpty()) {
+            String image = uploadImage(postCategoryDTO.getId(), file);
+            categoryEntity.setImage_path(image);
+        }
 
         cr.save(categoryEntity);
     }
@@ -72,6 +82,62 @@ public class CategoryService {
         categoryEntity.setDeleted_by(1L);
         categoryEntity.setDeleted_on(new Date());
         cr.delete(categoryEntity);
+    }
+
+    public String uploadImage(Long categoryId,MultipartFile file) throws CustomException, IOException {
+
+        //        MIME Type (Multipurpose Internet Mail Extensions)
+        String mimeType = file.getContentType();
+
+        if (mimeType == null || mimeType.isEmpty()) {
+            throw new CustomException(400, "Must input image category!!");
+        }
+
+        if (!ALLOWED_MIME_TYPES.contains(mimeType.toLowerCase())){
+            throw new CustomException(415, "Only JPG, JPEG, and PNG files are allowed");
+        }
+
+        if (file.getSize() > MAX_FILE_SIZE) {
+            throw new CustomException(413, "File size must be less than 2MB");
+        }
+
+//        String fileExtension = "";
+//        if (mimeType.toLowerCase().contains("image/jpg")){
+//            fileExtension = ".jpg";
+//        } else if(mimeType.toLowerCase().contains("image/jpeg")){
+//            fileExtension = ".jpeg";
+//        } else if (mimeType.toLowerCase().contains("image/png")){
+//            fileExtension = ".png";
+//        }
+
+        String basePath = new FileSystemResource("").getFile().getAbsolutePath();
+        String uploadPaths = basePath + File.separator + "uploads" + File.separator + "categories" + File.separator;
+
+        // Ensure the upload directory exists
+        File uploadDir = new File(uploadPaths);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        // Generate file name and path
+        String fileName = "ImageCategory_" + categoryId + " .jpg";
+        Path newPath = Path.of(uploadPaths + fileName);
+
+        // save file to destination path
+        Files.copy(file.getInputStream(), newPath, StandardCopyOption.REPLACE_EXISTING);
+
+        //construct the result URL
+        String resultUpload = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/images/").path(fileName).toUriString();
+
+        //data category image id
+//        CategoryEntity categoryEntity = cr.getReferenceById(categoryId);
+//        categoryEntity.setImage_path(resultUpload);
+//        categoryEntity.setModified_by(userId);
+//        categoryEntity.setModified_on(new Date());
+//
+//        cr.save(categoryEntity);
+        return resultUpload;
     }
 
 }

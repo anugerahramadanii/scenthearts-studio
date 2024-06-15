@@ -21,12 +21,14 @@ public class ProductEntity extends BaseProperties {
     @Column(nullable = false, length = 50)
     private String name;
 
+    @Column(length = 255)
+    private String image_path;
+
     @Column
     private String description;
 
     @Column(nullable = false, length = 18, precision = 2)
     private Double real_price;
-
 
     @Column(nullable = false, length = 18, precision = 2)
     private Double discount_price;
@@ -105,4 +107,11 @@ public class ProductEntity extends BaseProperties {
         this.active = active;
     }
 
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
 }

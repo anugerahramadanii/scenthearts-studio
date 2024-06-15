@@ -27,4 +27,8 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
     @Query(nativeQuery = true,
     value = "select id from m_user where id = :userId and is_delete = false")
     public Long getUserId(@Param("userId") Long user_id);
+
+    @Query(nativeQuery = true,
+    value = "select id from t_category where id = :categoryId and is_delete = false")
+    public Long getCategoryId(@Param("categoryId") Long category_id);
 }

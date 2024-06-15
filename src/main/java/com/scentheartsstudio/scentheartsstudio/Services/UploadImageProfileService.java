@@ -36,6 +36,7 @@ public class UploadImageProfileService {
 	public String uploadImageProfile(Long userId, MultipartFile file) throws IOException, CustomException {
 
 		String mimeType = file.getContentType();
+
 		if (mimeType == null || !ALLOWED_MIME_TYPES.contains(mimeType.toLowerCase())){
 			throw new CustomException(415, "Only JPG, JPEG, and PNG files are allowed");
 		}
@@ -43,19 +44,19 @@ public class UploadImageProfileService {
 			throw new CustomException(413, "File size must be less than 2MB");
 		}
 
-		String fileExtension = "";
-		if (mimeType.contains("image/jpg")){
-			fileExtension = ".jpg";
-		} else if(mimeType.contains("image/jpeg")){
-			fileExtension = ".jpeg";
-		} else {
-			fileExtension = ".png";
-		}
+//		String fileExtension = "";
+//		if (mimeType.contains("image/jpg")){
+//			fileExtension = ".jpg";
+//		} else if(mimeType.contains("image/jpeg")){
+//			fileExtension = ".jpeg";
+//		} else if(mimeType.contains("image/png")) {
+//			fileExtension = ".png";
+//		}
 
 		String basePath = new FileSystemResource("").getFile().getAbsolutePath();
 		String uploadPaths = basePath + File.separator + "uploads" + File.separator + "profile" + File.separator;
 
-		String fileName = "profile-user-" + userId + fileExtension ;
+		String fileName = "profile-user-" + userId + " .jpg" ;
 		Path newPath = Paths.get(uploadPaths + fileName);
 
 		// save file to destination path
