@@ -37,7 +37,7 @@ public class CategoryService {
     public void insertCategory(PostCategoryDTO postCategoryDTO, MultipartFile file) throws CustomException, IOException {
         Boolean isNameExists = cr.isNameExists(postCategoryDTO.getName());
         if (isNameExists) {
-            throw new CustomException(453, "Category Name " + postCategoryDTO.getName() + " Already Exists");
+            throw new CustomException(452, "Category Name " + postCategoryDTO.getName() + " Already Exists");
         }
 
         CategoryEntity categoryEntity = new CategoryEntity();
@@ -49,8 +49,9 @@ public class CategoryService {
 
         Long categoryId = categoryEntity.getId();
 
-        String image = uploadImage(categoryId, file);
+        String image = uploadImageCategory(categoryId, file);
         categoryEntity.setImage_path(image);
+
         cr.save(categoryEntity);
     }
 
@@ -68,10 +69,13 @@ public class CategoryService {
         categoryEntity.setModified_by(1L);
         categoryEntity.setModified_on(new Date());
 
-        if (file != null && !file.isEmpty()) {
-            String image = uploadImage(postCategoryDTO.getId(), file);
-            categoryEntity.setImage_path(image);
-        }
+        String image = uploadImageCategory(postCategoryDTO.getId(), file);
+        categoryEntity.setImage_path(image);
+
+//        if (file != null && !file.isEmpty()) {
+//            String image = uploadImageCategory(postCategoryDTO.getId(), file);
+//            categoryEntity.setImage_path(image);
+//        }
 
         cr.save(categoryEntity);
     }
@@ -84,14 +88,9 @@ public class CategoryService {
         cr.delete(categoryEntity);
     }
 
-    public String uploadImage(Long categoryId,MultipartFile file) throws CustomException, IOException {
-
-        //        MIME Type (Multipurpose Internet Mail Extensions)
+    public String uploadImageCategory(Long categoryId,MultipartFile file) throws CustomException, IOException {
+        //MIME Type (Multipurpose Internet Mail Extensions)
         String mimeType = file.getContentType();
-
-        if (mimeType == null || mimeType.isEmpty()) {
-            throw new CustomException(400, "Must input image category!!");
-        }
 
         if (!ALLOWED_MIME_TYPES.contains(mimeType.toLowerCase())){
             throw new CustomException(415, "Only JPG, JPEG, and PNG files are allowed");
@@ -100,15 +99,6 @@ public class CategoryService {
         if (file.getSize() > MAX_FILE_SIZE) {
             throw new CustomException(413, "File size must be less than 2MB");
         }
-
-//        String fileExtension = "";
-//        if (mimeType.toLowerCase().contains("image/jpg")){
-//            fileExtension = ".jpg";
-//        } else if(mimeType.toLowerCase().contains("image/jpeg")){
-//            fileExtension = ".jpeg";
-//        } else if (mimeType.toLowerCase().contains("image/png")){
-//            fileExtension = ".png";
-//        }
 
         String basePath = new FileSystemResource("").getFile().getAbsolutePath();
         String uploadPaths = basePath + File.separator + "uploads" + File.separator + "categories" + File.separator;
@@ -120,7 +110,7 @@ public class CategoryService {
         }
 
         // Generate file name and path
-        String fileName = "ImageCategory_" + categoryId + " .jpg";
+        String fileName = "ImageCategory_" + categoryId + " .jpg".trim();
         Path newPath = Path.of(uploadPaths + fileName);
 
         // save file to destination path
@@ -130,13 +120,6 @@ public class CategoryService {
         String resultUpload = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/images/").path(fileName).toUriString();
 
-        //data category image id
-//        CategoryEntity categoryEntity = cr.getReferenceById(categoryId);
-//        categoryEntity.setImage_path(resultUpload);
-//        categoryEntity.setModified_by(userId);
-//        categoryEntity.setModified_on(new Date());
-//
-//        cr.save(categoryEntity);
         return resultUpload;
     }
 

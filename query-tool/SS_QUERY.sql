@@ -29,6 +29,20 @@ select id from t_category where id = 1 and is_delete = false
 
 select exists (select * from t_category where initial ilike 'AA' and is_delete = false)
 
-select * from t_product
+select p.id, p.name as product_name, c.name as category_name, 
+	p.description, p.image_path, p.real_price, 
+	p.discount_price, p.stock
+	from t_product p
+	inner join t_category c
+	on p.category_id = c.id
+	where p.is_delete = false
+
+select exists(select * from t_product where name ilike '%Cincin%' and is_delete = false)
 
 select id from m_user where id = 1 and is_delete = false
+
+select * from t_product
+
+select exists(select * from t_product where name ilike '%Cincin Berlian Emas Kuning%' and 
+	name not ilike '%Cincin Berlian Emas%' and is_delete = false)
+

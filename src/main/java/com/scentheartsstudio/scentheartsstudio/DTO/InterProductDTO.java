@@ -2,12 +2,12 @@ package com.scentheartsstudio.scentheartsstudio.DTO;
 
 public interface InterProductDTO {
 	Long getId();
-	String getName();
+	String getProduct_name();
 	String getDescription();
-	String getImagePath();
-	Double getRealPrice();
-	Double getDiscountPrice();
+	String getImage_path();
+	Double getReal_price();
+	Double getDiscount_price();
 	Integer getStock();
-	Long getCategoryId();
-	String getCategoryName();
+	Long getCategory_id();
+	String getCategory_name();
 }

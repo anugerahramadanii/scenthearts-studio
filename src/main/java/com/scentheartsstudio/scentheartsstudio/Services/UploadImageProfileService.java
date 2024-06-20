@@ -56,7 +56,7 @@ public class UploadImageProfileService {
 		String basePath = new FileSystemResource("").getFile().getAbsolutePath();
 		String uploadPaths = basePath + File.separator + "uploads" + File.separator + "profile" + File.separator;
 
-		String fileName = "profile-user-" + userId + " .jpg" ;
+		String fileName = "profile-user-" + userId + " .jpg".trim();
 		Path newPath = Paths.get(uploadPaths + fileName);
 
 		// save file to destination path

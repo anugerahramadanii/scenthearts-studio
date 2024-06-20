@@ -33,9 +33,10 @@ public class UploadImageCategoryService {
 		//        MIME Type (Multipurpose Internet Mail Extensions)
 		String mimeType = file.getContentType();
 
-		if (mimeType == null || mimeType.isEmpty()) {
-			throw new CustomException(400, "Must input image category!!");
-		}
+		// memenuhi traffic, baiknya di FE saja
+//		if (mimeType == null || mimeType.isEmpty()) {
+//			throw new CustomException(400, "Must input image category!!");
+//		}
 
 		if (!ALLOWED_MIME_TYPES.contains(mimeType.toLowerCase())){
 			throw new CustomException(415, "Only JPG, JPEG, and PNG files are allowed");
@@ -45,14 +46,14 @@ public class UploadImageCategoryService {
 			throw new CustomException(413, "File size must be less than 2MB");
 		}
 
-		String fileExtension = "";
-		if (mimeType.toLowerCase().contains("image/jpg")){
-			fileExtension = ".jpg";
-		} else if(mimeType.toLowerCase().contains("image/jpeg")){
-			fileExtension = ".jpeg";
-		} else if (mimeType.toLowerCase().contains("image/png")){
-			fileExtension = ".png";
-		}
+//		String fileExtension = "";
+//		if (mimeType.toLowerCase().contains("image/jpg")){
+//			fileExtension = ".jpg";
+//		} else if(mimeType.toLowerCase().contains("image/jpeg")){
+//			fileExtension = ".jpeg";
+//		} else if (mimeType.toLowerCase().contains("image/png")){
+//			fileExtension = ".png";
+//		}
 
 		String basePath = new FileSystemResource("").getFile().getAbsolutePath();
 		String uploadPaths = basePath + File.separator + "uploads" + File.separator + "categories" + File.separator;
@@ -64,7 +65,7 @@ public class UploadImageCategoryService {
 		}
 
 		// Generate file name and path
-		String fileName = "ImageCategory_" + categoryId + fileExtension;
+		String fileName = "ImageCategory_" + categoryId + " .jpg";
 		Path newPath = Path.of(uploadPaths + fileName);
 
 		// save file to destination path

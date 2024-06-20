@@ -1,11 +1,6 @@
 package com.scentheartsstudio.scentheartsstudio.Entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "t_product")
@@ -20,6 +15,9 @@ public class ProductEntity extends BaseProperties {
 
     @Column(nullable = false, length = 50)
     private String name;
+
+    @Lob
+    private byte[] image;
 
     @Column(length = 255)
     private String image_path;
@@ -113,5 +111,13 @@ public class ProductEntity extends BaseProperties {
 
     public void setImage_path(String image_path) {
         this.image_path = image_path;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
