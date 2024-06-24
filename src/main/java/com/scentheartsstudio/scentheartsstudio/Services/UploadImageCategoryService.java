@@ -1,7 +1,7 @@
 package com.scentheartsstudio.scentheartsstudio.Services;
 
 import com.scentheartsstudio.scentheartsstudio.Entities.CategoryEntity;
-import com.scentheartsstudio.scentheartsstudio.Entities.UserEntity;
+import com.scentheartsstudio.scentheartsstudio.Entities.ProductEntity;
 import com.scentheartsstudio.scentheartsstudio.Repositories.CategoryRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +29,12 @@ public class UploadImageCategoryService {
 	private static final long MAX_FILE_SIZE = 1024 * 1024 * 2;
 
 	public String uploadImage(Long categoryId, Long userId, MultipartFile file) throws CustomException, IOException {
+//		CategoryEntity categoryEntity = cr.getReferenceById(categoryId);
+		CategoryEntity categoryEntity = cr.findById(categoryId)
+				.orElseThrow(() -> new CustomException(404, "Category with id " + categoryId + " not found"));
 
 		//        MIME Type (Multipurpose Internet Mail Extensions)
 		String mimeType = file.getContentType();
-
-		// memenuhi traffic, baiknya di FE saja
-//		if (mimeType == null || mimeType.isEmpty()) {
-//			throw new CustomException(400, "Must input image category!!");
-//		}
 
 		if (!ALLOWED_MIME_TYPES.contains(mimeType.toLowerCase())){
 			throw new CustomException(415, "Only JPG, JPEG, and PNG files are allowed");
@@ -45,15 +43,6 @@ public class UploadImageCategoryService {
 		if (file.getSize() > MAX_FILE_SIZE) {
 			throw new CustomException(413, "File size must be less than 2MB");
 		}
-
-//		String fileExtension = "";
-//		if (mimeType.toLowerCase().contains("image/jpg")){
-//			fileExtension = ".jpg";
-//		} else if(mimeType.toLowerCase().contains("image/jpeg")){
-//			fileExtension = ".jpeg";
-//		} else if (mimeType.toLowerCase().contains("image/png")){
-//			fileExtension = ".png";
-//		}
 
 		String basePath = new FileSystemResource("").getFile().getAbsolutePath();
 		String uploadPaths = basePath + File.separator + "uploads" + File.separator + "categories" + File.separator;
@@ -65,7 +54,7 @@ public class UploadImageCategoryService {
 		}
 
 		// Generate file name and path
-		String fileName = "ImageCategory_" + categoryId + " .jpg";
+		String fileName = "ImageCategory_" + categoryId + ".jpg";
 		Path newPath = Path.of(uploadPaths + fileName);
 
 		// save file to destination path
@@ -76,13 +65,12 @@ public class UploadImageCategoryService {
 				.path("/images/").path(fileName).toUriString();
 
 		//data category image id
-		CategoryEntity categoryEntity = cr.getReferenceById(categoryId);
 		categoryEntity.setImage_path(resultUpload);
 		categoryEntity.setModified_by(userId);
 		categoryEntity.setModified_on(new Date());
 
 		cr.save(categoryEntity);
 		return resultUpload;
-
 	}
+
 }

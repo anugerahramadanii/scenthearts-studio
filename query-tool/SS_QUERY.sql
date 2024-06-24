@@ -41,7 +41,7 @@ select exists(select * from t_product where name ilike '%Cincin%' and is_delete 
 
 select id from m_user where id = 1 and is_delete = false
 
-select * from t_product
+select * from t_product where is_delete = false
 
 select exists(select * from t_product where name ilike '%Cincin Berlian Emas Kuning%' and 
 	name not ilike '%Cincin Berlian Emas%' and is_delete = false)

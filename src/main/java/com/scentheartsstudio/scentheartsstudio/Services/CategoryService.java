@@ -27,6 +27,8 @@ public class CategoryService {
     private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpg", "image/jpeg", "image/png");
     private static final long MAX_FILE_SIZE = 1024 * 1024 * 2;
 
+    private int imageSequenceNumber = 1;
+
     @Autowired
     private CategoryRepository cr;
 
@@ -34,7 +36,7 @@ public class CategoryService {
         return cr.getAllCategories();
     }
 
-    public void insertCategory(PostCategoryDTO postCategoryDTO, MultipartFile file) throws CustomException, IOException {
+    public void insertCategory(PostCategoryDTO postCategoryDTO) throws CustomException {
         Boolean isNameExists = cr.isNameExists(postCategoryDTO.getName());
         if (isNameExists) {
             throw new CustomException(452, "Category Name " + postCategoryDTO.getName() + " Already Exists");
@@ -45,17 +47,18 @@ public class CategoryService {
         categoryEntity.setActive(postCategoryDTO.getActive());
         categoryEntity.setCreated_by(postCategoryDTO.getUser_id());
         categoryEntity.setCreated_on(new Date());
-        cr.save(categoryEntity);
-
-        Long categoryId = categoryEntity.getId();
-
-        String image = uploadImageCategory(categoryId, file);
-        categoryEntity.setImage_path(image);
 
         cr.save(categoryEntity);
+//        Long categoryId = categoryEntity.getId();
+//
+//        String image = uploadImageCategory(categoryId, file);
+//        categoryEntity.setImage_path(image);
+//        cr.save(categoryEntity);
+
+//        imageSequenceNumber++;
     }
 
-    public void updateCategory(PostCategoryDTO postCategoryDTO, MultipartFile file) throws CustomException, IOException {
+    public void updateCategory(PostCategoryDTO postCategoryDTO) throws CustomException {
         CategoryEntity categoryEntity = cr.getReferenceById(postCategoryDTO.getId());
 
         Boolean isNameExistUpdate = cr.isNameExistsUpdate(postCategoryDTO.getName(), categoryEntity.getName());
@@ -69,58 +72,25 @@ public class CategoryService {
         categoryEntity.setModified_by(1L);
         categoryEntity.setModified_on(new Date());
 
-        String image = uploadImageCategory(postCategoryDTO.getId(), file);
-        categoryEntity.setImage_path(image);
-
-//        if (file != null && !file.isEmpty()) {
-//            String image = uploadImageCategory(postCategoryDTO.getId(), file);
-//            categoryEntity.setImage_path(image);
-//        }
-
         cr.save(categoryEntity);
     }
 
-    public void deleteCategory(PostCategoryDTO postCategoryDTO) {
+    public void deleteCategory(PostCategoryDTO postCategoryDTO) throws IOException {
         CategoryEntity categoryEntity= cr.getReferenceById(postCategoryDTO.getId());
+
+        String imagePath = categoryEntity.getImage_path();
         categoryEntity.setIs_delete(true);
         categoryEntity.setDeleted_by(1L);
         categoryEntity.setDeleted_on(new Date());
+
         cr.delete(categoryEntity);
+
+        if (imagePath != null) {
+            String basePath = new FileSystemResource("").getFile().getAbsolutePath();
+            String fullImagePath = basePath + File.separator + "uploads" + File.separator + "categories" + File.separator
+                        + new File(imagePath).getName();
+            Files.delete(Path.of(fullImagePath));
+        }
     }
-
-    public String uploadImageCategory(Long categoryId,MultipartFile file) throws CustomException, IOException {
-        //MIME Type (Multipurpose Internet Mail Extensions)
-        String mimeType = file.getContentType();
-
-        if (!ALLOWED_MIME_TYPES.contains(mimeType.toLowerCase())){
-            throw new CustomException(415, "Only JPG, JPEG, and PNG files are allowed");
-        }
-
-        if (file.getSize() > MAX_FILE_SIZE) {
-            throw new CustomException(413, "File size must be less than 2MB");
-        }
-
-        String basePath = new FileSystemResource("").getFile().getAbsolutePath();
-        String uploadPaths = basePath + File.separator + "uploads" + File.separator + "categories" + File.separator;
-
-        // Ensure the upload directory exists
-        File uploadDir = new File(uploadPaths);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
-
-        // Generate file name and path
-        String fileName = "ImageCategory_" + categoryId + " .jpg".trim();
-        Path newPath = Path.of(uploadPaths + fileName);
-
-        // save file to destination path
-        Files.copy(file.getInputStream(), newPath, StandardCopyOption.REPLACE_EXISTING);
-
-        //construct the result URL
-        String resultUpload = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/images/").path(fileName).toUriString();
-
-        return resultUpload;
-    }
-
 }
+

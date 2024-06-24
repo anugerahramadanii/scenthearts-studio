@@ -19,7 +19,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 			+ "\tfrom t_product p\n"
 			+ "\tinner join t_category c\n"
 			+ "\ton p.category_id = c.id\n"
-			+ "\twhere p.is_delete = false")
+			+ "\twhere p.is_delete = false order by p.id asc")
 	public List<InterProductDTO> getAllProducts();
 
 	@Query(nativeQuery = true,

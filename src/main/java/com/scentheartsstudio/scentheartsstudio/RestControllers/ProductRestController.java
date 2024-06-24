@@ -4,6 +4,7 @@ import com.scentheartsstudio.scentheartsstudio.DTO.InterProductDTO;
 import com.scentheartsstudio.scentheartsstudio.DTO.PostCategoryDTO;
 import com.scentheartsstudio.scentheartsstudio.DTO.PostProductDTO;
 import com.scentheartsstudio.scentheartsstudio.Services.ProductService;
+import com.scentheartsstudio.scentheartsstudio.Services.UploadImageProductService;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import com.scentheartsstudio.scentheartsstudio.utils.Resp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class ProductRestController {
 	@Autowired
 	private ProductService ps;
 
+	@Autowired
+	private UploadImageProductService uips;
+
 	@GetMapping("product")
 	public Resp<List<InterProductDTO>> getAllProducts(){
 		Resp<List<InterProductDTO>> response = new Resp<>();
@@ -32,53 +36,78 @@ public class ProductRestController {
 	}
 
 	@PostMapping("product/insert")
-	public Resp<List<String>> insertProduct(@ModelAttribute PostProductDTO postProductDTO,
-	                                        @RequestParam("files") MultipartFile[] files){
-		Resp<List<String>> response = new Resp<>();
+	public Resp<String> insertProduct(@RequestBody PostProductDTO postProductDTO){
+		Resp<String> response = new Resp<>();
 		response.setCode(200);
 		response.setMessage("OK");
 		try{
-		List<String> data = ps.insertProduct(postProductDTO, files);
-			response.setData(data);
+			ps.insertProduct(postProductDTO);
 		}catch (CustomException e){
 			response.setCode(e.getCode());
 			response.setMessage(e.getMessage());
-		} catch (IOException e) {
-			e.printStackTrace();
-			response.setCode(455);
-			response.setMessage("Upload Image Failed!!");
 		}
 		return response;
 	}
 
 	@PutMapping("product/update")
-	public Resp<List<String>> updateProduct(@ModelAttribute PostProductDTO postProductDTO,
-	                                        @RequestParam("files") MultipartFile[] files){
-		Resp<List<String>> response = new Resp<>();
+	public Resp<String> updateProduct(@RequestBody PostProductDTO postProductDTO){
+		Resp<String> response = new Resp<>();
 		response.setCode(200);
 		response.setMessage("OK");
 		try{
-			List<String> data = ps.insertProduct(postProductDTO, files);
-			response.setData(data);
+			ps.updateProduct(postProductDTO);
 		}catch (CustomException e){
 			response.setCode(e.getCode());
 			response.setMessage(e.getMessage());
-		} catch (IOException e) {
-			e.printStackTrace();
-			response.setCode(455);
-			response.setMessage("Upload Image Failed!!");
 		}
 		return response;
 	}
 
+//	@PutMapping("product/update")
+//	public Resp<List<String>> updateProduct(@ModelAttribute PostProductDTO postProductDTO,
+//	                                        @RequestParam("files") MultipartFile[] files){
+//		Resp<List<String>> response = new Resp<>();
+//		response.setCode(200);
+//		response.setMessage("OK");
+//		try{
+//			List<String> data = ps.insertProduct(postProductDTO, files);
+//			response.setData(data);
+//		}catch (CustomException e){
+//			response.setCode(e.getCode());
+//			response.setMessage(e.getMessage());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			response.setCode(455);
+//			response.setMessage("Upload Image Failed!!");
+//		}
+//		return response;
+//	}
+
 	@DeleteMapping("product/delete")
-	public Resp<String> deleteProduct(@RequestBody PostProductDTO postProductDTO){
+	public Resp<String> deleteProduct(@RequestBody PostProductDTO postProductDTO) throws IOException {
 		ps.deleteProduct(postProductDTO);
 		Resp<String> response = new Resp<>();
 		response.setCode(200);
 		response.setMessage("OK");
-
 		return response;
 	}
 
+	@PostMapping("product/image")
+	public Resp<List<String>> uploadImage(@RequestParam("productId") Long productId
+			,@RequestParam("user_id") Long userId
+			,@RequestParam("files") MultipartFile[] files) {
+		Resp<List<String>> response = new Resp<>();
+		response.setCode(200);
+		response.setMessage("OK");
+		try {
+			uips.uploadImageProduct(productId,userId,files);
+		}catch (CustomException e) {
+			response.setCode(e.getCode());
+			response.setMessage(e.getMessage());
+		} catch (IOException e) {
+			response.setCode(455);
+			response.setMessage("Failed to upload images!");
+		}
+		return response;
+	}
 }

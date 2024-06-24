@@ -1,11 +1,13 @@
 package com.scentheartsstudio.scentheartsstudio.DTO;
 
+import java.util.List;
+
 public class PostProductDTO {
 	private Long id;
 	private Long category_id;
 	private String name;
 	private String description;
-	private String image_path;
+	private List<String> image_path;
 	private Double stock;
 	private Double real_price;
 	private Double discount_price;
@@ -44,11 +46,20 @@ public class PostProductDTO {
 		this.description = description;
 	}
 
-	public String getImage_path() {
+//	public String getImage_path() {
+//		return image_path;
+//	}
+//
+//	public void setImage_path(String image_path) {
+//		this.image_path = image_path;
+//	}
+
+
+	public List<String> getImage_path() {
 		return image_path;
 	}
 
-	public void setImage_path(String image_path) {
+	public void setImage_path(List<String> image_path) {
 		this.image_path = image_path;
 	}
 
