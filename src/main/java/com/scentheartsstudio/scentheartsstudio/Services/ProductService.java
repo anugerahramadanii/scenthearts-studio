@@ -37,7 +37,8 @@ public class ProductService {
 		productEntity.setDescription(postProductDTO.getDescription());
 		productEntity.setStock(postProductDTO.getStock());
 		productEntity.setReal_price(postProductDTO.getReal_price());
-		productEntity.setDiscount_price(postProductDTO.getDiscount_price());
+		productEntity.setDiscount_rate(postProductDTO.getDiscount_rate());
+		productEntity.setDiscount_price(calculateDiscountPrice(postProductDTO.getReal_price(), postProductDTO.getDiscount_rate()));
 		productEntity.setActive(postProductDTO.getActive());
 		productEntity.setCreated_by(1L);
 		productEntity.setCreated_on(new Date());
@@ -59,6 +60,7 @@ public class ProductService {
 		productEntity.setStock(postProductDTO.getStock());
 		productEntity.setReal_price(postProductDTO.getReal_price());
 		productEntity.setDiscount_price(postProductDTO.getDiscount_price());
+		productEntity.setDiscount_price(calculateDiscountPrice(postProductDTO.getReal_price(), postProductDTO.getDiscount_rate()));
 		productEntity.setActive(postProductDTO.getActive());
 		productEntity.setCreated_by(1L);
 		productEntity.setCreated_on(new Date());
@@ -84,6 +86,15 @@ public class ProductService {
 					Files.deleteIfExists(Path.of(locImagePath));
 				}
 
+		}
+	}
+
+	public Double calculateDiscountPrice(Double realPrice, Double discountRate) {
+		if (realPrice != null && discountRate != null) {
+			return realPrice * (1 - (discountRate / 100));
+		} else {
+			// jika tidak discount, return harga asli
+			return realPrice;
 		}
 	}
 

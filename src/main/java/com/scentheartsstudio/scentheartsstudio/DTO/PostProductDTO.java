@@ -10,6 +10,7 @@ public class PostProductDTO {
 	private List<String> image_path;
 	private Double stock;
 	private Double real_price;
+	private Double discount_rate;
 	private Double discount_price;
 	private Boolean active;
 	private Long user_id;
@@ -77,6 +78,14 @@ public class PostProductDTO {
 
 	public void setReal_price(Double real_price) {
 		this.real_price = real_price;
+	}
+
+	public Double getDiscount_rate() {
+		return discount_rate;
+	}
+
+	public void setDiscount_rate(Double discount_rate) {
+		this.discount_rate = discount_rate;
 	}
 
 	public Double getDiscount_price() {

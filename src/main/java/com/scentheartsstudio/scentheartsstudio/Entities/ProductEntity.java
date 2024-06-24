@@ -16,18 +16,17 @@ public class ProductEntity extends BaseProperties {
     @Column(nullable = false, length = 50)
     private String name;
 
-    @Lob
-    private byte[] image;
-
     @Column(length = 255)
     private String image_path;
 
     @Column
     private String description;
 
-
     @Column(nullable = false, length = 18, precision = 2)
     private Double real_price;
+
+    @Column
+    private Double discount_rate;
 
     @Column(nullable = false, length = 18, precision = 2)
     private Double discount_price;
@@ -78,6 +77,14 @@ public class ProductEntity extends BaseProperties {
         this.real_price = real_price;
     }
 
+    public Double getDiscount_rate() {
+        return this.discount_rate;
+    }
+
+    public void setDiscount_rate(Double discount_rate) {
+        this.discount_rate = discount_rate;
+    }
+
     public Double getDiscount_price() {
         return this.discount_price;
     }
@@ -113,12 +120,4 @@ public class ProductEntity extends BaseProperties {
         public void setImage_path(String image_path) {
             this.image_path = image_path;
         }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 }

@@ -34,18 +34,14 @@ public class UploadImageProductService {
 				.orElseThrow(() -> new CustomException(404, "Product with id " + productId + " not found"));
 
 		List<String> imageUrls = new ArrayList<>();
-
 		for (MultipartFile file : files){
 			String mimeType = file.getContentType();
-
 			if (!ALLOWED_MIME_TYPES.contains(mimeType.toLowerCase())) {
 				throw new CustomException(415, "Only JPG, JPEG, and PNG files are allowed");
 			}
-
 			if (file.getSize() > MAX_FILE_SIZE) {
 				throw new CustomException(413, "File size must be less than 2MB");
 			}
-
 			String basePath = new FileSystemResource("").getFile().getAbsolutePath();
 			String uploadPaths = basePath + File.separator + "uploads" + File.separator + "products" + File.separator;
 

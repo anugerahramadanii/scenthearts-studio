@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
 	@Query(nativeQuery = true,
 	value = "select p.id, p.name as product_name,p.category_id as category_id, c.name as category_name, \n"
-			+ "\tp.description, p.image_path, p.real_price, \n"
+			+ "\tp.description, p.image_path, p.real_price, p.discount_rate, \n"
 			+ "\tp.discount_price, p.stock\n"
 			+ "\tfrom t_product p\n"
 			+ "\tinner join t_category c\n"

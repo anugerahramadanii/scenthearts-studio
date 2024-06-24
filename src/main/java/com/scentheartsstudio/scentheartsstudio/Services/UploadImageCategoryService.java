@@ -1,7 +1,6 @@
 package com.scentheartsstudio.scentheartsstudio.Services;
 
 import com.scentheartsstudio.scentheartsstudio.Entities.CategoryEntity;
-import com.scentheartsstudio.scentheartsstudio.Entities.ProductEntity;
 import com.scentheartsstudio.scentheartsstudio.Repositories.CategoryRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
