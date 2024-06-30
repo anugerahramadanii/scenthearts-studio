@@ -24,7 +24,7 @@ public class UploadImageProductService {
 	@Autowired
 	private ProductRepository pr;
 
-	public List<String> uploadImageProduct(Long productId,Long userId, MultipartFile[] files) throws CustomException, IOException {
+	public List<String> uploadImageProduct(Long productId, Long userId, MultipartFile[] files) throws CustomException, IOException {
 
 //		ProductEntity productEntity = pr.getReferenceById(productId);
 //		if (productEntity.getId() == null){

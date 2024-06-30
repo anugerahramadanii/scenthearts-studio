@@ -27,7 +27,7 @@ public class CategoryService {
     private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpg", "image/jpeg", "image/png");
     private static final long MAX_FILE_SIZE = 1024 * 1024 * 2;
 
-    private int imageSequenceNumber = 1;
+//    private int imageSequenceNumber = 1;
 
     @Autowired
     private CategoryRepository cr;

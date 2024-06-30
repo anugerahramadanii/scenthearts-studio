@@ -1,26 +1,20 @@
-package com.scentheartsstudio.scentheartsstudio.Entities;
+package com.scentheartsstudio.scentheartsstudio.DTO;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "t_cart")
-public class CartEntity extends BaseProperties  {
-	@Id
-	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PostCartDTO {
 	private Long id;
-
-	@Column(nullable = false)
 	private Long product_id;
-
-	@Column(nullable = false)
 	private Long user_id;
-
-	@Column
 	private Integer quantity;
-
-	@Column
 	private Double total_price;
+
+	public Double getTotal_price() {
+		return total_price;
+	}
+
+	public void setTotal_price(Double total_price) {
+		this.total_price = total_price;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -52,13 +46,5 @@ public class CartEntity extends BaseProperties  {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
-	}
-
-	public Double getTotal_price() {
-		return total_price;
-	}
-
-	public void setTotal_price(Double total_price) {
-		this.total_price = total_price;
 	}
 }

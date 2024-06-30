@@ -26,7 +26,7 @@ public class ProductService {
 	}
 
 	public void insertProduct(PostProductDTO postProductDTO) throws CustomException{
-		Boolean isNameExists = pr.isNameExist(postProductDTO.getName());
+		Boolean isNameExists = pr.isNameExists(postProductDTO.getName());
 		if (isNameExists){
 			throw new CustomException(452, "Product " + postProductDTO.getName() + " already exists");
 		}
@@ -49,7 +49,7 @@ public class ProductService {
 	public void updateProduct(PostProductDTO postProductDTO) throws CustomException {
 		ProductEntity productEntity = pr.getReferenceById(postProductDTO.getId());
 
-		Boolean isNameExistsUpdate = pr.isNameExistUpdate(postProductDTO.getName(), productEntity.getName());
+		Boolean isNameExistsUpdate = pr.isNameExistsUpdate(postProductDTO.getName(), productEntity.getName());
 		if (isNameExistsUpdate){
 			throw new CustomException(453, "Product Name " + postProductDTO.getName() + " already exists");
 		}
@@ -59,7 +59,6 @@ public class ProductService {
 		productEntity.setDescription(postProductDTO.getDescription());
 		productEntity.setStock(postProductDTO.getStock());
 		productEntity.setReal_price(postProductDTO.getReal_price());
-		productEntity.setDiscount_price(postProductDTO.getDiscount_price());
 		productEntity.setDiscount_price(calculateDiscountPrice(postProductDTO.getReal_price(), postProductDTO.getDiscount_rate()));
 		productEntity.setActive(postProductDTO.getActive());
 		productEntity.setCreated_by(1L);
@@ -93,7 +92,6 @@ public class ProductService {
 		if (realPrice != null && discountRate != null) {
 			return realPrice * (1 - (discountRate / 100));
 		} else {
-			// jika tidak discount, return harga asli
 			return realPrice;
 		}
 	}

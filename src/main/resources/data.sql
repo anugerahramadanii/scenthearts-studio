@@ -34,10 +34,18 @@ INSERT INTO t_category (name, active, created_by, created_on) VALUES
 ('Liontin', TRUE, 1, NOW()),
 ('Bros', TRUE, 1, NOW());
 
--- Insert data dummy untuk produk perhiasan
-INSERT INTO t_product (category_id, name, description, real_price, discount_rate, discount_price, stock, active, created_by, created_on) VALUES
-(1, 'Cincin Berlian Emas Kuning', 'Cincin berlian dengan desain klasik, terbuat dari emas kuning 18 karat.', 450000, 50, 50000 ,10, TRUE, 1, NOW()),
-(2, 'Kalung Berlian Safir', 'Kalung berlian safir dengan tali rantai emas putih 18 karat.', 1200000, 50, 45000, 5, TRUE, 1, NOW()),
-(3, 'Gelang Perak Etnik', 'Gelang perak dengan desain etnik dan motif tradisional.', 100000, 50, 40000, 15, TRUE, 1, NOW()),
-(4, 'Anting-anting Mutiara Elegan', 'Anting-anting mutiara dengan desain elegan dan timeless.', 250000, 50, 60000, 8, TRUE, 1, NOW()),
-(5, 'Liontin Berlian Berlian', 'Liontin berlian dengan desain modern dan berlian yang berkilauan.', 550000, 50, 150000, 12, TRUE, 1, NOW());
+---- Insert data dummy untuk produk perhiasan
+--INSERT INTO t_product (category_id, name, description, real_price, discount_rate, discount_price, stock, active, created_by, created_on) VALUES
+--(1, 'Cincin Berlian Emas Kuning', 'Cincin berlian dengan desain klasik, terbuat dari emas kuning 18 karat.', 10000, 50, 50000 ,10, TRUE, 1, NOW()),
+--(2, 'Kalung Berlian Safir', 'Kalung berlian safir dengan tali rantai emas putih 18 karat.', 20000, 50, 10000, 5, TRUE, 1, NOW()),
+--(3, 'Gelang Perak Etnik', 'Gelang perak dengan desain etnik dan motif tradisional.', 30000, 50, 15000, 15, TRUE, 1, NOW()),
+--(4, 'Anting-anting Mutiara', 'Anting-anting mutiara dengan desain klasik dan timeless.', 50000, 50, 25000, 10, TRUE, 1, NOW()),
+--(4, 'Anting-anting Mutiara Elegan', 'Anting-anting mutiara dengan desain elegan dan timeless.', 5000, 50, 2500, 8, TRUE, 1, NOW()),
+--(5, 'Liontin Berlian Berlian', 'Liontin berlian dengan desain modern dan berlian yang berkilauan.', 14000, 50, 7000, 12, TRUE, 1, NOW());
+
+--INSERT INTO t_cart(product_id, user_id, quantity, total_price, created_by, created_on) VALUES
+--(1, 1, 5, 0, 1, NOW()),
+--(2, 1, 6, 0, 1, NOW()),
+--(3, 1, 7, 0, 1, NOW()),
+--(4, 1, 8, 0, 1, NOW()),
+--(5, 1, 9, 0, 1, NOW());

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
@@ -24,9 +25,13 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
 	@Query(nativeQuery = true,
 	value = "select exists(select * from t_product where name ilike :name and is_delete = false)")
-	public Boolean isNameExist(@Param("name") String name);
+	public Boolean isNameExists(@Param("name") String name);
 
 	@Query(nativeQuery = true,
 			value = "select exists(select * from t_product where name ilike :name and name not ilike :oldName and is_delete = false)")
-	public Boolean isNameExistUpdate(@Param("name") String name, @Param("oldName") String oldName);
+	public Boolean isNameExistsUpdate(@Param("name") String name, @Param("oldName") String oldName);
+
+	@Query(nativeQuery = true,
+	value = "select exists(select * from t_product where id = :productId and is_delete = false)")
+	public Boolean isProductExists(@Param("productId") Long product_id);
 }
