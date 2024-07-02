@@ -1,6 +1,7 @@
 package com.scentheartsstudio.scentheartsstudio.RestControllers;
 
 import com.scentheartsstudio.scentheartsstudio.DTO.InterProductDTO;
+import com.scentheartsstudio.scentheartsstudio.DTO.InterProductSizeDTO;
 import com.scentheartsstudio.scentheartsstudio.DTO.PostProductDTO;
 import com.scentheartsstudio.scentheartsstudio.Services.ProductService;
 import com.scentheartsstudio.scentheartsstudio.Services.UploadImageProductService;
@@ -29,10 +30,33 @@ public class ProductRestController {
 		response.setCode(200);
 		response.setMessage("OK");
 
-		List<InterProductDTO> data = ps.getAllProduct();
+		List<InterProductDTO> data = ps.getAllProducts();
 		response.setData(data);
 		return response;
 	}
+
+	@GetMapping("product/byCategoryId")
+	public Resp<List<InterProductDTO>> getAllProductsByCategoryId(@RequestParam("categoryId") Long category_id){
+		Resp<List<InterProductDTO>> response = new Resp<>();
+		response.setCode(200);
+		response.setMessage("OK");
+
+		List<InterProductDTO> data = ps.getAllProductsByCategory(category_id);
+		response.setData(data);
+		return response;
+	}
+
+	@GetMapping("product/productSize")
+	public Resp<List<InterProductSizeDTO>> getProductSizeByProductId(@RequestParam("productId") Long product_id){
+		Resp<List<InterProductSizeDTO>> response = new Resp<>();
+		response.setCode(200);
+		response.setMessage("OK");
+
+		List<InterProductSizeDTO> data = ps.getProductSizeByProductId(product_id);
+		response.setData(data);
+		return response;
+	}
+
 
 	@PostMapping("product/insert")
 	public Resp<String> insertProduct(@RequestBody PostProductDTO postProductDTO){

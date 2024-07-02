@@ -8,6 +8,7 @@ public interface InterProductDTO {
 	Double getReal_price();
 	Double getDiscount_rate();
 	Double getDiscount_price();
+	String getSize();
 	Integer getStock();
 	Long getCategory_id();
 	String getCategory_name();

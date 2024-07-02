@@ -36,12 +36,44 @@ INSERT INTO t_category (name, active, created_by, created_on) VALUES
 
 ---- Insert data dummy untuk produk perhiasan
 --INSERT INTO t_product (category_id, name, description, real_price, discount_rate, discount_price, stock, active, created_by, created_on) VALUES
---(1, 'Cincin Berlian Emas Kuning', 'Cincin berlian dengan desain klasik, terbuat dari emas kuning 18 karat.', 10000, 50, 50000 ,10, TRUE, 1, NOW()),
+--(1, 'Cincin Berlian Emas Kuning', 'Cincin berlian dengan desain klasik, terbuat dari emas kuning 18 karat.', 10000, 50, 5000 ,10, TRUE, 1, NOW()),
+--(1, 'Cincin Berlian Emas Putih', 'Cincin berlian dengan desain klasik, terbuat dari emas putih 18 karat.', 15000, 50, 7500, 10, TRUE, 1, NOW()),
+--(1, 'Cincin Berlian Emas Biru', 'Cincin berlian dengan desain klasik, terbuat dari emas biru 18 karat.', 20000, 50, 10000, 10, TRUE, 1, NOW()),
+--(1, 'Cincin Berlian Emas Merah', 'Cincin berlian dengan desain klasik, terbuat dari emas merah 18 karat.', 50000, 50, 25000, 10, TRUE, 1, NOW()),
 --(2, 'Kalung Berlian Safir', 'Kalung berlian safir dengan tali rantai emas putih 18 karat.', 20000, 50, 10000, 5, TRUE, 1, NOW()),
+--(2, 'Kalung Berlian Air', 'Kalung berlian safir dengan tali rantai emas putih 18 karat.', 20000, 50, 10000, 5, TRUE, 1, NOW()),
 --(3, 'Gelang Perak Etnik', 'Gelang perak dengan desain etnik dan motif tradisional.', 30000, 50, 15000, 15, TRUE, 1, NOW()),
 --(4, 'Anting-anting Mutiara', 'Anting-anting mutiara dengan desain klasik dan timeless.', 50000, 50, 25000, 10, TRUE, 1, NOW()),
 --(4, 'Anting-anting Mutiara Elegan', 'Anting-anting mutiara dengan desain elegan dan timeless.', 5000, 50, 2500, 8, TRUE, 1, NOW()),
 --(5, 'Liontin Berlian Berlian', 'Liontin berlian dengan desain modern dan berlian yang berkilauan.', 14000, 50, 7000, 12, TRUE, 1, NOW());
+--
+--INSERT INTO t_product (category_id, name, description, real_price, discount_rate, discount_price, active, created_by, created_on) VALUES
+--(1, 'Cincin Berlian Emas Kuning', 'Cincin berlian dengan desain klasik, terbuat dari emas kuning 18 karat.', 10000, 50, 5000, TRUE, 1, NOW()),
+--(2, 'Kalung Berlian Safir', 'Kalung berlian safir dengan tali rantai emas putih 18 karat.', 20000, 50, 10000, TRUE, 1, NOW()),
+--(3, 'Gelang Perak Etnik', 'Gelang perak dengan desain etnik dan motif tradisional.', 30000, 50, 15000, TRUE, 1, NOW()),
+--(4, 'Anting-anting Mutiara', 'Anting-anting mutiara dengan desain klasik dan timeless.', 50000, 50, 25000, TRUE, 1, NOW()),
+--(4, 'Anting-anting Mutiara Elegan', 'Anting-anting mutiara dengan desain elegan dan timeless.', 5000, 50, 2500, TRUE, 1, NOW()),
+--(5, 'Liontin Berlian Berlian', 'Liontin berlian dengan desain modern dan berlian yang berkilauan.', 14000, 50, 7000, TRUE, 1, NOW());
+--
+--INSERT INTO t_product_size (product_id, size, stock, created_by, created_on) VALUES
+--(1, '5', 10, 1, NOW()),
+--(1, '6', 10, 1, NOW()),
+--(1, '7', 10, 1, NOW()),
+--(1, '8', 10, 1, NOW()),
+--(1, '9', 10, 1, NOW()),
+--(1, '10', 10, 1, NOW()),
+--(2, '5', 10, 1, NOW()),
+--(2, '6', 10, 1, NOW()),
+--(2, '7', 10, 1, NOW()),
+--(2, '8', 10, 1, NOW()),
+--(2, '9', 10, 1, NOW()),
+--(2, '10', 10, 1, NOW()),
+--(3, '5', 10, 1, NOW()),
+--(3, '6', 10, 1, NOW()),
+--(3, '7', 10, 1, NOW()),
+--(3, '8', 10, 1, NOW()),
+--(3, '9', 10, 1, NOW()),
+--(3, '10', 10, 1, NOW());
 
 --INSERT INTO t_cart(product_id, user_id, quantity, total_price, created_by, created_on) VALUES
 --(1, 1, 5, 0, 1, NOW()),

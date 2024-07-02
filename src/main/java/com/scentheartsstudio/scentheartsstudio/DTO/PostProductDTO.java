@@ -8,7 +8,7 @@ public class PostProductDTO {
 	private String name;
 	private String description;
 	private List<String> image_path;
-	private Double stock;
+	private List<PostProductSizeDTO> sizes;
 	private Double real_price;
 	private Double discount_rate;
 	private Double discount_price;
@@ -47,15 +47,6 @@ public class PostProductDTO {
 		this.description = description;
 	}
 
-//	public String getImage_path() {
-//		return image_path;
-//	}
-//
-//	public void setImage_path(String image_path) {
-//		this.image_path = image_path;
-//	}
-
-
 	public List<String> getImage_path() {
 		return image_path;
 	}
@@ -64,12 +55,13 @@ public class PostProductDTO {
 		this.image_path = image_path;
 	}
 
-	public Double getStock() {
-		return stock;
+
+	public List<PostProductSizeDTO> getSizes() {
+		return sizes;
 	}
 
-	public void setStock(Double stock) {
-		this.stock = stock;
+	public void setSizes(List<PostProductSizeDTO> sizes) {
+		this.sizes = sizes;
 	}
 
 	public Double getReal_price() {

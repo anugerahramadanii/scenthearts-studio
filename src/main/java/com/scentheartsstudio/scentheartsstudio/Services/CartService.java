@@ -53,6 +53,7 @@ public class CartService {
 		Integer newQuantity = postCartDTO.getQuantity();
 		Double totalPrice = newPrice * newQuantity;
 
+		// if newQuantity <= 0, delete product in cart
 		if (newQuantity <= 0){
 			throw new CustomException(423, "Quantity must be greater than 0");
 		}

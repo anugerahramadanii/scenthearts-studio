@@ -31,14 +31,12 @@ public class ProductEntity extends BaseProperties {
     @Column(nullable = false, length = 18, precision = 2)
     private Double discount_price;
 
-    @Column(nullable = false, length = 18, precision = 2)
-    private Double stock;
-
     @Column(nullable = false)
     private Boolean active;
 
+
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -46,7 +44,7 @@ public class ProductEntity extends BaseProperties {
     }
 
     public Long getCategory_id() {
-        return this.category_id;
+        return category_id;
     }
 
     public void setCategory_id(Long category_id) {
@@ -54,23 +52,31 @@ public class ProductEntity extends BaseProperties {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-   public Double getReal_price() {
-        return this.real_price;
+    public Double getReal_price() {
+        return real_price;
     }
 
     public void setReal_price(Double real_price) {
@@ -78,7 +84,7 @@ public class ProductEntity extends BaseProperties {
     }
 
     public Double getDiscount_rate() {
-        return this.discount_rate;
+        return discount_rate;
     }
 
     public void setDiscount_rate(Double discount_rate) {
@@ -86,38 +92,18 @@ public class ProductEntity extends BaseProperties {
     }
 
     public Double getDiscount_price() {
-        return this.discount_price;
+        return discount_price;
     }
 
     public void setDiscount_price(Double discount_price) {
         this.discount_price = discount_price;
     }
 
-    public Double getStock() {
-        return this.stock;
-    }
-
-    public void setStock(Double stock) {
-        this.stock = stock;
-    }
-
-    public Boolean isActive() {
-        return this.active;
-    }
-
     public Boolean getActive() {
-        return this.active;
+        return active;
     }
 
     public void setActive(Boolean active) {
         this.active = active;
     }
-
-        public String getImage_path() {
-            return image_path;
-        }
-
-        public void setImage_path(String image_path) {
-            this.image_path = image_path;
-        }
 }
