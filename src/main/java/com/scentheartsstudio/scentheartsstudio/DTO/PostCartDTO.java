@@ -4,6 +4,7 @@ public class PostCartDTO {
 	private Long id;
 	private Long product_id;
 	private Long user_id;
+	private String size;
 	private Integer quantity;
 	private Double total_price;
 
@@ -38,6 +39,14 @@ public class PostCartDTO {
 
 	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
 	}
 
 	public Integer getQuantity() {

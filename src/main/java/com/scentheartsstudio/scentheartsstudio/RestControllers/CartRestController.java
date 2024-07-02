@@ -2,14 +2,13 @@ package com.scentheartsstudio.scentheartsstudio.RestControllers;
 
 import com.scentheartsstudio.scentheartsstudio.DTO.InterCartDTO;
 import com.scentheartsstudio.scentheartsstudio.DTO.PostCartDTO;
-import com.scentheartsstudio.scentheartsstudio.DTO.PostProductDTO;
 import com.scentheartsstudio.scentheartsstudio.Services.CartService;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import com.scentheartsstudio.scentheartsstudio.utils.Resp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+
 import java.util.List;
 
 @RestController

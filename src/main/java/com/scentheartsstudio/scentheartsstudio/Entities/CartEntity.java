@@ -17,6 +17,9 @@ public class CartEntity extends BaseProperties  {
 	private Long user_id;
 
 	@Column
+	private String size;
+
+	@Column
 	private Integer quantity;
 
 	@Column
@@ -45,6 +48,15 @@ public class CartEntity extends BaseProperties  {
 	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
 
 	public Integer getQuantity() {
 		return quantity;

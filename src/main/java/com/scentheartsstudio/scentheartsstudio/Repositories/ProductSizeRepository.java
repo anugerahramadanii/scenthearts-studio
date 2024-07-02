@@ -27,4 +27,9 @@ public interface ProductSizeRepository extends JpaRepository<ProductSizeEntity, 
 					+ "\twhere ps.product_id = :productId and ps.is_delete = false")
 	public List<InterProductSizeDTO> getProductSizeByProductId(@Param("productId") Long product_id);
 
+
+	@Query(nativeQuery = true,
+			value = "select * from t_product_size where product_id = :productId and size ilike :size and is_delete = false")
+	public ProductSizeEntity getProductSizeByProductIdAndSize(@Param("productId") Long product_id, @Param("size") String size);
+
 }

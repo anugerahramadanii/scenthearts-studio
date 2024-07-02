@@ -4,9 +4,11 @@ import com.scentheartsstudio.scentheartsstudio.DTO.InterCartDTO;
 import com.scentheartsstudio.scentheartsstudio.DTO.PostCartDTO;
 import com.scentheartsstudio.scentheartsstudio.Entities.CartEntity;
 import com.scentheartsstudio.scentheartsstudio.Entities.ProductEntity;
+import com.scentheartsstudio.scentheartsstudio.Entities.ProductSizeEntity;
 import com.scentheartsstudio.scentheartsstudio.Entities.UserEntity;
 import com.scentheartsstudio.scentheartsstudio.Repositories.CartRepository;
 import com.scentheartsstudio.scentheartsstudio.Repositories.ProductRepository;
+import com.scentheartsstudio.scentheartsstudio.Repositories.ProductSizeRepository;
 import com.scentheartsstudio.scentheartsstudio.Repositories.UserRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class CartService {
 	@Autowired
 	private UserRepository ur;
 
+	@Autowired
+	private ProductSizeRepository psr;
+
 	public List<InterCartDTO> getAllCartByUserId(Long user_id) {
 		return cr.getAllCartByUserId(user_id);
 	}
@@ -48,15 +53,26 @@ public class CartService {
 			throw new CustomException( 420, "User with ID " + postCartDTO.getUser_id() + " Not Found");
 		}
 
+		Optional<ProductSizeEntity> optProductSize = Optional.ofNullable(psr.getProductSizeByProductIdAndSize(postCartDTO.getProduct_id(), postCartDTO.getSize()));
+		if (optProductSize.isEmpty()) {
+			throw new CustomException( 420, "Product with ID " + postCartDTO.getProduct_id() + " and Size " + postCartDTO.getSize() + " Not Found");
+		}
+		ProductSizeEntity productSizeEntity = optProductSize.get();
+		//check stock available
+		if (productSizeEntity.getStock() < postCartDTO.getQuantity()){
+			throw new CustomException(424, "Insufficient stock for Product ID " + postCartDTO.getProduct_id() + " and Size " + postCartDTO.getSize());
+		}
+
 		// Count total Price
 		Double newPrice = productEntity.getDiscount_price();
 		Integer newQuantity = postCartDTO.getQuantity();
 		Double totalPrice = newPrice * newQuantity;
 
-		// if newQuantity <= 0, delete product in cart
+		// check quantity
 		if (newQuantity <= 0){
 			throw new CustomException(423, "Quantity must be greater than 0");
 		}
+
 		// is product in cart
 		Optional<CartEntity> optCart = cr.getCartByUserIdAndProductId(postCartDTO.getUser_id(), postCartDTO.getProduct_id());
 		CartEntity cartEntity;
@@ -66,17 +82,20 @@ public class CartService {
 			cartEntity.setTotal_price(cartEntity.getTotal_price() + totalPrice);
 		} else {
 			cartEntity = new CartEntity();
-			//			Double newPrice = productEntity.getDiscount_price();
-			//			Integer newQuantity = postCartDTO.getQuantity();
-			//			Double totalPrice = newPrice * newQuantity;
 			cartEntity.setUser_id(postCartDTO.getUser_id());
 			cartEntity.setProduct_id(postCartDTO.getProduct_id());
+			cartEntity.setSize(postCartDTO.getSize());
 			cartEntity.setQuantity(newQuantity);
 			cartEntity.setTotal_price(totalPrice);
 			cartEntity.setCreated_by(1L);
 			cartEntity.setCreated_on(new Date());
 		}
 		cr.save(cartEntity);
+
+		//update stock product
+		// NOTE: harusnya stock berkurang ketika sudah payment
+//		productSizeEntity.setStock(productSizeEntity.getStock() - newQuantity);
+//		psr.save(productSizeEntity);
 	}
 
 
@@ -93,6 +112,16 @@ public class CartService {
 		Optional<UserEntity> optUser = ur.findById(postCartDTO.getUser_id());
 		if (optUser.isEmpty()) {
 			throw new CustomException( 420, "User with ID " + postCartDTO.getUser_id() + " Not Found");
+		}
+
+		Optional<ProductSizeEntity> optProductSize = Optional.ofNullable(psr.getProductSizeByProductIdAndSize(postCartDTO.getProduct_id(), postCartDTO.getSize()));
+		if (optProductSize.isEmpty()) {
+			throw new CustomException( 420, "Product with ID " + postCartDTO.getProduct_id() + " and Size " + postCartDTO.getSize() + " Not Found");
+		}
+		ProductSizeEntity productSizeEntity = optProductSize.get();
+		//check stock available
+		if (productSizeEntity.getStock() < postCartDTO.getQuantity()){
+			throw new CustomException(424, "Insufficient stock for Product ID " + postCartDTO.getProduct_id() + " and Size " + postCartDTO.getSize());
 		}
 
 		// is product in cart
@@ -114,6 +143,11 @@ public class CartService {
 		cartEntity.setQuantity(newQuantity);
 		cartEntity.setTotal_price(totalPrice);
 		cr.save(cartEntity);
+
+		//update stock product
+		// NOTE: harusnya stock berkurang ketika sudah payment
+//		productSizeEntity.setStock(productSizeEntity.getStock() - newQuantity);
+//		psr.save(productSizeEntity);
 	}
 
 	public void deleteProductInCart(PostCartDTO postCartDTO) throws CustomException {
