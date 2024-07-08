@@ -8,7 +8,8 @@ public class PostProductDTO {
 	private String name;
 	private String description;
 	private List<String> image_path;
-	private List<PostProductSizeDTO> sizes;
+	private Long product_size_id;
+	private Integer quantity;
 	private Double real_price;
 	private Double discount_rate;
 	private Double discount_price;
@@ -55,13 +56,20 @@ public class PostProductDTO {
 		this.image_path = image_path;
 	}
 
-
-	public List<PostProductSizeDTO> getSizes() {
-		return sizes;
+	public Long getProduct_size_id() {
+		return product_size_id;
 	}
 
-	public void setSizes(List<PostProductSizeDTO> sizes) {
-		this.sizes = sizes;
+	public void setProduct_size_id(Long product_size_id) {
+		this.product_size_id = product_size_id;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public Double getReal_price() {

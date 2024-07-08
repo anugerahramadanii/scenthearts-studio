@@ -13,6 +13,9 @@ public class ProductEntity extends BaseProperties {
     @Column(nullable = false)
     private Long category_id;
 
+    @Column
+    private Long product_size_id;
+
     @Column(nullable = false, length = 50)
     private String name;
 
@@ -21,6 +24,9 @@ public class ProductEntity extends BaseProperties {
 
     @Column
     private String description;
+
+    @Column
+    private Integer quantity;
 
     @Column(nullable = false, length = 18, precision = 2)
     private Double real_price;
@@ -51,6 +57,14 @@ public class ProductEntity extends BaseProperties {
         this.category_id = category_id;
     }
 
+    public Long getProduct_size_id() {
+        return product_size_id;
+    }
+
+    public void setProduct_size_id(Long product_size_id) {
+        this.product_size_id = product_size_id;
+    }
+
     public String getName() {
         return name;
     }
@@ -73,6 +87,14 @@ public class ProductEntity extends BaseProperties {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Double getReal_price() {

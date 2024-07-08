@@ -1,11 +1,8 @@
 package com.scentheartsstudio.scentheartsstudio.Services;
 
 import com.scentheartsstudio.scentheartsstudio.DTO.InterProductDTO;
-import com.scentheartsstudio.scentheartsstudio.DTO.InterProductSizeDTO;
 import com.scentheartsstudio.scentheartsstudio.DTO.PostProductDTO;
-import com.scentheartsstudio.scentheartsstudio.DTO.PostProductSizeDTO;
 import com.scentheartsstudio.scentheartsstudio.Entities.ProductEntity;
-import com.scentheartsstudio.scentheartsstudio.Entities.ProductSizeEntity;
 import com.scentheartsstudio.scentheartsstudio.Repositories.ProductRepository;
 import com.scentheartsstudio.scentheartsstudio.Repositories.ProductSizeRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
@@ -36,19 +33,20 @@ public class ProductService {
 		return pr.getAllProductsByCategoryId(category_id);
 	}
 
-	public List<InterProductSizeDTO> getProductSizeByProductId(Long product_id) {
-		return psr.getProductSizeByProductId(product_id);
-	}
+//	public List<InterProductSizeDTO> getProductSizeByProductId(Long product_id) {
+//		return psr.getProductSizeByProductId(product_id);
+//	}
 
 	public void insertProduct(PostProductDTO postProductDTO) throws CustomException{
 		Boolean isNameExists = pr.isNameExists(postProductDTO.getName());
 		if (isNameExists){
 			throw new CustomException(452, "Product " + postProductDTO.getName() + " already exists");
 		}
-
 		ProductEntity productEntity = new ProductEntity();
 		productEntity.setName(postProductDTO.getName());
 		productEntity.setCategory_id(postProductDTO.getCategory_id());
+		productEntity.setProduct_size_id(postProductDTO.getProduct_size_id());
+		productEntity.setQuantity(postProductDTO.getQuantity());
 		productEntity.setDescription(postProductDTO.getDescription());
 		productEntity.setReal_price(postProductDTO.getReal_price());
 		productEntity.setDiscount_rate(postProductDTO.getDiscount_rate());
@@ -56,54 +54,26 @@ public class ProductService {
 		productEntity.setActive(postProductDTO.getActive());
 		productEntity.setCreated_by(1L);
 		productEntity.setCreated_on(new Date());
-
 		pr.save(productEntity);
-
-		for(PostProductSizeDTO postProductSizeDTO : postProductDTO.getSizes()){
-			ProductSizeEntity productSizeEntity = new ProductSizeEntity();
-			productSizeEntity.setProduct_id(productEntity.getId());
-			productSizeEntity.setSize(postProductSizeDTO.getSize());
-			productSizeEntity.setStock(postProductSizeDTO.getStock());
-			productSizeEntity.setCreated_by(1L);
-			productSizeEntity.setCreated_on(new Date());
-
-			psr.save(productSizeEntity);
-		}
 	}
 
 	public void updateProduct(PostProductDTO postProductDTO) throws CustomException {
 		ProductEntity productEntity = pr.getReferenceById(postProductDTO.getId());
-
 		Boolean isNameExistsUpdate = pr.isNameExistsUpdate(postProductDTO.getName(), productEntity.getName());
 		if (isNameExistsUpdate){
 			throw new CustomException(453, "Product Name " + postProductDTO.getName() + " already exists");
 		}
-
 		productEntity.setName(postProductDTO.getName());
 		productEntity.setCategory_id(postProductDTO.getCategory_id());
+		productEntity.setProduct_size_id(postProductDTO.getProduct_size_id());
+		productEntity.setQuantity(postProductDTO.getQuantity());
 		productEntity.setDescription(postProductDTO.getDescription());
 		productEntity.setReal_price(postProductDTO.getReal_price());
 		productEntity.setDiscount_price(calculateDiscountPrice(postProductDTO.getReal_price(), postProductDTO.getDiscount_rate()));
 		productEntity.setActive(postProductDTO.getActive());
 		productEntity.setCreated_by(1L);
 		productEntity.setCreated_on(new Date());
-
 		pr.save(productEntity);
-
-//		psr.deleteByProductId(productEntity.getId());
-
-		for(PostProductSizeDTO postProductSizeDTO : postProductDTO.getSizes()){
-			ProductSizeEntity productSizeEntity = psr.getReferenceById(postProductSizeDTO.getId());
-
-			productSizeEntity.setProduct_id(productEntity.getId());
-			productSizeEntity.setSize(postProductSizeDTO.getSize());
-//			productSizeEntity.setStock(productSizeEntity.getStock() + postProductSizeDTO.getStock());
-			productSizeEntity.setStock(postProductSizeDTO.getStock());
-			productSizeEntity.setModified_by(1L);
-			productSizeEntity.setModified_on(new Date());
-
-			psr.save(productSizeEntity);
-		}
 	}
 
 	public void deleteProduct(PostProductDTO postProductDTO) throws IOException {
@@ -112,9 +82,7 @@ public class ProductService {
 		productEntity.setIs_delete(true);
 		productEntity.setDeleted_by(1L);
 		productEntity.setDeleted_on(new Date());
-
 		pr.delete(productEntity);
-//		psr.deleteByProductId(productEntity.getId());
 
 		if (imagePath != null && !imagePath.isEmpty()) {
 			String basePath = new FileSystemResource("").getFile().getAbsolutePath();

@@ -10,14 +10,11 @@ public class ProductSizeEntity extends BaseProperties {
 	@Column(nullable = false)
 	private Long id;
 
-	@Column(nullable = false)
-	private Long product_id;
+	@Column(nullable = false, length = 5)
+	private String name;
 
 	@Column
-	private String size;
-
-	@Column
-	private Integer stock;
+	private Boolean active;
 
 	public Long getId() {
 		return id;
@@ -27,27 +24,19 @@ public class ProductSizeEntity extends BaseProperties {
 		this.id = id;
 	}
 
-	public Long getProduct_id() {
-		return product_id;
+	public String getName() {
+		return name;
 	}
 
-	public void setProduct_id(Long product_id) {
-		this.product_id = product_id;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getSize() {
-		return size;
+	public Boolean getActive() {
+		return active;
 	}
 
-	public void setSize(String size) {
-		this.size = size;
-	}
-
-	public Integer getStock() {
-		return stock;
-	}
-
-	public void setStock(Integer stock) {
-		this.stock = stock;
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 }

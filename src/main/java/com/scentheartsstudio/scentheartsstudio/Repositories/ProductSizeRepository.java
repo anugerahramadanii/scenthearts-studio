@@ -13,23 +13,17 @@ import java.util.List;
 
 @Repository
 public interface ProductSizeRepository extends JpaRepository<ProductSizeEntity, Long> {
-
-	@Modifying
-	@Transactional
 	@Query(nativeQuery = true,
-	value = "DELETE FROM t_product_size WHERE product_id = :productId and is_deleted = false")
-	public void deleteByProductId(@Param("productId") Long product_id);
+		value = "select id, name, active from t_product_size where is_delete = false")
+	public List<InterProductSizeDTO> getAllSizes();
 
 	@Query(nativeQuery = true,
-			value = "select ps.id, p.id as product_id, ps.size, ps.stock from t_product_size ps\n"
-					+ "\tinner join t_product p\n"
-					+ "\ton p.id = ps.product_id\n"
-					+ "\twhere ps.product_id = :productId and ps.is_delete = false")
-	public List<InterProductSizeDTO> getProductSizeByProductId(@Param("productId") Long product_id);
-
+		value = "select exists (select * from t_product_size where name ilike :name and is_delete =false)")
+	public Boolean isNameExist(@Param("name") String name);
 
 	@Query(nativeQuery = true,
-			value = "select * from t_product_size where product_id = :productId and size ilike :size and is_delete = false")
-	public ProductSizeEntity getProductSizeByProductIdAndSize(@Param("productId") Long product_id, @Param("size") String size);
+			value = "select exists(select * from t_product_size where name ilike :name and name not ilike :oldName and is_delete = false)")
+	public Boolean isNameExistUpdate(@Param("name") String name, @Param("oldName") String oldName);
+
 
 }

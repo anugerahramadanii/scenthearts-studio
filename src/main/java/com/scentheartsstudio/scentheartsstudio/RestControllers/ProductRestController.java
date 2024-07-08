@@ -46,18 +46,6 @@ public class ProductRestController {
 		return response;
 	}
 
-	@GetMapping("product/productSize")
-	public Resp<List<InterProductSizeDTO>> getProductSizeByProductId(@RequestParam("productId") Long product_id){
-		Resp<List<InterProductSizeDTO>> response = new Resp<>();
-		response.setCode(200);
-		response.setMessage("OK");
-
-		List<InterProductSizeDTO> data = ps.getProductSizeByProductId(product_id);
-		response.setData(data);
-		return response;
-	}
-
-
 	@PostMapping("product/insert")
 	public Resp<String> insertProduct(@RequestBody PostProductDTO postProductDTO){
 		Resp<String> response = new Resp<>();
@@ -86,26 +74,6 @@ public class ProductRestController {
 		return response;
 	}
 
-//	@PutMapping("product/update")
-//	public Resp<List<String>> updateProduct(@ModelAttribute PostProductDTO postProductDTO,
-//	                                        @RequestParam("files") MultipartFile[] files){
-//		Resp<List<String>> response = new Resp<>();
-//		response.setCode(200);
-//		response.setMessage("OK");
-//		try{
-//			List<String> data = ps.insertProduct(postProductDTO, files);
-//			response.setData(data);
-//		}catch (CustomException e){
-//			response.setCode(e.getCode());
-//			response.setMessage(e.getMessage());
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			response.setCode(455);
-//			response.setMessage("Upload Image Failed!!");
-//		}
-//		return response;
-//	}
-
 	@DeleteMapping("product/delete")
 	public Resp<String> deleteProduct(@RequestBody PostProductDTO postProductDTO) throws IOException {
 		ps.deleteProduct(postProductDTO);
@@ -133,4 +101,35 @@ public class ProductRestController {
 		}
 		return response;
 	}
+
+	//	@GetMapping("product/productSize")
+	//	public Resp<List<InterProductSizeDTO>> getProductSizeByProductId(@RequestParam("productId") Long product_id){
+	//		Resp<List<InterProductSizeDTO>> response = new Resp<>();
+	//		response.setCode(200);
+	//		response.setMessage("OK");
+	//
+	//		List<InterProductSizeDTO> data = ps.getProductSizeByProductId(product_id);
+	//		response.setData(data);
+	//		return response;
+	//	}
+
+	//	@PutMapping("product/update")
+	//	public Resp<List<String>> updateProduct(@ModelAttribute PostProductDTO postProductDTO,
+	//	                                        @RequestParam("files") MultipartFile[] files){
+	//		Resp<List<String>> response = new Resp<>();
+	//		response.setCode(200);
+	//		response.setMessage("OK");
+	//		try{
+	//			List<String> data = ps.insertProduct(postProductDTO, files);
+	//			response.setData(data);
+	//		}catch (CustomException e){
+	//			response.setCode(e.getCode());
+	//			response.setMessage(e.getMessage());
+	//		} catch (IOException e) {
+	//			e.printStackTrace();
+	//			response.setCode(455);
+	//			response.setMessage("Upload Image Failed!!");
+	//		}
+	//		return response;
+	//	}
 }

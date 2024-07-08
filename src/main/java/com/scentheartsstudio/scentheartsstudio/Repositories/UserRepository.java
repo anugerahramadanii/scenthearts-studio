@@ -16,6 +16,11 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     public Boolean isEmailExists(@Param("email") String email);
 
     @Query(nativeQuery = true,
-    value = "select id from m_user where id = :userId and is_delete =false")
-    public Long getIdUser(@Param("userId") Long id);
+    value = "select * from m_user where id = :userId and is_delete =false")
+    public Long getUserId(@Param("userId") Long id);
+
+
+//    @Query(nativeQuery = true,
+//    value = "select exists (select * from m_user where id = :id and is_delete =false)")
+//    public Boolean isUserExists(@Param("id") Long id);
 }
