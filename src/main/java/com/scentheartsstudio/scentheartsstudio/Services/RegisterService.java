@@ -3,15 +3,14 @@ package com.scentheartsstudio.scentheartsstudio.Services;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.scentheartsstudio.scentheartsstudio.DTO.RegisterDTO;
-import com.scentheartsstudio.scentheartsstudio.Entities.AdminEntity;
 import com.scentheartsstudio.scentheartsstudio.Entities.BiodataEntity;
 import com.scentheartsstudio.scentheartsstudio.Entities.CustomerEntity;
 import com.scentheartsstudio.scentheartsstudio.Entities.TokenEntity;
 import com.scentheartsstudio.scentheartsstudio.Entities.UserEntity;
-import com.scentheartsstudio.scentheartsstudio.Repositories.AdminRepository;
 import com.scentheartsstudio.scentheartsstudio.Repositories.BiodataRepository;
 import com.scentheartsstudio.scentheartsstudio.Repositories.CustomerRepository;
 import com.scentheartsstudio.scentheartsstudio.Repositories.TokenRepository;
@@ -31,13 +30,12 @@ public class RegisterService {
     private BiodataRepository br;
 
     @Autowired
-    private AdminRepository ar;
-
-    @Autowired
     private CustomerRepository cr;
 
     @Autowired
     private EmailService es;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public void registerUser(RegisterDTO registerDTO) throws CustomException {
 
@@ -60,10 +58,10 @@ public class RegisterService {
 
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(registerDTO.getEmail());
-        userEntity.setPassword(passwordUser);
+        userEntity.setPassword(encoder.encode(passwordUser));
         userEntity.setCreated_by(1L);
         userEntity.setCreated_on(new Date());
-        userEntity.setRole_id(2L); //Customer
+        userEntity.setRole_id(2L); //User
 
         userEntity = ur.save(userEntity);
 
@@ -112,7 +110,7 @@ public class RegisterService {
 
         String subject = "Register OTP";
         String msgBody = "Token OTP anda adalah " + token + " ! Jangan beritahukan ke siapa-siapa!" +
-                "Token expired in " + expiredOn;
+                " Token expired in " + expiredOn;
         es.sendEmail(email, subject, msgBody);
     }
 

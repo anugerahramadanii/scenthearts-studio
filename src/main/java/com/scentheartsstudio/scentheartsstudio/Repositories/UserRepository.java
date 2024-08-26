@@ -1,5 +1,7 @@
 package com.scentheartsstudio.scentheartsstudio.Repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,8 +21,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     value = "select * from m_user where id = :userId and is_delete =false")
     public Long getUserId(@Param("userId") Long id);
 
+    @Query(nativeQuery = true, 
+    value = "SELECT * FROM m_user where email = :email and is_delete = false")
+    public UserEntity getUserByEmail(@Param("email") String email);
 
-//    @Query(nativeQuery = true,
-//    value = "select exists (select * from m_user where id = :id and is_delete =false)")
-//    public Boolean isUserExists(@Param("id") Long id);
 }

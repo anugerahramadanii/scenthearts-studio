@@ -1,7 +1,9 @@
 package com.scentheartsstudio.scentheartsstudio.Services;
 
 import com.scentheartsstudio.scentheartsstudio.Entities.CategoryEntity;
+import com.scentheartsstudio.scentheartsstudio.Entities.UserEntity;
 import com.scentheartsstudio.scentheartsstudio.Repositories.CategoryRepository;
+import com.scentheartsstudio.scentheartsstudio.Repositories.UserRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -24,6 +26,9 @@ public class UploadImageCategoryService {
 	@Autowired
 	private CategoryRepository cr;
 
+	@Autowired
+	private UserRepository ur;
+
 	private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpg", "image/jpeg", "image/png");
 	private static final long MAX_FILE_SIZE = 1024 * 1024 * 2;
 
@@ -34,6 +39,9 @@ public class UploadImageCategoryService {
 
 		//        MIME Type (Multipurpose Internet Mail Extensions)
 		String mimeType = file.getContentType();
+		if (file.isEmpty()){
+			throw new CustomException(400, "File is empty");
+		}
 
 		if (!ALLOWED_MIME_TYPES.contains(mimeType.toLowerCase())){
 			throw new CustomException(415, "Only JPG, JPEG, and PNG files are allowed");
@@ -63,6 +71,8 @@ public class UploadImageCategoryService {
 		String resultUpload = ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("/images/").path(fileName).toUriString();
 
+		// get userId
+		UserEntity userEntity = ur.getReferenceById(userId);
 		//data category image id
 		categoryEntity.setImage_path(resultUpload);
 		categoryEntity.setModified_by(userId);

@@ -1,6 +1,6 @@
 package com.scentheartsstudio.scentheartsstudio.DTO;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+// import com.fasterxml.jackson.annotation.JsonInclude;
 
 public interface InterProductDTO {
 	Long getId();

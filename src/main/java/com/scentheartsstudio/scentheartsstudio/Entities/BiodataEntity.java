@@ -1,9 +1,13 @@
 package com.scentheartsstudio.scentheartsstudio.Entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "m_biodata")
+@Getter
+@Setter
 public class BiodataEntity extends BaseProperties {
 
     @Column(nullable = false)
@@ -25,65 +29,4 @@ public class BiodataEntity extends BaseProperties {
 
     @Column(length = 255)
     private String image_path;
-
-
-    // @Column(length = 255)
-    // private String address;
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstname() {
-        return this.firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return this.lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getMobile_phone() {
-        return this.mobile_phone;
-    }
-
-    public void setMobile_phone(String mobile_phone) {
-        this.mobile_phone = mobile_phone;
-    }
-
-    // public String getAddress() {
-    // return this.address;
-    // }
-
-    // public void setAddress(String address) {
-    // this.address = address;
-    // }
-
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public String getImage_path() {
-        return image_path;
-    }
-
-    public void setImage_path(String image_path) {
-        this.image_path = image_path;
-    }
 }

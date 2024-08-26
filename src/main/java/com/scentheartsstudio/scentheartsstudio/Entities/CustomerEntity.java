@@ -6,9 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "m_customer")
+@Getter
+@Setter
 public class CustomerEntity extends BaseProperties {
     @Id
     @Column
@@ -17,21 +21,4 @@ public class CustomerEntity extends BaseProperties {
 
     @Column
     private Long biodata_id;
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getBiodata_id() {
-        return this.biodata_id;
-    }
-
-    public void setBiodata_id(Long biodata_id) {
-        this.biodata_id = biodata_id;
-    }
-
 }

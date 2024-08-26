@@ -9,5 +9,5 @@ public class ScentheartsStudioApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ScentheartsStudioApplication.class, args);
 	}
-
+// IMAGE CATEGORY MASIH ERORR
 }

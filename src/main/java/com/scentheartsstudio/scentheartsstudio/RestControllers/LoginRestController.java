@@ -19,7 +19,8 @@ public class LoginRestController {
     private UserService us;
 
     @PostMapping("/login")
-    public Resp<LoginDTO> login(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public Resp<LoginDTO> login(@RequestParam("email") String email,
+                                @RequestParam("password") String password) {
         Resp<LoginDTO> response = new Resp<>();
         response.setCode(200);
         response.setMessage("OK");

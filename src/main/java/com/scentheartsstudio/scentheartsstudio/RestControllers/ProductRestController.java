@@ -1,7 +1,6 @@
 package com.scentheartsstudio.scentheartsstudio.RestControllers;
 
 import com.scentheartsstudio.scentheartsstudio.DTO.InterProductDTO;
-import com.scentheartsstudio.scentheartsstudio.DTO.InterProductSizeDTO;
 import com.scentheartsstudio.scentheartsstudio.DTO.PostProductDTO;
 import com.scentheartsstudio.scentheartsstudio.Services.ProductService;
 import com.scentheartsstudio.scentheartsstudio.Services.UploadImageProductService;

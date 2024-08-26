@@ -1,9 +1,13 @@
 package com.scentheartsstudio.scentheartsstudio.Entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "t_product")
+@Getter
+@Setter
 public class ProductEntity extends BaseProperties {
     @Id
     @Column
@@ -39,93 +43,4 @@ public class ProductEntity extends BaseProperties {
 
     @Column(nullable = false)
     private Boolean active;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(Long category_id) {
-        this.category_id = category_id;
-    }
-
-    public Long getProduct_size_id() {
-        return product_size_id;
-    }
-
-    public void setProduct_size_id(Long product_size_id) {
-        this.product_size_id = product_size_id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImage_path() {
-        return image_path;
-    }
-
-    public void setImage_path(String image_path) {
-        this.image_path = image_path;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getReal_price() {
-        return real_price;
-    }
-
-    public void setReal_price(Double real_price) {
-        this.real_price = real_price;
-    }
-
-    public Double getDiscount_rate() {
-        return discount_rate;
-    }
-
-    public void setDiscount_rate(Double discount_rate) {
-        this.discount_rate = discount_rate;
-    }
-
-    public Double getDiscount_price() {
-        return discount_price;
-    }
-
-    public void setDiscount_price(Double discount_price) {
-        this.discount_price = discount_price;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
 }

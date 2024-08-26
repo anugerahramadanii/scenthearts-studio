@@ -3,6 +3,7 @@ package com.scentheartsstudio.scentheartsstudio.Services;
 import com.scentheartsstudio.scentheartsstudio.DTO.InterProductDTO;
 import com.scentheartsstudio.scentheartsstudio.DTO.PostProductDTO;
 import com.scentheartsstudio.scentheartsstudio.Entities.ProductEntity;
+import com.scentheartsstudio.scentheartsstudio.Entities.ProductSizeEntity;
 import com.scentheartsstudio.scentheartsstudio.Repositories.ProductRepository;
 import com.scentheartsstudio.scentheartsstudio.Repositories.ProductSizeRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
@@ -33,17 +34,20 @@ public class ProductService {
 		return pr.getAllProductsByCategoryId(category_id);
 	}
 
-//	public List<InterProductSizeDTO> getProductSizeByProductId(Long product_id) {
-//		return psr.getProductSizeByProductId(product_id);
-//	}
-
 	public void insertProduct(PostProductDTO postProductDTO) throws CustomException{
-		Boolean isNameExists = pr.isNameExists(postProductDTO.getName());
+		Boolean isNameExists = pr.isNameExists(postProductDTO.getProduct_name(), postProductDTO.getProduct_size_name());
 		if (isNameExists){
-			throw new CustomException(452, "Product " + postProductDTO.getName() + " already exists");
+			throw new CustomException(451, "Product " + postProductDTO.getProduct_name() + " with size " +
+					postProductDTO.getProduct_size_name() + " already exists");
 		}
+
+		Boolean isProductSizeIdExists = psr.isProductSizeIdExists(postProductDTO.getProduct_size_id());
+		if (!isProductSizeIdExists){
+			throw new CustomException(452, "Product Size Id " + postProductDTO.getProduct_size_id() + " not found!!");
+		}
+
 		ProductEntity productEntity = new ProductEntity();
-		productEntity.setName(postProductDTO.getName());
+		productEntity.setName(postProductDTO.getProduct_name());
 		productEntity.setCategory_id(postProductDTO.getCategory_id());
 		productEntity.setProduct_size_id(postProductDTO.getProduct_size_id());
 		productEntity.setQuantity(postProductDTO.getQuantity());
@@ -59,11 +63,20 @@ public class ProductService {
 
 	public void updateProduct(PostProductDTO postProductDTO) throws CustomException {
 		ProductEntity productEntity = pr.getReferenceById(postProductDTO.getId());
-		Boolean isNameExistsUpdate = pr.isNameExistsUpdate(postProductDTO.getName(), productEntity.getName());
+		ProductSizeEntity productSizeEntity = psr.getReferenceById(postProductDTO.getProduct_size_id());
+		Boolean isNameExistsUpdate = pr.isNameExistsUpdate(postProductDTO.getProduct_name(), productEntity.getName(),
+				postProductDTO.getProduct_size_name(), productSizeEntity.getName());
 		if (isNameExistsUpdate){
-			throw new CustomException(453, "Product Name " + postProductDTO.getName() + " already exists");
+			throw new CustomException(453, "Product " + postProductDTO.getProduct_name() + " with size " +
+					postProductDTO.getProduct_size_name() + " already exists");
 		}
-		productEntity.setName(postProductDTO.getName());
+
+		Boolean isProductSizeIdExists = psr.isProductSizeIdExists(postProductDTO.getProduct_size_id());
+		if (!isProductSizeIdExists){
+			throw new CustomException(454, "Product Size Id " + postProductDTO.getProduct_size_id() + " not found!!");
+		}
+
+		productEntity.setName(postProductDTO.getProduct_name());
 		productEntity.setCategory_id(postProductDTO.getCategory_id());
 		productEntity.setProduct_size_id(postProductDTO.getProduct_size_id());
 		productEntity.setQuantity(postProductDTO.getQuantity());

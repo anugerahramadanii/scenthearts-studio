@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrderService {
 
-//	@Transactional
+	@Transactional
 	public void insertOrder() {
 
 		//method create order

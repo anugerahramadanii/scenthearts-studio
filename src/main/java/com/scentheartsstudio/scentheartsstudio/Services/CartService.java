@@ -7,6 +7,7 @@ import com.scentheartsstudio.scentheartsstudio.Entities.ProductEntity;
 import com.scentheartsstudio.scentheartsstudio.Entities.UserEntity;
 import com.scentheartsstudio.scentheartsstudio.Repositories.CartRepository;
 import com.scentheartsstudio.scentheartsstudio.Repositories.ProductRepository;
+import com.scentheartsstudio.scentheartsstudio.Repositories.ProductSizeRepository;
 import com.scentheartsstudio.scentheartsstudio.Repositories.UserRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class CartService {
 	@Autowired
 	private UserRepository ur;
 
+	@Autowired
+	private ProductSizeRepository psr;
+
 
 	public List<InterCartDTO> getAllCartByUserId(Long user_id) {
 		return cr.getAllCartByUserId(user_id);
@@ -43,16 +47,24 @@ public class CartService {
 		}
 		ProductEntity productEntity = optProduct.get();
 
+		Boolean isProductSizeIdExists = psr.isProductSizeIdExists(postCartDTO.getProduct_size_id());
+		if (!isProductSizeIdExists){
+			throw new CustomException(421, "Product Size Id " + postCartDTO.getProduct_size_id() + " not found!!");
+		}
+		// QUANTITY KAYAKNYA HARUS DI PRODUCT SIZE ENTITY
+		Integer quantityProduct = pr.getQuantityProductByProductIdAndPsId(postCartDTO.getProduct_id(), postCartDTO.getProduct_size_id());
+
 		Double price = productEntity.getDiscount_price();
 		Integer newQuantity = postCartDTO.getQuantity();
-		Integer quantity = productEntity.getQuantity();
+//		Integer quantity = productEntity.getQuantity();
 		Double totalPrice = price * newQuantity;
 		// check quantity
 		if (newQuantity <= 0){
 			throw new CustomException(423, "Quantity must be greater than 0");
 		}
-		if (newQuantity > quantity){
-			throw new CustomException(424, "Quantity not enough!!, Quantity only has " + quantity);
+		if (quantityProduct < newQuantity ){
+			throw new CustomException(424, "Quantity not enough!!, Product Id " + postCartDTO.getProduct_id() + " with Size " +
+					postCartDTO.getProduct_size_id() + " only has " + quantityProduct);
 		}
 
 		// is product in cart
@@ -85,22 +97,29 @@ public class CartService {
 		}
 		ProductEntity productEntity = optProduct.get();
 
+		Boolean isProductSizeIdExists = psr.isProductSizeIdExists(postCartDTO.getProduct_size_id());
+		if (!isProductSizeIdExists){
+			throw new CustomException(421, "Product Size Id " + postCartDTO.getProduct_size_id() + " not found!!");
+		}
+
 		//cek user exist
 		Optional<UserEntity> optUser = ur.findById(postCartDTO.getUser_id());
 		if (optUser.isEmpty()) {
-			throw new CustomException( 420, "User with ID " + postCartDTO.getUser_id() + " Not Found");
+			throw new CustomException( 422, "User with ID " + postCartDTO.getUser_id() + " Not Found");
 		}
+		Integer quantityProduct = pr.getQuantityProductByProductIdAndPsId(postCartDTO.getProduct_id(), postCartDTO.getProduct_size_id());
 
 		Double price = productEntity.getDiscount_price();
 		Integer newQuantity = postCartDTO.getQuantity();
-		Integer quantity = productEntity.getQuantity();
+//		Integer quantity = productEntity.getQuantity();
 		Double totalPrice = price * newQuantity;
 		// check quantity
 		if (newQuantity <= 0){
 			throw new CustomException(423, "Quantity must be greater than 0");
 		}
-		if (newQuantity > quantity){
-			throw new CustomException(424, "Quantity not enough!!, Quantity only has " + quantity);
+		if (newQuantity > quantityProduct){
+			throw new CustomException(424, "Quantity not enough!!, Product Id " + postCartDTO.getProduct_id() + " with Size " +
+					postCartDTO.getProduct_size_id() + " only has " + quantityProduct);
 		}
 
 		// is product in cart
