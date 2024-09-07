@@ -28,21 +28,21 @@ INSERT INTO t_category (name, active, created_by, created_on) VALUES
 ('Liontin', TRUE, 1, NOW()),
 ('Bros', TRUE, 1, NOW());
 
-INSERT INTO t_product_size (name, active, created_by, created_on) VALUES
-('S', TRUE, 1, NOW()),
-('M', TRUE, 1, NOW()),
-('L', TRUE, 1, NOW()),
-('XL', TRUE, 1, NOW());
-
----- Insert data dummy untuk produk perhiasan
---INSERT INTO t_product (category_id, product_size_id, name, description, quantity, real_price, discount_rate, discount_price, active, created_by, created_on) VALUES
---(1, 1, 'Cincin Berlian Emas Kuning', 'Cincin berlian dengan desain klasik, terbuat dari emas kuning 18 karat.', 10, 10000, 50, 5000, TRUE, 1, NOW()),
---(1, 1, 'Cincin Berlian Emas Putih', 'Cincin berlian dengan desain klasik, terbuat dari emas putih 18 karat.', 30, 15000, 50, 7500, TRUE, 1, NOW()),
---(2, 2,'Kalung Berlian Safir', 'Kalung berlian safir dengan tali rantai emas putih 18 karat.', 20, 20000, 50, 10000, TRUE, 1, NOW()),
---(3, 3, 'Gelang Perak Etnik', 'Gelang perak dengan desain etnik dan motif tradisional.', 5, 30000, 50, 15000, TRUE, 1, NOW()),
---(4, 4, 'Anting-anting Mutiara', 'Anting-anting mutiara dengan desain klasik dan timeless.', 7, 50000, 50, 25000, TRUE, 1, NOW()),
---(4, 1, 'Anting-anting Mutiara Elegan', 'Anting-anting mutiara dengan desain elegan dan timeless.', 15, 5000, 50, 2500, TRUE, 1, NOW()),
---(5, 2, 'Liontin Berlian Berlian', 'Liontin berlian dengan desain modern dan berlian yang berkilauan.', 55, 14000, 50, 7000, TRUE, 1, NOW());
+INSERT INTO t_product (category_id, name, image_path, description, price, active, created_by, created_on) VALUES
+(1, 'Cincin Berlian Emas Kuning', null, 'Cincin berlian dengan desain klasik, terbuat dari emas kuning 18 karat.', 10000, TRUE, 1, NOW()),
+(1, 'Cincin Berlian Emas Putih', null, 'Cincin berlian dengan desain klasik, terbuat dari emas putih 18 karat.',  15000, TRUE, 1, NOW()),
+(2, 'Kalung Berlian Safir', null, 'Kalung berlian safir dengan tali rantai emas putih 18 karat.', 20000, TRUE, 1, NOW()),
+(3, 'Gelang Perak Etnik', null, 'Gelang perak dengan desain etnik dan motif tradisional.', 30000, TRUE, 1, NOW()),
+(4, 'Anting-anting Mutiara', null, 'Anting-anting mutiara dengan desain klasik dan timeless.', 50000, TRUE, 1, NOW()),
+(4, 'Anting-anting Mutiara Elegan', null,'Anting-anting mutiara dengan desain elegan dan timeless.', 5000, TRUE, 1, NOW()),
+(5, 'Liontin Berlian Berlian', null, 'Liontin berlian dengan desain modern dan berlian yang berkilauan.', 14000, TRUE, 1, NOW());
+--
+--
+INSERT INTO t_product_size (product_id, name, quantity, active, created_by, created_on) VALUES
+(1, 'S', 10, TRUE, 1, NOW()),
+(1, 'M', 20, TRUE, 1, NOW()),
+(1, 'L', 30, TRUE, 1, NOW()),
+(1, 'XL', 40, TRUE, 1, NOW());
 
 -- Insert data dummy for cart
 --INSERT INTO t_cart(product_id, user_id, product_size_id, quantity, total_price, created_by, created_on) VALUES

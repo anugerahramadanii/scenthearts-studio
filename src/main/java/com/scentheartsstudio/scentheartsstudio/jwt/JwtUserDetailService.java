@@ -1,20 +1,15 @@
 package com.scentheartsstudio.scentheartsstudio.jwt;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import com.scentheartsstudio.scentheartsstudio.Entities.UserPrincipal;
+import com.scentheartsstudio.scentheartsstudio.entities.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.scentheartsstudio.scentheartsstudio.Entities.UserEntity;
-import com.scentheartsstudio.scentheartsstudio.Repositories.UserRepository;
+import com.scentheartsstudio.scentheartsstudio.entities.UserEntity;
+import com.scentheartsstudio.scentheartsstudio.repositories.UserRepository;
 
 @Service
 public class JwtUserDetailService implements UserDetailsService {
