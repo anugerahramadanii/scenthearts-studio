@@ -25,5 +25,4 @@ public class RoleEntity extends BaseProperties {
 
     @Column(length = 20)
     private String code;
-
 }

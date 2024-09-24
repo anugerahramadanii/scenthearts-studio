@@ -7,8 +7,7 @@ import lombok.Setter;
 @Setter
 public class PostProfileDTO {
 	private Long user_id;
-	private String firstname;
-	private String lastname;
+	private String fullname;
 	private String mobile_phone;
 	private String email;
 	private String otp;

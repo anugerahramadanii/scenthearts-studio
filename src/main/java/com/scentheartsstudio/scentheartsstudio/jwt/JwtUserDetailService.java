@@ -23,15 +23,6 @@ public class JwtUserDetailService implements UserDetailsService {
         if (userEntity == null){
             throw new UsernameNotFoundException("User not found with Email " + email);
         }
-
-//        System.out.println("Loaded User: " + userEntity.getEmail() + ", Password: " + userEntity.getPassword());
-
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole_id()));
-
-//        return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
-        return new UserPrincipal(userEntity);
+        return new UserPrincipal(userEntity, ur);
     }
-
-
 }

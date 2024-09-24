@@ -40,8 +40,7 @@ public class ProfileService {
 		ur.save(userEntity);
 
 		BiodataEntity biodataEntity = br.getReferenceById(userEntity.getBiodata_id());
-		biodataEntity.setFirstname(postProfileDTO.getFirstname());
-		biodataEntity.setLastname(postProfileDTO.getLastname());
+		biodataEntity.setFullname(postProfileDTO.getFullname());
 		biodataEntity.setMobile_phone(postProfileDTO.getMobile_phone());
 		biodataEntity.setModified_by(postProfileDTO.getUser_id());
 		biodataEntity.setModified_on(new Date());
@@ -67,7 +66,7 @@ public class ProfileService {
 		ur.save(userEntity);
 	}
 
-	public void sendEmailOTPProfile(String email) throws CustomException {
+	public void sendEmailOTPProfile(String email, Long userId) throws CustomException {
 		// validasi email
 		Boolean isEmailExist = ur.isEmailExists(email);
 		if (isEmailExist) {
@@ -84,7 +83,7 @@ public class ProfileService {
 			tokenEntity.setToken(token);
 			tokenEntity.setUsed_for(usedFor);
 			tokenEntity.setExpired_on(expiredOn);
-			tokenEntity.setCreated_by(1L);
+			tokenEntity.setCreated_by(userId);
 			tokenEntity.setCreated_on(new Date());
 			tr.save(tokenEntity);
 
@@ -96,7 +95,6 @@ public class ProfileService {
 
 	public void changePassword(PostProfileDTO postProfileDTO) throws CustomException {
 		//validasi password
-		// take user id
 		UserEntity userEntity = ur.getReferenceById(postProfileDTO.getUser_id());
 		if (!postProfileDTO.getOld_password().equals(userEntity.getPassword())){
 			throw new CustomException(454, "Old Password Wrong!!");

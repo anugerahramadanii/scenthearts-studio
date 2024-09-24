@@ -31,6 +31,4 @@ public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
 //        @Query(nativeQuery = true,
 //        value = "select id from t_token where email = :email and is_delete = false and (is_expired = false or is_expired is null) order by id desc limit 1")
 //        public Long isEmailExist(@Param("email") String email );
-
-
 }

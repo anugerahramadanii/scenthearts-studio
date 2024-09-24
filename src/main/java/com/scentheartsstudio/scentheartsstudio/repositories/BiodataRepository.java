@@ -12,7 +12,7 @@ import com.scentheartsstudio.scentheartsstudio.entities.BiodataEntity;
 public interface BiodataRepository extends JpaRepository<BiodataEntity, Long> {
 
     // profile
-    @Query(nativeQuery = true, value = "select b.firstname, b,lastname, b.mobile_phone, b.image_path, u.email\n"
+    @Query(nativeQuery = true, value = "select b.fullname, b.mobile_phone, b.image_path, u.email\n"
             + "from m_biodata b \n"
             + "inner join m_user u on\n"
             + "b.id = u.biodata_id\n"

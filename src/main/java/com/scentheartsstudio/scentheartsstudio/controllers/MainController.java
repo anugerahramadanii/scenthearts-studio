@@ -2,46 +2,99 @@ package com.scentheartsstudio.scentheartsstudio.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
-    @RequestMapping("")
+
+    @GetMapping("/scenthearts-studio")
     public String loadHomePage() {
-        return "index/index.html";
+        return "/user/index";
     }
 
-    @RequestMapping("/about")
-    public String loadAboutUs() {
-        return "about/about-us.html";
-    }
-
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String loadLogin() {
-        return "login/login.html";
+        return "/auth/login";
     }
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
     public String loadRegister() {
-        return "login/register.html";
-    }
-//
-//     @RequestMapping("/categories/allproducts")
-//     public String loadAllProducts() {
-//     return "categories/sidebar-all-products.html";
-//     }
-
-    @RequestMapping("/categories/allproducts")
-    public String loadAllProducts(Model model) {
-        String templatePath = "all-products.html";
-        model.addAttribute("contentCategories", templatePath);
-        return "categories/sidebar-all-products.html";
+        return "/auth/register";
     }
 
-    @RequestMapping("/categories/rings")
-    public String loadAllRings(Model model) {
-        String templatePath = "rings.html";
-        model.addAttribute("contentCategories", templatePath);
-        return "categories/sidebar-all-products.html";
+    @GetMapping("/forgot-password")
+    public String loadForgotPassword() {
+        return "/auth/forgot-password";
     }
+    
+    @GetMapping("/products")
+    public String loadProducts() {
+        return "/user/shop-grid";
+    }
+
+    @GetMapping("/product-detail")
+    public String loadDetailProduct() {
+        return "/user/shop-details";
+    }
+    
+    @GetMapping("/checkout")
+    public String loadCheckout() {
+        return "/user/checkout";
+    }
+
+    @GetMapping("/shopping-cart")
+    public String loadShoppingCart() {
+        return "/user/shoping-cart";
+    }
+
+    @GetMapping("/blog")
+    public String loadBlog() {
+        return "/user/blog";
+    }
+
+    @GetMapping("/blog-details")
+    public String loadBlogDetail() {
+        return "/user/blog-details";
+    }
+
+    @GetMapping("/contact")
+    public String loadContact() {
+        return "/user/contact";
+    }
+
+    // ADMIN
+    @GetMapping("/admin-dashboard")
+    public String loadAdminHomePage() {
+        return "admin/admin-index";
+    }
+
+    @GetMapping("/admin-profile")
+    public String loadAdminProfile() {
+        return "admin/admin-profile";
+    }
+
+    @GetMapping("/admin-profile-account")
+    public String loadAdminProfileAccount(HttpServletRequest request, Model model){
+        model.addAttribute("currentUri", request.getRequestURI());
+        return "admin/admin-profile/admin-profile-account";
+    }
+
+    @GetMapping("/admin-profile-change-password")
+    public String loadAdminProfileChangePassword(HttpServletRequest request, Model model) {
+        model.addAttribute("currentUri", request.getRequestURI());
+        return "admin/admin-profile/admin-profile-change-password";
+    }
+
+    @GetMapping("/admin-products")
+    public String loadAdminProducts() {
+        return "admin/admin-products/index-products.html";
+    }
+    @GetMapping("/admin-category-products")
+    public String loadAdminCategoryProducts() {
+        return "admin/admin-category-products/index-category-products.html";
+    }
+
+    
 }

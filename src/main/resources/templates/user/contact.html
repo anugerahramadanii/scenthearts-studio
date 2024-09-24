@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!--Head Begin-->
+  <head>
+    <th:block th:replace="~{/user/fragments/head :: head}"></th:block>
+  </head>
+  <!--Head End-->
+
+  <body>
+    <!-- Page Preloder -->
+    <div th:insert="~{/user/fragments/preloder :: preloder}"></div>
+    <!--    Page Preloder End-->
+
+    <!-- Humberger Begin -->
+    <div th:replace="~{/user/fragments/humberger :: humberger}"></div>
+    <!-- Humberger End -->
+
+    <!-- Header Section Begin -->
+    <header th:replace="~{/user/fragments/header :: header}"></header>
+    <!-- Header Section End -->
+
+    <!-- Hero Section Begin -->
+    <th:block th:replace="~{/user/fragments/hero :: hero}"></th:block>
+    <!-- Hero Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section
+      class="breadcrumb-section set-bg"
+      data-setbg="/user/img/breadcrumb-new.png"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <div class="breadcrumb__text">
+              <h2>Contact Us</h2>
+              <div class="breadcrumb__option">
+                <a th:href="@{/scenthearts-studio}">Home</a>
+                <span>Contact Us</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    <!-- 7fad39 -->
+    <!-- Contact Section Begin -->
+    <section class="contact spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+            <div class="contact__widget">
+              <span class="icon_phone"></span>
+              <h4>Phone</h4>
+              <p>+01-3-8888-6868</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+            <div class="contact__widget">
+              <span class="icon_pin_alt"></span>
+              <h4>Address</h4>
+              <p>Kampoeng Doel</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+            <div class="contact__widget">
+              <span class="icon_clock_alt"></span>
+              <h4>Open time</h4>
+              <p>Until the end of the world</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+            <div class="contact__widget">
+              <span class="icon_mail_alt"></span>
+              <h4>Email</h4>
+              <p>scenthearsstudio@rocket.co.id</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section End -->
+
+    <!-- Map Begin -->
+    <div class="map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63791.11001023436!2d106.08177867181816!3d-2.174835166056201!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e22c7a7e24a4e15%3A0x46b88995170b9815!2sDul%2C%20Pangkalan%20Baru%2C%20Central%20Bangka%20Regency%2C%20Bangka%20Belitung%20Islands!5e0!3m2!1sen!2sid!4v1726322259152!5m2!1sen!2sid"
+        height="500"
+        style="border: 0"
+        allowfullscreen=""
+        aria-hidden="false"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        tabindex="0"
+      ></iframe>
+      <div class="map-inside">
+        <i class="icon_pin"></i>
+        <div class="inside-widget">
+          <h4>Kampoeng Doel</h4>
+          <ul>
+            <li>Phone: +12-345-6789</li>
+            <li>Add: Kampoeng Doel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Map End -->
+
+    <!-- Contact Form Begin -->
+    <div class="contact-form spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="contact__form__title">
+              <h2>Leave Message</h2>
+            </div>
+          </div>
+        </div>
+        <form action="#">
+          <div class="row">
+            <div class="col-lg-6 col-md-6">
+              <input type="text" placeholder="Your name" />
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <input type="text" placeholder="Your Email" />
+            </div>
+            <div class="col-lg-12 text-center">
+              <textarea placeholder="Your message"></textarea>
+              <button type="submit" class="self-btn">SEND MESSAGE</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Contact Form End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="~{/user/fragments/footer :: footer}"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <th:block th:replace="~{/user/fragments/scripts :: scripts}"></th:block>
+  </body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="light-style layout-menu-fixed layout-compact"
+  dir="ltr"
+  data-theme="theme-default"
+  data-admin-path="../admin/"
+  data-template="vertical-menu-template-free"
+  data-style="light"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <!--Head Begin-->
+  <head>
+    <th:block
+      th:replace="~{admin/admin-fragments/admin-head :: head}"
+    ></th:block>
+  </head>
+  <!--Head End-->
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Sidebar -->
+        <aside th:replace="~{admin/admin-fragments/sidebar :: sidebar}"></aside>
+        <!--  Sidebar -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+          <nav
+            th:replace="~{admin/admin-fragments/admin-navbar :: navbar}"
+          ></nav>
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <!-- Basic Layout -->
+              <div class="row">
+                <div class="col-xl">
+                  <div class="card mb-6">
+                    <h5 class="card-header">Category Products</h5>
+                    <div class="card-body">
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-6"
+                      >
+                        <form class="d-flex" onsubmit="return false">
+                          <input
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                          />
+                        </form>
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          onclick="addItemModal()"
+                        >
+                          Add
+                        </button>
+                      </div>
+
+                      <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                          <thead class="table-primary">
+                            <tr>
+                              <th>Image Category</th>
+                              <th>name</th>
+                              <th>active</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody class="table-border-bottom-0">
+                            <tr>
+                              <td>
+                                <img
+                                  src=""
+                                  alt="collapse-image"
+                                  height="70"
+                                  class="me-6 mb-sm-0 mb-2"
+                                />
+                              </td>
+                              <td>Albert Cook</td>
+                              <td>Yes</td>
+                              <td>
+                                <div class="dropdown">
+                                  <button
+                                    type="button"
+                                    class="btn p-0 dropdown-toggle hide-arrow"
+                                    data-bs-toggle="dropdown"
+                                  >
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                  </button>
+                                  <div class="dropdown-menu">
+                                    <a
+                                      class="dropdown-item"
+                                      href="javascript:void(0);"
+                                      ><i class="bx bx-edit-alt me-1"></i>
+                                      Edit</a
+                                    >
+                                    <a
+                                      class="dropdown-item"
+                                      href="javascript:void(0);"
+                                      ><i class="bx bx-trash me-1"></i>
+                                      Delete</a
+                                    >
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div
+                          class="d-flex justify-content-between align-items-center mt-6"
+                        >
+                          <p>Showing 1 to 10 of 57 entries</p>
+                          <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-end">
+                              <li class="page-item prev">
+                                <a class="page-link" href="javascript:void(0);"
+                                  ><i
+                                    class="tf-icon bx bx-chevrons-left bx-sm"
+                                  ></i
+                                ></a>
+                              </li>
+                              <li class="page-item">
+                                <a class="page-link" href="javascript:void(0);"
+                                  >1</a
+                                >
+                              </li>
+                              <li class="page-item active">
+                                <a class="page-link" href="javascript:void(0);"
+                                  >2</a
+                                >
+                              </li>
+                              <li class="page-item">
+                                <a class="page-link" href="javascript:void(0);"
+                                  >3</a
+                                >
+                              </li>
+                              <li class="page-item next">
+                                <a class="page-link" href="javascript:void(0);"
+                                  ><i
+                                    class="tf-icon bx bx-chevrons-right bx-sm"
+                                  ></i
+                                ></a>
+                              </li>
+                            </ul>
+                          </nav>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer Section Begin -->
+            <footer
+              th:replace="~{admin/admin-fragments/admin-footer :: admin-footer}"
+            ></footer>
+            <!-- Footer Section End -->
+
+            <!-- Modal Begin -->
+            <div
+              id="modalAddEdit"
+              class="modal fade"
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel3">
+                      Modal title
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div
+                      th:replace="~{/admin/admin-category-products/add-edit-category :: add-edit-category}"
+                    ></div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary me-2"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                      Save changes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal End -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <th:block
+      th:replace="~{admin/admin-fragments/admin-scripts :: admin-scripts}"
+    ></th:block>
+
+    <script type="text/javascript">
+      function addItemModal() {
+        modal = new bootstrap.Modal($("#modalAddEdit"));
+        modal.toggle();
+        // resetUiAdd();
+      }
+
+      // function editItemModal(index) {
+      //   modal = new bootstrap.Modal($("#modalAddEdit"));
+      //   modal.toggle();
+      //   resetUiEdit(index);
+      // }
+    </script>
+  </body>
+</html>

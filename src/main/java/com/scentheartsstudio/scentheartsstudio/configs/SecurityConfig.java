@@ -24,10 +24,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Autowired
-    JwtUserDetailService jwtUserDetailService;
+    private JwtUserDetailService jwtUserDetailService;
 
     @Autowired
-    AuthEntryPointJwt authEntryPointJwt;
+    private AuthEntryPointJwt authEntryPointJwt;
 
     @Bean
     public AuthTokenFilter authTokenFilter(){
@@ -40,8 +40,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/category/**", "/api/variant/**", "/api/product/**",
-                                "/api/cart/**", "/api/profile/**").authenticated()
+                        .requestMatchers("/api/category/**", "/api/product/**", "/api/productSize/**", "/api/cart/**",
+                                "/api/profile/**").authenticated()
                         .anyRequest().permitAll())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPointJwt))
                 .authenticationProvider(authenticationProvider())
@@ -51,10 +51,10 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(jwtUserDetailService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(jwtUserDetailService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
     }
 
     @Bean
@@ -64,6 +64,6 @@ public class SecurityConfig {
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
+        return new BCryptPasswordEncoder();
     }
 }

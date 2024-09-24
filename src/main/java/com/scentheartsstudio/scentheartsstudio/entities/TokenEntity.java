@@ -24,9 +24,6 @@ public class TokenEntity extends BaseProperties {
     @Column(length = 100)
     private String email;
 
-    @Column
-    private Long user_id;
-
     @Column(length = 50)
     private String token;
 

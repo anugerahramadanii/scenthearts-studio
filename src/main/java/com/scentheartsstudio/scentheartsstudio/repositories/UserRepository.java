@@ -9,6 +9,7 @@ import com.scentheartsstudio.scentheartsstudio.entities.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
+
     @Query(nativeQuery = true, value = "select * from m_user where email = :email and password = :password")
     public UserEntity getEmailAndPasswordUser(@Param("email") String email, @Param("password") String password);
 
@@ -23,4 +24,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     value = "SELECT * FROM m_user where email = :email and is_delete = false")
     public UserEntity getUserByEmail(@Param("email") String email);
 
+    @Query(nativeQuery = true,
+    value = "select r.code from m_user u inner join m_role r on r.id = u.role_id where u.id = :userId and u.is_delete = false")
+    public String getRoleByUserId(@Param("userId") Long userId);
 }

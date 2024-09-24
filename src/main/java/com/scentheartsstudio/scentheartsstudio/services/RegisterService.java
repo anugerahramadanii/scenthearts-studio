@@ -4,19 +4,19 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.scentheartsstudio.scentheartsstudio.dto.RegisterDTO;
 import com.scentheartsstudio.scentheartsstudio.entities.BiodataEntity;
-import com.scentheartsstudio.scentheartsstudio.entities.CustomerEntity;
 import com.scentheartsstudio.scentheartsstudio.entities.TokenEntity;
 import com.scentheartsstudio.scentheartsstudio.entities.UserEntity;
 import com.scentheartsstudio.scentheartsstudio.repositories.BiodataRepository;
-import com.scentheartsstudio.scentheartsstudio.repositories.CustomerRepository;
 import com.scentheartsstudio.scentheartsstudio.repositories.TokenRepository;
 import com.scentheartsstudio.scentheartsstudio.repositories.UserRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import com.scentheartsstudio.scentheartsstudio.utils.Utilities;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RegisterService {
@@ -30,13 +30,12 @@ public class RegisterService {
     private BiodataRepository br;
 
     @Autowired
-    private CustomerRepository cr;
-
-    @Autowired
     private EmailService es;
 
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
+    @Transactional
     public void registerUser(RegisterDTO registerDTO) throws CustomException {
 
         Boolean isTokenCorrect = tr.isTokenCorrect(registerDTO.getEmail(), registerDTO.getOtp());
@@ -58,7 +57,10 @@ public class RegisterService {
 
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(registerDTO.getEmail());
-        userEntity.setPassword(encoder.encode(passwordUser));
+        userEntity.setPassword(passwordEncoder.encode(passwordUser));
+        userEntity.setLast_login(new Date());
+        userEntity.setIs_locked(false);
+        userEntity.setLogin_attempt(0);
         userEntity.setCreated_by(1L);
         userEntity.setCreated_on(new Date());
         userEntity.setRole_id(2L); //User
@@ -66,27 +68,18 @@ public class RegisterService {
         userEntity = ur.save(userEntity);
 
         BiodataEntity biodataEntity = new BiodataEntity();
-        biodataEntity.setFirstname(registerDTO.getFirstname());
-        biodataEntity.setLastname(registerDTO.getLastname());
+        biodataEntity.setFullname(registerDTO.getFullname());
         biodataEntity.setMobile_phone(registerDTO.getMobile_phone());
-        biodataEntity.setCreated_by(1L);
+        biodataEntity.setCreated_by(userEntity.getId());
         biodataEntity.setCreated_on(new Date());
 
         biodataEntity = br.save(biodataEntity);
-
-        CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setBiodata_id(biodataEntity.getId());
-        customerEntity.setCreated_by(1L);
-        customerEntity.setCreated_on(new Date());
-
-        cr.save(customerEntity);
-
         // update biodata.id di table m_user
         userEntity.setBiodata_id(biodataEntity.getId());
-
         ur.save(userEntity);
     }
 
+    @Transactional
     public void sendRegisterEmailOTP(String email) throws CustomException {
         Boolean isEmailExists = ur.isEmailExists(email);
         if (isEmailExists) {
@@ -95,11 +88,10 @@ public class RegisterService {
 
         String token = Utilities.generateToken6Digit();
         String usedFor = "Register Account";
-        Date expiredOn = new Date(System.currentTimeMillis() + (1000 * 60 * 5));
+        Date expiredOn = new Date(System.currentTimeMillis() + (1000 * 60 * 30));
 
         TokenEntity tokenEntity = new TokenEntity();
         tokenEntity.setEmail(email);
-        tokenEntity.setUser_id(2L);
         tokenEntity.setExpired_on(expiredOn);
         tokenEntity.setToken(token);
         tokenEntity.setUsed_for(usedFor);
@@ -113,5 +105,4 @@ public class RegisterService {
                 " Token expired in " + expiredOn;
         es.sendEmail(email, subject, msgBody);
     }
-
 }

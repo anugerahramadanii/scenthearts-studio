@@ -16,10 +16,13 @@ public class BiodataEntity extends BaseProperties {
     private Long id;
 
     @Column(length = 255)
-    private String firstname;
+    private String fullname;
 
-    @Column(length = 255)
-    private String lastname;
+    // @Column(length = 255)
+    // private String firstname;
+
+    // @Column(length = 255)
+    // private String lastname;
 
     @Column(length = 15)
     private String mobile_phone;

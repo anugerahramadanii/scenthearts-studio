@@ -1,0 +1,134 @@
+.featured__item__pic__hover li:active {
+  transform: translateY(2px); /* Efek sedikit turun saat tombol ditekan */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Mengurangi bayangan */
+}
+
+.featured__item__pic__hover li:last-child {
+  margin-right: 0;
+}
+
+.featured__item__pic__hover li:hover a {
+  background: var(--silver-hover);
+  /* border-color: var(--silver); */
+}
+
+.featured__item__pic__hover li:hover a i {
+  color: #ffffff;
+  transform: rotate(360deg);
+}
+
+/*  transition: all 0.3s ease; Animasi untuk transisi halus */
+/* 1382 - 1385 */
+.product__item__pic__hover li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* 1388-1389 */
+.product__item__pic__hover li:last-child {
+  margin-right: 0;
+}
+
+/* 1392- 1394 */
+.product__item__pic__hover li:hover a {
+  background: #7fad39;
+  border-color: #7fad39;
+}
+
+/* 1397 - 1399 */
+.product__item__pic__hover li:hover a i {
+  color: #ffffff;
+  transform: rotate(360deg);
+}
+
+/* 1402 - 1417 */
+.product__item__pic__hover li a {
+  font-size: 16px;
+  color: #1c1c1c;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #ebebeb;
+  background: #ffffff;
+  display: block;
+  border-radius: 50%;
+  -webkit-transition: all, 0.5s;
+  -moz-transition: all, 0.5s;
+  -ms-transition: all, 0.5s;
+  -o-transition: all, 0.5s;
+  transition: all, 0.5s;
+}
+
+/* 1420 - 1427 */
+.product__item__pic__hover li a i {
+  position: relative;
+  transform: rotate(0);
+  -webkit-transition: all, 0.3s;
+  -moz-transition: all, 0.3s;
+  -ms-transition: all, 0.3s;
+  -o-transition: all, 0.3s;
+  transition: all, 0.3s;
+}
+
+.product__item__pic__hover {
+  position: absolute;
+  left: 0;
+  bottom: -50px;
+  width: 100%;
+  text-align: center;
+  -webkit-transition: all, 0.5s;
+  -moz-transition: all, 0.5s;
+  -ms-transition: all, 0.5s;
+  -o-transition: all, 0.5s;
+  transition: all, 0.5s;
+}
+
+.product__item__pic__hover li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.product__item__pic__hover li:last-child {
+  margin-right: 0;
+}
+
+.product__item__pic__hover li:hover a {
+  background: #7fad39;
+  border-color: #7fad39;
+}
+
+.product__item__pic__hover li:hover a i {
+  color: #ffffff;
+  transform: rotate(360deg);
+}
+
+.product__item__pic__hover li a {
+  font-size: 16px;
+  color: #1c1c1c;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #ebebeb;
+  background: #ffffff;
+  display: block;
+  border-radius: 50%;
+  -webkit-transition: all, 0.5s;
+  -moz-transition: all, 0.5s;
+  -ms-transition: all, 0.5s;
+  -o-transition: all, 0.5s;
+  transition: all, 0.5s;
+}
+
+.product__item__pic__hover li a i {
+  position: relative;
+  transform: rotate(0);
+  -webkit-transition: all, 0.3s;
+  -moz-transition: all, 0.3s;
+  -ms-transition: all, 0.3s;
+  -o-transition: all, 0.3s;
+  transition: all, 0.3s;
+}

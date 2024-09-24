@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style layout-wide customizer-hide"
+  dir="ltr"
+  data-theme="theme-default"
+  data-admin-path="../admin/"
+  data-template="vertical-menu-template-free"
+  data-style="light"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Scenthearts Studio</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../admin/img/favicon/ss-logo.png"
+    />
+
+    <!-- Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+    />
+
+    <link rel="stylesheet" href="../admin/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link
+      rel="stylesheet"
+      href="../admin/vendor/css/core.css"
+      class="template-customizer-core-css"
+    />
+    <link
+      rel="stylesheet"
+      href="../admin/vendor/css/theme-default.css"
+      class="template-customizer-theme-css"
+    />
+    <link rel="stylesheet" href="../admin/css/demo.css" />
+    <!-- Vendors CSS -->
+    <link
+      rel="stylesheet"
+      href="../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"
+    />
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="../admin/vendor/css/pages/page-auth.css" />
+
+    <!-- Helpers -->
+    <script src="../admin/vendor/js/helpers.js"></script>
+    <script src="../admin/js/config.js"></script>
+  </head>
+
+  <body>
+    <!-- Content -->
+    <!-- Page Preloder -->
+    <div th:insert="~{/user/fragments/preloder :: preloder}"></div>
+    <!-- Page Preloder End-->
+
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <!-- Register Card -->
+          <div class="card px-sm-6 px-0">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center mb-6">
+                <a th:href="@{/register}" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo">
+                    <img src="../admin/img/ss-logo2.png" alt="" />
+                  </span>
+                  <span class="app-brand-text demo text-heading fw-bold"
+                    >Scenthears Studio</span
+                  >
+                </a>
+              </div>
+              <!-- /Logo -->
+              <p class="mb-3">Sign-up now for more detail</p>
+
+              <form id="formRegister" class="mb-6" action="">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <label for="email" class="form-label">Email Address</label>
+                    <div class="input-group mb-3">
+                      <input
+                        id="email"
+                        type="email"
+                        class="form-control"
+                        placeholder="Email address"
+                        aria-label="Email address"
+                        aria-describedby="btn-otp"
+                        autofocus
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="text-white self-btn-group"
+                          type="button"
+                          id="btn-otp"
+                        >
+                          Send OTP
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="err-send-email">
+                  <!-- <p class="text-danger">Email can not empty!!</p> -->
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <div>
+                      <label for="emailOtp" class="form-label">Email OTP</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="emailOtp"
+                        name="emailOtp"
+                        placeholder="Enter your OTP"
+                      />
+                    </div>
+                    <div id="err-email-otp">
+                      <!-- <p class="text-danger">Email OTP not empty!!</p> -->
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div>
+                      <label for="phoneNumber" class="form-label"
+                        >Phone Number</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        placeholder="Enter your phone number"
+                        autofocus
+                      />
+                    </div>
+                    <div id="err-phone-number"></div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="fullname" class="form-label">Fullname</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fullname"
+                    name="fullname"
+                    placeholder="Enter your fullname"
+                    autofocus
+                  />
+                </div>
+                <div id="err-fullname">
+                  <!-- <p class="text-danger">Fullname can not empty!!</p> -->
+                </div>
+
+                <div class="mb-3 form-password-toggle">
+                  <label class="form-label" for="password">Password</label>
+                  <div class="input-group input-group-merge">
+                    <input
+                      type="password"
+                      id="password"
+                      class="form-control"
+                      name="password"
+                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      aria-describedby="password"
+                    />
+                    <span class="input-group-text cursor-pointer"
+                      ><i class="bx bx-hide"></i
+                    ></span>
+                  </div>
+                </div>
+                <div id="err-password">
+                  <!-- <p class="text-danger">Password can not empty!!</p> -->
+                </div>
+                <div class="mb-3 form-password-toggle">
+                  <label class="form-label" for="confirm-password"
+                    >Confirm Password</label
+                  >
+                  <div class="input-group input-group-merge">
+                    <input
+                      type="password"
+                      id="confirm-password"
+                      class="form-control"
+                      name="confirm-password"
+                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      aria-describedby="password"
+                    />
+                    <span class="input-group-text cursor-pointer"
+                      ><i class="bx bx-hide"></i
+                    ></span>
+                  </div>
+                </div>
+                <div id="err-confirm-password">
+                  <!-- <p class="text-danger">Confirm Password can not empty!!</p> -->
+                </div>
+                <button class="btn text-white d-grid w-100 self-btn">
+                  Sign up
+                </button>
+              </form>
+
+              <p class="text-center">
+                <span>Already have an account?</span>
+                <a href="">
+                  <span>Sign in instead</span>
+                </a>
+              </p>
+            </div>
+          </div>
+          <!-- Register Card -->
+        </div>
+        <div
+          class="bs-toast toast fade show bg-success"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          <div class="toast-header">
+            <i class="bx bx-bell me-2"></i>
+            <div class="me-auto fw-medium">Bootstrap</div>
+            <small>11 mins ago</small>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="toast"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="toast-body">
+            Fruitcake chocolate bar tootsie roll gummies gummies jelly beans
+            cake.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- / Content -->
+
+    <!-- Core JS -->
+    <!-- build:js admin/vendor/js/core.js -->
+    <script src="../admin/vendor/libs/jquery/jquery.js"></script>
+    <script src="../admin/vendor/libs/popper/popper.js"></script>
+    <script src="../admin/vendor/js/bootstrap.js"></script>
+    <script src="../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../admin/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+    <!-- Vendors JS -->
+    <!-- Main JS -->
+    <script src="../admin/js/main.js"></script>
+    <!-- Page JS -->
+    <script src="../admin/js/ui-toasts.js"></script>
+
+    <!-- AJAX SCRIPT API -->
+    <script>
+      async function verifyEmailAPI(email) {
+        var form = new FormData();
+        form.append("email", email);
+
+        var settings = {
+          url: "/api/register/verifyEmail",
+          method: "POST",
+          timeout: 0,
+          processData: false,
+          mimeType: "multipart/form-data",
+          contentType: false,
+          data: form,
+        };
+
+        return $.ajax(settings);
+      }
+
+      async function registerAPI(respBody) {
+        var settings = {
+          url: "/api/register",
+          method: "POST",
+          timeout: 0,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: respBody,
+        };
+
+        return $.ajax(settings);
+      }
+    </script>
+
+    <!-- variable global -->
+    <script>
+      let modal;
+      let countdownValue = 60;
+      let countdownInterval;
+      let isCountdownRunning = false;
+    </script>
+
+    <script>
+      function startCountdown() {
+        if (!isCountdownRunning) {
+          countdownInterval = setInterval(() => {
+            $("#btn-otp").html(`Resend Email in ${countdownValue}s`);
+            $("#btn-otp").prop("disabled", true);
+            countdownValue--;
+
+            if (countdownValue < 0) {
+              clearInterval(countdownInterval);
+              $("#btn-otp").html("Send OTP");
+              $("#btn-otp").prop("disabled", false);
+              countdownValue = 60;
+              isCountdownRunning = false;
+            }
+          }, 1000);
+          isCountdownRunning = true;
+        }
+      }
+
+      $(document).ready(function () {
+        $("#btn-otp").click(async function () {
+          // literal regex
+          const emailRegex =
+            /^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/;
+
+          const email = $("#email").val();
+          if (email == "" || email == null) {
+            $("#err-send-email").html(
+              `<p class="text-danger">Email can not empty!!</p>`
+            );
+            return;
+          }
+          if (!email.match(emailRegex)) {
+            $("#err-send-email").html(
+              `<p class="text-danger">Invalid email format!!</p>`
+            );
+            return;
+          }
+          $("#err-send-email").html("");
+          try {
+            console.log("Mengirim request ke API...");
+            const res = await verifyEmailAPI(email);
+            const response = JSON.parse(res);
+            console.log("Response diterima:", response);
+            if (response.code == 200) {
+              startCountdown();
+            } else {
+              // console.error("Gagal mengirim OTP");
+              let errorMsg = `<p class="text-danger">${response.message}</p>`;
+              $("#err-send-email").html(errorMsg);
+            }
+          } catch (error) {
+            console.error(error);
+            $("#err-send-email").html(
+              `<p class="text-danger">Failed to send OTP. Please try again later.</p>`
+            );
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

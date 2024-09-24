@@ -23,11 +23,11 @@ public class ProductEntity extends BaseProperties {
     @Column(length = 255)
     private String image_path;
 
-    @Column
-    private String description;
-
     @Column(nullable = false, length = 18, precision = 2)
     private Double price;
+
+    @Column
+    private String description;
 
     @Column(nullable = false)
     private Boolean active;

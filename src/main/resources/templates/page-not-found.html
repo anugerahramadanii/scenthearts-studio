@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style layout-wide customizer-hide"
+  dir="ltr"
+  data-theme="theme-default"
+  data-admin-path="../admin/"
+  data-template="vertical-menu-template-free"
+  data-style="light"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Scenthearts Studio</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <!-- <link
+      rel="icon"
+      type="image/x-icon"
+      href="../admin/img/favicon/ss-logo.ico"
+    /> -->
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="../admin/img/favicon/ss-logo.png"
+    />
+    <!-- Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+    />
+
+    <link rel="stylesheet" href="../admin/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link
+      rel="stylesheet"
+      href="../admin/vendor/css/core.css"
+      class="template-customizer-core-css"
+    />
+    <link
+      rel="stylesheet"
+      href="../admin/vendor/css/theme-default.css"
+      class="template-customizer-theme-css"
+    />
+    <link rel="stylesheet" href="../admin/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link
+      rel="stylesheet"
+      href="../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"
+    />
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="../admin/vendor/css/pages/page-auth.css" />
+
+    <!-- Helpers -->
+    <script src="../admin/vendor/js/helpers.js"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="../admin/js/config.js"></script>
+  </head>
+
+  <body>
+    <!-- Content -->
+    <!-- Page Preloder -->
+    <div th:insert="~{/user/fragments/preloder :: preloder}"></div>
+    <!-- Page Preloder End-->
+
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <!-- Register -->
+          <div
+            class="card px-sm-6 px-0 d-flex justify-content-center align-items-center"
+          >
+            <div class="card-body">
+              <div class="misc-wrapper">
+                <h1
+                  class="mb-2 mx-auto"
+                  style="line-height: 6rem; font-size: 6rem"
+                >
+                  404
+                </h1>
+                <h4 class="mb-2 mx-auto">Page Not Found️ ⚠️</h4>
+                <p class="mb-6 mx-auto">
+                  we couldn't find the page you are looking for
+                </p>
+                <a
+                  th:href="@{/scenthearts-studio}"
+                  class="btn text-white self-btn"
+                  >Back to home</a
+                >
+                <!-- <div class="mt-6">
+                  <img
+                    src="../admin/img/illustrations/page-misc-error-light.png"
+                    alt="page-misc-error-light"
+                    width="500"
+                    class="img-fluid"
+                    data-app-light-img="illustrations/page-misc-error-light.png"
+                    data-app-dark-img="illustrations/page-misc-error-dark.png"
+                  />
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <!-- /Register -->
+        </div>
+      </div>
+    </div>
+
+    <!-- / Content -->
+
+    <!-- Core JS -->
+    <!-- build:js admin/vendor/js/core.js -->
+
+    <script src="../admin/vendor/libs/jquery/jquery.js"></script>
+    <script src="../admin/vendor/libs/popper/popper.js"></script>
+    <script src="../admin/vendor/js/bootstrap.js"></script>
+    <script src="../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../admin/vendor/js/menu.js"></script>
+
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="../admin/js/main.js"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag before closing body tag for github widget button. -->
+    <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
+  </body>
+</html>

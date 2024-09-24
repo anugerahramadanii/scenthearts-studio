@@ -32,15 +32,16 @@ public class UserService {
 
     //Login
     public LoginDTO loginService(String email, String password) throws CustomException {
-        UserEntity dataUser = ur.getUserByEmail(email); // Fetch user by email only
+        UserEntity dataUser = ur.getUserByEmail(email);
+
+        Authentication auth = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
 
         if (dataUser == null || !passwordEncoder.matches(password, dataUser.getPassword())) {
             throw new CustomException(401, "Email atau Password Salah!");
         }
 
-        Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password)
-        );
         SecurityContextHolder.getContext().setAuthentication(auth);
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String token = jwtTokenUtil.generateToken(userDetails);

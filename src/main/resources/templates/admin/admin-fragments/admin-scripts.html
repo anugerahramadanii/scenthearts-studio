@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <th:block th:fragment="admin-scripts">
+      <!-- Core JS -->
+      <!-- build:js admin/vendor/js/core.js -->
+
+      <script
+        src="../admin/vendor/libs/jquery/jquery.js"
+        th:src="@{/admin/vendor/libs/jquery/jquery.js}"
+      ></script>
+      <script
+        src="../admin/vendor/libs/popper/popper.js"
+        th:src="@{/admin/vendor/libs/popper/popper.js}"
+      ></script>
+      <script
+        src="../admin/vendor/js/bootstrap.js"
+        th:src="@{/admin/vendor/js/bootstrap.js}"
+      ></script>
+      <script
+        src="../admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"
+        th:src="@{/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"
+      ></script>
+      <script
+        src="../admin/vendor/js/menu.js"
+        th:src="@{/admin/vendor/js/menu.js}"
+      ></script>
+
+      <!-- endbuild -->
+
+      <!-- Vendors JS -->
+
+      <!-- Main JS -->
+      <script src="../admin/js/main.js" th:src="@{/admin/js/main.js}"></script>
+      <!-- <script src="../admin/js/ui-modals.js"></script> -->
+      <!-- Page JS -->
+      <!-- Page JS -->
+      <script
+        src="../admin/js/ui-modals.js"
+        th:src="@{/admin/js/ui-modals.js}"
+      ></script>
+      <!-- Place this tag before closing body tag for github widget button. -->
+      <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
+    </th:block>
+  </body>
+</html>

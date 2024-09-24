@@ -1,5 +1,6 @@
 package com.scentheartsstudio.scentheartsstudio.entities;
 
+import com.scentheartsstudio.scentheartsstudio.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,17 +12,22 @@ import java.util.List;
 
 public class UserPrincipal implements UserDetails {
 
-	@Autowired
-	UserEntity userEntity;
+	private UserEntity userEntity;
+	private UserRepository userRepository;
 
-	public UserPrincipal(UserEntity userEntity) {
+	public UserPrincipal(UserEntity userEntity, UserRepository userRepository) {
 		this.userEntity = userEntity;
+		this.userRepository = userRepository;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole_id()));
+
+		String role = userRepository.getRoleByUserId(userEntity.getId());
+//		System.out.println("Role fetched: " + role);
+
+		authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 		return authorities;
 	}
 

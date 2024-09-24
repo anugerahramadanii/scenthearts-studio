@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!--Head Begin-->
+  <head>
+    <th:block th:replace="~{fragments/head :: head}"></th:block>
+  </head>
+  <!--Head End-->
+
+  <body>
+    <!-- Page Preloder -->
+    <div th:insert="~{fragments/preloder :: preloder}"></div>
+    <!--    Page Preloder End-->
+
+    <!-- Login Section Begin -->
+    <section class="register">
+      <div class="container">
+        <div
+          class="page-wrapper"
+          id="main-wrapper"
+          data-layout="vertical"
+          data-navbarbg="skin6"
+          data-sidebartype="full"
+          data-sidebar-position="fixed"
+          data-header-position="fixed"
+        >
+          <div
+            class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center"
+          >
+            <div class="d-flex align-items-center justify-content-center w-100">
+              <div class="row justify-content-center w-100">
+                <div class="col-md-8 col-lg-6 col-xxl-3">
+                  <div class="card mb-0">
+                    <div class="card-body">
+                      <h2 class="text-center">Scenthearts Studio</h2>
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label for="firstname" class="form-label">
+                                Firstname<span>*</span>
+                              </label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="firstname"
+                                placeholder="First name"
+                                aria-describedby="textHelp"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label for="lastname" class="form-label">
+                                Lastname<span>*</span>
+                              </label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="lastname"
+                                placeholder="Last name"
+                                aria-describedby="textHelp"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <label for="email" class="form-label"
+                              >Email Address<span>*</span></label
+                            >
+                            <div class="input-group mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Email address"
+                                aria-label="Email address"
+                                aria-describedby="btn-register"
+                              />
+                              <div class="input-group-append">
+                                <button
+                                  class="btn text-white self-btn-register"
+                                  type="button"
+                                  id="btn-register"
+                                >
+                                  Send OTP
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="mb-3">
+                              <label for="email-otp" class="form-label"
+                                >Email OTP<span>*</span></label
+                              >
+                              <input
+                                type="email-otp"
+                                class="form-control"
+                                id="email-otp"
+                                placeholder="OTP"
+                                aria-describedby="emailHelp"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="phone-number" class="form-label">
+                            Phone Number
+                          </label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="phone-number"
+                            placeholder="Phone Number"
+                            aria-describedby="textHelp"
+                          />
+                        </div>
+
+                        <div class="row mb-4">
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label for="password" class="form-label"
+                                >Password<span>*</span></label
+                              >
+                              <input
+                                type="password"
+                                class="form-control"
+                                placeholder="Password"
+                                id="password"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-3">
+                              <label for="confirm-password" class="form-label"
+                                >Confirm Password<span>*</span></label
+                              >
+                              <input
+                                type="password"
+                                class="form-control"
+                                placeholder="Confirm Password"
+                                id="confirm-password"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <button
+                          type="submit"
+                          th:href="@{/scenthearts-studio}"
+                          class="btn text-white w-100 py-8 fs-4 mb-4 rounded-2 self-btn"
+                        >
+                          Sign Up
+                        </button>
+                        <div
+                          class="d-flex align-items-center justify-content-center"
+                        >
+                          <p class="fs-4 mb-0 fw-bold">
+                            Already have an Account?
+                          </p>
+                          <a
+                            class="text-primary fw-bold ms-2"
+                            th:href="@{/login}"
+                            >Sign In</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Login Section End -->
+
+    <!-- Footer Section Begin -->
+    <!-- <footer th:replace="~{fragments/footer :: footer}"></footer> -->
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+  </body>
+</html>

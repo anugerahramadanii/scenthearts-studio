@@ -1,0 +1,22 @@
+<div th:fragment="admin-profile-layout" class="nav-align-top">
+  <ul class="nav nav-pills flex-column flex-md-row mb-6">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        th:classappend="${currentUri == '/admin-profile-account'} ? 'active'"
+        th:href="@{/admin-profile-account}"
+      >
+        <i class="bx bx-sm bx-user me-1_5"></i> Account
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        th:classappend="${currentUri == '/admin-profile-change-password'} ? 'active'"
+        th:href="@{/admin-profile-change-password}"
+      >
+        <i class="bx bx-sm bx-bell me-1_5"></i> Change Password
+      </a>
+    </li>
+  </ul>
+</div>

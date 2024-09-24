@@ -6,7 +6,6 @@ import java.util.List;
 
 @Data
 public class MidtransRequestDTO {
-
 	private TransactionDetails transaction_details;
 	private List<ItemDetails> item_details;
 	private CustomerDetails customer_details;

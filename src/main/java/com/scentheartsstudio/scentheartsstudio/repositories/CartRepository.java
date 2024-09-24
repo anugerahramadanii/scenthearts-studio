@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<CartEntity, Long> {
 	@Query(nativeQuery = true,
 	value = "select c.id, c.product_id as product_id, p.name as product_name,\n"
-			+ "\tc.product_size_id as product_size_id, p.image_path, c.product_price, c.total_price, ps.name as size_name,\n"
+			+ "\tc.product_size_id as product_size_id, p.image_path, c.product_price, c.total_price, ps.size_name,\n"
 			+ "\tc.quantity, c.user_id\n"
 			+ "\tfrom t_cart c\n"
 			+ "\tinner join t_product p\n"

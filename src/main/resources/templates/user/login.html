@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!--Head Begin-->
+  <head>
+    <th:block th:replace="~{fragments/head :: head}"></th:block>
+  </head>
+  <!--Head End-->
+
+  <body>
+    <!-- Page Preloder -->
+    <div th:insert="~{fragments/preloder :: preloder}"></div>
+    <!--    Page Preloder End-->
+
+    <!-- Login Section Begin -->
+    <section class="login">
+      <div class="container">
+        <div
+          class="page-wrapper"
+          id="main-wrapper"
+          data-layout="vertical"
+          data-navbarbg="skin6"
+          data-sidebartype="full"
+          data-sidebar-position="fixed"
+          data-header-position="fixed"
+        >
+          <div
+            class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center"
+          >
+            <div class="d-flex align-items-center justify-content-center w-100">
+              <div class="row justify-content-center w-100">
+                <div class="col-md-8 col-lg-6 col-xxl-3">
+                  <div class="card mb-0">
+                    <div class="card-body">
+                      <h2 class="text-center">Scenthearts Studio</h2>
+                      <form id="login-form">
+                        <div class="mb-3">
+                          <label for="email" class="form-label"
+                            >Email<span>*</span></label
+                          >
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            aria-describedby="emailHelp"
+                          />
+                        </div>
+                        <div class="mb-4">
+                          <label for="password" class="form-label"
+                            >Password<span>*</span></label
+                          >
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                          />
+                        </div>
+                        <div
+                          class="d-flex align-items-center justify-content-between mb-4"
+                        >
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id="checkbox-remember-me"
+                              checked
+                            />
+                            <label
+                              class="form-check-label text-dark"
+                              for="checkbox-remember-me"
+                            >
+                              Remeber this Device
+                            </label>
+                          </div>
+                          <a
+                            id="btn-forgot-password"
+                            class="text-primary fw-bold"
+                            th:href="@{/scenthearts-studio}"
+                            >Forgot Password ?</a
+                          >
+                        </div>
+                        <button
+                          id="btn-login"
+                          class="btn text-white w-100 py-8 fs-4 mb-4 rounded-2 self-btn"
+                          type="submit"
+                        >
+                          Sign In
+                        </button>
+                        <div
+                          class="d-flex align-items-center justify-content-center"
+                        >
+                          <p class="fs-4 mb-0 fw-bold">
+                            Don't have an account?
+                          </p>
+                          <a
+                            class="text-primary fw-bold ms-2"
+                            th:href="@{/register}"
+                            >Sign up</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Login Section End -->
+
+    <!-- Js Plugins -->
+    <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+  </body>
+
+  <!-- Ajax API -->
+  <script>
+    async function loginAPI(email, password) {
+      var form = new FormData();
+      form.append("email", email);
+      form.append("password", password);
+
+      var settings = {
+        url: "/api/login",
+        method: "POST",
+        timeout: 0,
+        processData: false,
+        mimeType: "multipart/form-data",
+        contentType: false,
+        data: form,
+      };
+
+      return $.ajax(settings);
+    }
+
+    function loginSuccessAPI(user_id) {
+      var form = new FormData();
+      form.append("user_id", user_id);
+
+      var settings = {
+        url: "/login/success",
+        method: "POST",
+        timeout: 0,
+        processData: false,
+        mimeType: "multipart/form-data",
+        contentType: false,
+        data: form,
+      };
+
+      return $.ajax(settings);
+    }
+  </script>
+  <script>
+    $(document).ready(function () {
+      $("#login-form").on("submit", async function (e) {
+        e.preventDefault();
+        const email = $("#email").val();
+        // console.log(email);
+        const password = $("#password").val();
+        // console.log(password);
+
+        if (!email || !password) {
+          alert("Email and Password cannot be empty.");
+          return;
+        }
+
+        try {
+          const res = await loginAPI(email, password);
+          const response = JSON.parse(res);
+          // console.log(response);
+
+          if (response.code == 200) {
+            // Set token to local storage
+            localStorage.setItem("token", response.data.token);
+            // Redirect to dashboard
+            loginSuccessAPI(response.data.user_id);
+            window.location.href = "/";
+          } else {
+            alert(response.message);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Login gagal! Silakan coba lagi.");
+        }
+      });
+    });
+  </script>
+</html>

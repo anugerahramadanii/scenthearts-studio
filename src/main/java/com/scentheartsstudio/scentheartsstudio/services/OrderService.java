@@ -53,6 +53,8 @@ public class OrderService {
 		orderEntity.setOrder_number(orderNumber);
 		orderEntity.setStatus(OrderStatusEnum.PENDING);
 		orderEntity.setOrder_date(new Date());
+		orderEntity.setCreated_by(orderDTO.getUser_id());
+		orderEntity.setCreated_on(new Date());
 
 		List<OrderItemEntity> items = new ArrayList<>();
 		double totalAmount = 0.0;
@@ -80,7 +82,7 @@ public class OrderService {
 			totalAmount += orderItemEntity.getTotal_amount();
 			items.add(orderItemEntity);
 
-//			psr.decreaseStock(orderItemDTO.getProduct_id(), orderItemDTO.getProduct_size_id(), orderItemDTO.getQuantity());
+//			pr.decreaseStock(orderItemDTO.getProduct_id(), orderItemDTO.getProduct_size_id(), orderItemDTO.getQuantity());
 		}
 
 		// Calculate the shipping cost using RajaOngkir

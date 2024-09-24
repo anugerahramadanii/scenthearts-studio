@@ -14,14 +14,14 @@ public class ProductSizeEntity extends BaseProperties {
 	@Column(nullable = false)
 	private Long id;
 
-	@Column
+	@Column(nullable = false)
 	private Long product_id;
 
-	@Column
-	private Integer quantity;
-
 	@Column(nullable = false, length = 5)
-	private String name;
+	private String size_name;
+
+	@Column
+	private Integer stock;
 
 	@Column
 	private Boolean active;

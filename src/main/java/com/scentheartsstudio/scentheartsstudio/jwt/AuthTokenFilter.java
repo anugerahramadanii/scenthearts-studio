@@ -31,13 +31,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
          final String requestTokenHeader = request.getHeader("Authorization");
 
-         String email = null;
+         String username = null;
          String jwtToken = null;
 
          if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")){
              jwtToken = requestTokenHeader.substring(7);
              try {
-                 email = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+             } catch (IllegalArgumentException e){
+                 logger.warn("Unable to get JWT Token");
              } catch (ExpiredJwtException e) {
                  logger.warn("JWT Token has expired");
              } catch (Exception e) {
@@ -47,12 +49,16 @@ public class AuthTokenFilter extends OncePerRequestFilter {
              logger.warn("JWT Token does not begin with Bearer String");
          }
 
-         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null){
-             UserDetails userDetails = this.jwtUserDetailService.loadUserByUsername(email);
+        // Once we get the token, validate it.
+         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
+             UserDetails userDetails = this.jwtUserDetailService.loadUserByUsername(username);
+
+             // If token is valid configure Spring Security to manually set authentication
              if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                  UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken
                          (userDetails, null, userDetails.getAuthorities());
                  usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                 // After setting the Authentication in the context, we specify that the current user is authenticated.
                  SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 }
              }

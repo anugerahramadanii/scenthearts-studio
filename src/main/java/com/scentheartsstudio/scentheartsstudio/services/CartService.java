@@ -8,7 +8,6 @@ import com.scentheartsstudio.scentheartsstudio.entities.ProductSizeEntity;
 import com.scentheartsstudio.scentheartsstudio.repositories.CartRepository;
 import com.scentheartsstudio.scentheartsstudio.repositories.ProductRepository;
 import com.scentheartsstudio.scentheartsstudio.repositories.ProductSizeRepository;
-import com.scentheartsstudio.scentheartsstudio.repositories.UserRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +26,6 @@ public class CartService {
 	@Autowired
 	private ProductRepository pr;
 
-	@Autowired
-	private UserRepository ur;
 
 	@Autowired
 	private ProductSizeRepository psr;
@@ -39,7 +36,6 @@ public class CartService {
 
 	@Transactional
 	public void addProductToCart(PostCartDTO postCartDTO) throws CustomException {
-		// Cek Product ada atau tidak di db
 		ProductEntity productEntity = pr.findById(postCartDTO.getProduct_id())
 				.orElseThrow(() -> new CustomException(420, "Product with ID " + postCartDTO.getProduct_id() + " Not Found"));
 
@@ -63,7 +59,7 @@ public class CartService {
 		if (quantityInCart == null) {
 			quantityInCart = 0;
 		}
-//		System.out.println("Quantity in cart for this product and size = " + quantityInCart);
+//		System.out.println("Quantity in user " + postCartDTO.getUser_id() + " cart for this product and size = " + quantityInCart);
 
 		if (postCartDTO.getQuantity() <= 0){
 			throw new CustomException(423, "Quantity must be greater than 0");
@@ -128,7 +124,7 @@ public class CartService {
 			throw new CustomException(423, "Quantity must be greater than 0");
 		}
 
-		if (postCartDTO.getQuantity() + quantityInCart > quantityProductInStock){
+		if (postCartDTO.getQuantity() > quantityProductInStock){
 			throw new CustomException(424, "Quantity not enough!!, Product Id " + postCartDTO.getProduct_id() + " with Size " +
 					postCartDTO.getProduct_size_id() + " only has " + (quantityProductInStock - quantityInCart) + " remaining");
 		}
@@ -145,6 +141,7 @@ public class CartService {
 		if (optCart.isEmpty()){
 			throw new CustomException(435, "Product with ID " + postCartDTO.getProduct_id() + " and size " + postCartDTO.getProduct_size_id() + " Not Found in cart");
 		}
+
 		CartEntity cartEntity;
 		cartEntity = optCart.get();
 		cartEntity.setIs_delete(true);
