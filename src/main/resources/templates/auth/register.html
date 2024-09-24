@@ -224,16 +224,19 @@
           </div>
           <!-- Register Card -->
         </div>
+        <!-- Toast with Placements -->
         <div
-          class="bs-toast toast fade show bg-success"
+          id="otp-success-toast"
+          class="bs-toast toast fade bg-success success-toast"
           role="alert"
           aria-live="assertive"
           aria-atomic="true"
+          data-bs-delay="6000"
         >
           <div class="toast-header">
             <i class="bx bx-bell me-2"></i>
-            <div class="me-auto fw-medium">Bootstrap</div>
-            <small>11 mins ago</small>
+            <div class="me-auto fw-bold">Scenthearts Studio</div>
+            <small>Just now</small>
             <button
               type="button"
               class="btn-close"
@@ -241,11 +244,9 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="toast-body">
-            Fruitcake chocolate bar tootsie roll gummies gummies jelly beans
-            cake.
-          </div>
+          <div class="toast-body">OTP successfully sent to your email!</div>
         </div>
+        <!-- Toast with Placements -->
       </div>
     </div>
 
@@ -263,7 +264,6 @@
     <!-- Main JS -->
     <script src="../admin/js/main.js"></script>
     <!-- Page JS -->
-    <script src="../admin/js/ui-toasts.js"></script>
 
     <!-- AJAX SCRIPT API -->
     <script>
@@ -301,63 +301,84 @@
 
     <!-- variable global -->
     <script>
-      let modal;
-      let countdownValue = 60;
+      let countdownValue = 60; // Durasi countdown awal
       let countdownInterval;
-      let isCountdownRunning = false;
-    </script>
+      let isCountdownRunning =
+        localStorage.getItem("isCountdownRunning") === "true"; // Ambil status countdown dari localStorage
 
-    <script>
+      // Fungsi untuk menghitung sisa waktu countdown dari localStorage
+      function getRemainingCountdown() {
+        const countdownStartTime = localStorage.getItem("countdownStartTime");
+        if (countdownStartTime) {
+          const elapsedTime = Math.floor(
+            (Date.now() - countdownStartTime) / 1000
+          ); // Hitung waktu yang sudah berlalu
+          return countdownValue - elapsedTime; // Kembalikan sisa waktu countdown
+        }
+        return countdownValue; // Jika tidak ada countdown yang sedang berjalan, kembalikan nilai default
+      }
+
+      // Fungsi untuk memulai countdown
       function startCountdown() {
-        if (!isCountdownRunning) {
-          countdownInterval = setInterval(() => {
+        countdownValue = getRemainingCountdown(); // Ambil sisa waktu countdown
+
+        // Jika sisa waktu sudah habis, reset button
+        if (countdownValue <= 0) {
+          $("#btn-otp").html("Send OTP");
+          $("#btn-otp").prop("disabled", false);
+          localStorage.removeItem("isCountdownRunning"); // Hapus status countdown dari localStorage
+          localStorage.removeItem("countdownStartTime"); // Hapus waktu mulai dari localStorage
+          return;
+        }
+
+        // Jalankan interval untuk countdown
+        countdownInterval = setInterval(() => {
+          if (countdownValue > 0) {
             $("#btn-otp").html(`Resend Email in ${countdownValue}s`);
             $("#btn-otp").prop("disabled", true);
             countdownValue--;
 
-            if (countdownValue < 0) {
-              clearInterval(countdownInterval);
-              $("#btn-otp").html("Send OTP");
-              $("#btn-otp").prop("disabled", false);
-              countdownValue = 60;
-              isCountdownRunning = false;
-            }
-          }, 1000);
-          isCountdownRunning = true;
-        }
+            // Simpan status countdown di localStorage
+            localStorage.setItem("isCountdownRunning", "true");
+          } else {
+            clearInterval(countdownInterval);
+            $("#btn-otp").html("Send OTP");
+            $("#btn-otp").prop("disabled", false);
+            localStorage.removeItem("isCountdownRunning"); // Hapus status dari localStorage
+            localStorage.removeItem("countdownStartTime"); // Hapus waktu mulai dari localStorage
+          }
+        }, 1000); // Update setiap detik
       }
 
       $(document).ready(function () {
-        $("#btn-otp").click(async function () {
-          // literal regex
-          const emailRegex =
-            /^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/;
+        // Saat halaman dimuat, cek apakah countdown masih berjalan
+        if (isCountdownRunning) {
+          startCountdown(); // Mulai countdown jika masih berjalan
+        }
 
+        // Event ketika tombol OTP diklik
+        $("#btn-otp").click(async function () {
           const email = $("#email").val();
           if (email == "" || email == null) {
             $("#err-send-email").html(
-              `<p class="text-danger">Email can not empty!!</p>`
+              `<p class="text-danger">Email cannot be empty!</p>`
             );
             return;
           }
-          if (!email.match(emailRegex)) {
-            $("#err-send-email").html(
-              `<p class="text-danger">Invalid email format!!</p>`
-            );
-            return;
-          }
-          $("#err-send-email").html("");
+
           try {
-            console.log("Mengirim request ke API...");
-            const res = await verifyEmailAPI(email);
+            // Mulai countdown
+            startCountdown();
+            const res = await verifyEmailAPI(email); // Panggil API untuk kirim OTP
             const response = JSON.parse(res);
-            console.log("Response diterima:", response);
             if (response.code == 200) {
-              startCountdown();
+              toastSuccess();
+              // Simpan waktu mulai countdown di localStorage
+              localStorage.setItem("countdownStartTime", Date.now());
             } else {
-              // console.error("Gagal mengirim OTP");
-              let errorMsg = `<p class="text-danger">${response.message}</p>`;
-              $("#err-send-email").html(errorMsg);
+              $("#err-send-email").html(
+                `<p class="text-danger">${response.message}</p>`
+              );
             }
           } catch (error) {
             console.error(error);
@@ -367,6 +388,12 @@
           }
         });
       });
+      // Fungsi untuk menampilkan toast saat OTP berhasil dikirim
+      function toastSuccess() {
+        const toastElement = document.getElementById("otp-success-toast");
+        const toast = new bootstrap.Toast(toastElement);
+        toast.show();
+      }
     </script>
   </body>
 </html>

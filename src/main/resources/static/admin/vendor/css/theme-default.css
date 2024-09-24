@@ -1115,6 +1115,13 @@ html:not(.layout-menu-collapsed)
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Mengurangi bayangan */
 }
 
+/* Toast */
+.success-toast {
+  position: fixed;
+  top: 20px; /* Jarak dari bagian atas */
+  right: 20px; /* Jarak dari bagian kanan */
+  z-index: 9999; /* Pastikan toast berada di atas elemen lainnya */
+}
 /* Preloder */
 
 #preloder {
