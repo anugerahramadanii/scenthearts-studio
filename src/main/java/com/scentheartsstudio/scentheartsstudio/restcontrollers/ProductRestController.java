@@ -5,6 +5,7 @@ import com.scentheartsstudio.scentheartsstudio.dto.PostProductDTO;
 import com.scentheartsstudio.scentheartsstudio.services.ProductService;
 import com.scentheartsstudio.scentheartsstudio.services.UploadImageProductService;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
+import com.scentheartsstudio.scentheartsstudio.utils.Paging;
 import com.scentheartsstudio.scentheartsstudio.utils.Resp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,15 @@ public class ProductRestController {
 	private UploadImageProductService uips;
 
 	@GetMapping("product")
-	public Resp<List<InterProductDTO>> getAllProducts(){
-		Resp<List<InterProductDTO>> response = new Resp<>();
+	public Resp<Paging<List<InterProductDTO>>> getAllProducts(@RequestParam("keyword") String keyword,
+	                                                          @RequestParam("page") Integer page,
+	                                                          @RequestParam("sortBy") String sortBy,
+	                                                          @RequestParam("sortOrder") String sortOrder){
+		Resp<Paging<List<InterProductDTO>>> response = new Resp<>();
 		response.setCode(200);
 		response.setMessage("OK");
 
-		List<InterProductDTO> data = ps.getAllProducts();
+		Paging<List<InterProductDTO>> data = ps.getAllProducts(keyword, page, sortBy, sortOrder);
 		response.setData(data);
 		return response;
 	}

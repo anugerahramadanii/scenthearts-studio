@@ -20,10 +20,6 @@ public class CategoryEntity extends BaseProperties {
     @Column(length = 255)
     private String image_path;
 
-//    @Lob
-//    @Column
-//    private byte[] image;
-
     @Column(nullable = false)
     private Boolean active;
 }

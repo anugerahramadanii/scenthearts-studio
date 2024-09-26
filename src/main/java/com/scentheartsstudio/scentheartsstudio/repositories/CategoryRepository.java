@@ -17,6 +17,35 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
             value = "select * from t_category where is_delete = false")
     public List<InterCategoryDTO> getAllCategories();
 
+    // Get total data
+    @Query(nativeQuery = true,
+            value = "select count(*) from t_category where is_delete = false")
+    public Integer getTotalData();
+
+    // get all categories with pagination, and search
+    @Query(nativeQuery = true,
+            value = "select id, name, image_path, active from t_category \n"
+                    + "where(name ilike '%' || :keyword || '%') and is_delete = false limit :limit offset :offset")
+    public List<InterCategoryDTO> searchPaginateCategories(@Param("keyword") String keyword,
+                                                              @Param("offset") Integer offset,
+                                                              @Param("limit") Integer limit);
+
+    // get all categories with pagination, sorting ASC, and search
+    @Query(nativeQuery = true,
+            value = "select id, name, image_path, active from t_category \n"
+                    + "where(name ilike '%' || :keyword || '%') and is_delete = false order by name asc limit :limit offset :offset")
+    public List<InterCategoryDTO> searchPaginateCategoriesAsc(@Param("keyword") String keyword,
+                                                              @Param("offset") Integer offset,
+                                                              @Param("limit") Integer limit);
+
+    // get all categories with pagination, sorting DESC, and search
+    @Query(nativeQuery = true,
+            value = "select id, name, image_path, active from t_category \n"
+                    + "where(name ilike '%' || :keyword || '%') and is_delete = false order by name asc limit :limit offset :offset")
+    public List<InterCategoryDTO> searchPaginateCategoriesDesc(@Param("keyword") String keyword,
+                                                              @Param("offset") Integer offset,
+                                                              @Param("limit") Integer limit);
+
     // cek name sudah ada atau belum
     @Query(nativeQuery = true,
             value = "select exists (select * from t_category where name ilike :name and is_delete = false)")

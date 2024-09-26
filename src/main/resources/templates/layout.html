@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.au/thymeleaf/layout"
+>
+  <!--Head Begin-->
+  <head>
+    <th:block th:replace="~{/user/fragments/head :: head}"></th:block>
+  </head>
+  <!--Head End-->
+  <body>
+    <!-- Page Preloder -->
+    <div th:insert="~{/user/fragments/preloder :: preloder}"></div>
+    <!-- Page Preloder End-->
+
+    <!-- Humberger Begin -->
+    <div th:replace="~{/user/fragments/humberger :: humberger}"></div>
+    <!-- Humberger End -->
+
+    <!-- Header Section Begin -->
+    <header th:replace="~{/user/fragments/header :: header}"></header>
+    <!-- Header Section End -->
+
+    <div layout:fragment="content"></div>
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="~{/user/fragments/footer :: footer}"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <th:block th:replace="~{/user/fragments/scripts :: scripts}"></th:block>
+  </body>
+</html>

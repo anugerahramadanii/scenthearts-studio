@@ -5,6 +5,7 @@ import com.scentheartsstudio.scentheartsstudio.dto.PostProductDTO;
 import com.scentheartsstudio.scentheartsstudio.entities.ProductEntity;
 import com.scentheartsstudio.scentheartsstudio.repositories.ProductRepository;
 import com.scentheartsstudio.scentheartsstudio.utils.CustomException;
+import com.scentheartsstudio.scentheartsstudio.utils.Paging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,30 @@ public class ProductService {
 	@Autowired
 	private ProductRepository pr;
 
-	public List<InterProductDTO> getAllProducts(){
-		return pr.getAllProducts();
+	public Paging<List<InterProductDTO>> getAllProducts(String keyword, Integer page, String sortBy, String sortOrder){
+		Integer limit = 5;
+		Integer offset = (page - 1) * limit;
+		Integer totalData = pr.getTotalData();
+		Integer totalPage = (int) Math.ceil((double) totalData /limit);
+
+		List<InterProductDTO> dataList = pr.searchPaginateProducts(keyword, offset, limit);
+		if(sortBy.equals("NAME") && sortOrder.equals("ASC")) {
+			dataList = pr.searchPaginateProductsAsc(keyword, offset, limit);
+		} else if (sortBy.equals("NAME") && sortOrder.equals("DESC")) {
+			dataList = pr.searchPaginateProductsDesc(keyword, offset, limit);
+		} else if(sortBy.equals("CATEGORY") && sortOrder.equals("ASC")) {
+			dataList = pr.searchPaginateProductsCatAsc(keyword, offset, limit);
+		} else if (sortBy.equals("CATEGORY") && sortOrder.equals("DESC")) {
+			dataList = pr.searchPaginateProductsCatDesc(keyword, offset, limit);
+		}
+
+		Paging<List<InterProductDTO>> paging = new Paging<>();
+		paging.setPage(page);
+		paging.setTotal_data(totalData);
+		paging.setTotal_page(totalPage);
+		paging.setList(dataList);
+
+		return paging;
 	}
 
 	public List<InterProductDTO> getAllProductsByCategory(Long category_id){

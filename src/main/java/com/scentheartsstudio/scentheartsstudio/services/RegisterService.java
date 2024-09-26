@@ -3,7 +3,6 @@ package com.scentheartsstudio.scentheartsstudio.services;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,16 +47,9 @@ public class RegisterService {
             throw new CustomException(453, "Code OTP Expired!!!");
         }
 
-        String passwordUser = registerDTO.getPassword();
-        String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
-
-        if (!passwordUser.matches(regexPassword)){
-            throw new CustomException(455, "Minimal 8 karakter, Setidaknya satu huruf besar, Setidaknya satu huruf kecil, Setidaknya satu digit, Setidaknya satu karakter spesial");
-        }
-
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(registerDTO.getEmail());
-        userEntity.setPassword(passwordEncoder.encode(passwordUser));
+        userEntity.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         userEntity.setLast_login(new Date());
         userEntity.setIs_locked(false);
         userEntity.setLogin_attempt(0);

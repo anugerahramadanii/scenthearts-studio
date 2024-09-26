@@ -89,7 +89,7 @@
               <!-- /Logo -->
               <p class="mb-3">Sign-up now for more detail</p>
 
-              <form id="formRegister" class="mb-6" action="">
+              <form id="formRegister" class="mb-6" onsubmit="return false">
                 <div class="row">
                   <div class="col-lg-12">
                     <label for="email" class="form-label">Email Address</label>
@@ -115,19 +115,21 @@
                     </div>
                   </div>
                 </div>
-                <div id="err-send-email">
+                <div id="err-email">
                   <!-- <p class="text-danger">Email can not empty!!</p> -->
                 </div>
 
                 <div class="row mb-3">
                   <div class="col-md-6">
                     <div>
-                      <label for="emailOtp" class="form-label">Email OTP</label>
+                      <label for="email-otp" class="form-label"
+                        >Email OTP</label
+                      >
                       <input
                         type="text"
                         class="form-control"
-                        id="emailOtp"
-                        name="emailOtp"
+                        id="email-otp"
+                        name="email-otp"
                         placeholder="Enter your OTP"
                       />
                     </div>
@@ -138,14 +140,14 @@
 
                   <div class="col-md-6">
                     <div>
-                      <label for="phoneNumber" class="form-label"
+                      <label for="phone-number" class="form-label"
                         >Phone Number</label
                       >
                       <input
                         type="text"
                         class="form-control"
-                        id="phoneNumber"
-                        name="phoneNumber"
+                        id="phone-number"
+                        name="phone-number"
                         placeholder="Enter your phone number"
                         autofocus
                       />
@@ -209,14 +211,18 @@
                 <div id="err-confirm-password">
                   <!-- <p class="text-danger">Confirm Password can not empty!!</p> -->
                 </div>
-                <button class="btn text-white d-grid w-100 self-btn">
+                <button
+                  id="btn-register"
+                  type="submit"
+                  class="btn text-white d-grid w-100 self-btn"
+                >
                   Sign up
                 </button>
               </form>
 
               <p class="text-center">
                 <span>Already have an account?</span>
-                <a href="">
+                <a th:href="@{/login}">
                   <span>Sign in instead</span>
                 </a>
               </p>
@@ -225,27 +231,7 @@
           <!-- Register Card -->
         </div>
         <!-- Toast with Placements -->
-        <div
-          id="otp-success-toast"
-          class="bs-toast toast fade bg-success success-toast"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-          data-bs-delay="6000"
-        >
-          <div class="toast-header">
-            <i class="bx bx-bell me-2"></i>
-            <div class="me-auto fw-bold">Scenthearts Studio</div>
-            <small>Just now</small>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="toast"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="toast-body">OTP successfully sent to your email!</div>
-        </div>
+        <div th:replace="~{/utils/toast-success :: toast-success}"></div>
         <!-- Toast with Placements -->
       </div>
     </div>
@@ -263,6 +249,7 @@
     <!-- Vendors JS -->
     <!-- Main JS -->
     <script src="../admin/js/main.js"></script>
+    <script src="../admin/js/utils.js"></script>
     <!-- Page JS -->
 
     <!-- AJAX SCRIPT API -->
@@ -304,7 +291,8 @@
       let countdownValue = 60; // Durasi countdown awal
       let countdownInterval;
       let isCountdownRunning =
-        localStorage.getItem("isCountdownRunning") === "true"; // Ambil status countdown dari localStorage
+        localStorage.getItem("isCountdownRunning") === "true"; // Ambil status countdown dari
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
       // Fungsi untuk menghitung sisa waktu countdown dari localStorage
       function getRemainingCountdown() {
@@ -358,10 +346,17 @@
 
         // Event ketika tombol OTP diklik
         $("#btn-otp").click(async function () {
-          const email = $("#email").val();
+          const email = $("#email").val().trim();
           if (email == "" || email == null) {
-            $("#err-send-email").html(
+            $("#err-email").html(
               `<p class="text-danger">Email cannot be empty!</p>`
+            );
+            return;
+          }
+
+          if (!emailRegex.test(email)) {
+            $("#err-email").html(
+              `<p class="text-danger">Invalid email format!</p>`
             );
             return;
           }
@@ -372,28 +367,181 @@
             const res = await verifyEmailAPI(email); // Panggil API untuk kirim OTP
             const response = JSON.parse(res);
             if (response.code == 200) {
-              toastSuccess();
+              toastSuccess("OTP successfully sent to your email!");
               // Simpan waktu mulai countdown di localStorage
               localStorage.setItem("countdownStartTime", Date.now());
             } else {
-              $("#err-send-email").html(
+              $("#err-email").html(
                 `<p class="text-danger">${response.message}</p>`
               );
             }
           } catch (error) {
-            console.error(error);
-            $("#err-send-email").html(
+            // console.error(error);
+            $("#err-email").html(
               `<p class="text-danger">Failed to send OTP. Please try again later.</p>`
             );
           }
         });
+
+        // register
+        $("#btn-register").click(async function (e) {
+          e.preventDefault();
+          $("#err-email").html("");
+          $("#err-email-otp").html("");
+          $("#err-fullname").html("");
+          $("#err-phone-number").html("");
+          $("#err-password").html("");
+          $("#err-confirm-password").html("");
+
+          const phoneNumberRegex = /^08\d{8,14}$/;
+          let isFormValid = true;
+
+          const email = $("#email").val().trim();
+          if (email == "" || email == null || !emailRegex.test(email)) {
+            isFormValid = false;
+          }
+
+          const emailOTP = $("#email-otp").val().trim();
+          if (emailOTP == "" || emailOTP == null) {
+            isFormValid = false;
+          }
+
+          const fullname = $("#fullname").val().trim();
+          if (fullname == "" || fullname == null) {
+            isFormValid = false;
+            $("#err-fullname").html(`
+            <p class='text-danger'>
+              Fullname cannot be empty!
+              </p>
+              `);
+          }
+
+          const phoneNumber = $("#phone-number").val().trim();
+          if (phoneNumber == "" || phoneNumber == null) {
+            isFormValid = false;
+            $("#err-phone-number").html(`
+            <p class='text-danger'>
+              Phone Number can not be empty!
+              </p>
+          `);
+          }
+
+          if (!phoneNumberRegex.test(phoneNumber)) {
+            isFormValid = false;
+            $("#err-phone-number").html(`
+            <p class='text-danger'>
+              Phone Number is not valid! Should start from 08!
+              </p>
+          `);
+          }
+          const password = $("#password").val().trim();
+          const passwordErrors = validatePassword(password);
+          if (passwordErrors.length > 0) {
+            isFormValid = false;
+            $("#err-password").html(
+              passwordErrors
+                .map((err) => `<p class='text-danger'>${err}</p>`)
+                .join("")
+            );
+          }
+
+          const confirmPassword = $("#confirm-password").val().trim();
+          if (confirmPassword == "" || confirmPassword == null) {
+            isFormValid = false;
+          }
+          if (password != confirmPassword) {
+            isFormValid = false;
+            $("#err-confirm-password").html(`
+            <p class='text-danger'>
+              Password does not match!
+              </p>
+          `);
+          }
+
+          // Jika ada error, tidak submit form
+          if (!isFormValid) {
+            return;
+          }
+
+          // Jika form valid, kirim data register ke API
+          const data = {
+            email: email,
+            otp: emailOTP,
+            fullname: fullname,
+            mobile_phone: phoneNumber,
+            password: password,
+          };
+          console.log(data);
+
+          try {
+            const dataJSON = JSON.stringify(data);
+            // console.log(dataJSON);
+            const response = await registerAPI(dataJSON);
+            // console.log(response);
+            if (response.code == 200) {
+              toastSuccess("Registration successful!");
+              window.location.href = "/login";
+              // Reset form
+              $("#formRegister")[0].reset();
+            } else {
+              $("#err-email-otp").html(
+                `<p class="text-danger">${response.message}</p>`
+              );
+            }
+          } catch (error) {
+            // console.error(error);
+            $("#err-email").html(
+              `<p class="text-danger">Failed to register. Please try again later.</p>`
+            );
+          }
+        });
       });
-      // Fungsi untuk menampilkan toast saat OTP berhasil dikirim
-      function toastSuccess() {
-        const toastElement = document.getElementById("otp-success-toast");
-        const toast = new bootstrap.Toast(toastElement);
-        toast.show();
+
+      function validatePassword(password) {
+        let errMessagePass = [];
+
+        if (password.length == 0) {
+          errMessagePass.push("Password cannot be empty.");
+        }
+
+        if (password.length < 8 || password > 16) {
+          errMessagePass.push("Password must be between 8 and 16 characters.");
+        }
+
+        if (!/(?=.*[a-z])/.test(password)) {
+          errMessagePass.push(
+            "Password must contain at least one lowercase letter."
+          );
+        }
+        if (!/(?=.*[A-Z])/.test(password)) {
+          errMessagePass.push(
+            "Password must contain at least one uppercase letter."
+          );
+        }
+        if (!/(?=.*\d)/.test(password)) {
+          errMessagePass.push("Password must contain at least one number.");
+        }
+
+        return errMessagePass;
       }
+
+      // Event listener untuk input password secara realtime
+      $("#password").on("input", function () {
+        const password = $(this).val().trim();
+        const errors = validatePassword(password);
+        if (errors.length > 0) {
+          $("#err-password").html(
+            errors.map((err) => `<p class='text-danger'>${err}</p>`).join("")
+          );
+        } else {
+          $("#err-password").html("");
+        }
+      });
+
+      // Event listener untuk focusout pada input password
+      $("#password").on("focusout", function () {
+        $("#err-password").html("");
+      });
     </script>
   </body>
 </html>

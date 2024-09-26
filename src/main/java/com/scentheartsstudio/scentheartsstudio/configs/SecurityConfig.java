@@ -34,13 +34,14 @@ public class SecurityConfig {
         return new AuthTokenFilter();
     }
 
+    //"/api/category/**", "/api/product/**", "/api/productSize/**",
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/category/**", "/api/product/**", "/api/productSize/**", "/api/cart/**",
+                        .requestMatchers( "/api/cart/**",
                                 "/api/profile/**").authenticated()
                         .anyRequest().permitAll())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPointJwt))

@@ -248,7 +248,7 @@
               localStorage.setItem("token", response.data.token);
               // Redirect to dashboard
               loginSuccessAPI(response.data.user_id);
-              window.location.href = "/";
+              window.location.href = "/scenthearts-studio";
             } else {
               alert(response.message);
             }

@@ -1,47 +1,62 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <section th:fragment="hero" class="hero hero-normal">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-3">
-          <div class="hero__categories">
-            <div class="hero__categories__all">
-              <i class="fa fa-bars"></i>
-              <span>All Categories</span>
+<section
+  th:fragment="hero(className, showExtraContent)"
+  th:classappend="${className}"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="hero__categories">
+          <div class="hero__categories__all">
+            <i class="fa fa-bars"></i>
+            <span>All Categories</span>
+          </div>
+          <ul>
+            <li><a th:href="@{/scenthearts-studio}">Rings</a></li>
+            <li><a th:href="@{/scenthearts-studio}">Necklaces</a></li>
+            <li><a th:href="@{/scenthearts-studio}">Earrings</a></li>
+            <li><a th:href="@{/scenthearts-studio}">Pendants</a></li>
+            <li><a th:href="@{/scenthearts-studio}">Bracelets</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+        <div class="hero__search">
+          <div class="hero__search__form">
+            <form action="#">
+              <div class="hero__search__categories">
+                All Categories
+                <span class="arrow_carrot-down"></span>
+              </div>
+              <input type="text" placeholder="What do yo u need?" />
+              <button type="submit" class="site-btn">SEARCH</button>
+            </form>
+          </div>
+          <div class="hero__search__phone">
+            <div class="hero__search__phone__icon">
+              <i class="fa fa-phone"></i>
             </div>
-            <ul>
-              <li><a th:href="@{/}">Rings</a></li>
-              <li><a th:href="@{/}">Necklaces</a></li>
-              <li><a th:href="@{/}">Earrings</a></li>
-              <li><a th:href="@{/}">Pendants</a></li>
-              <li><a th:href="@{/}">Bracelets</a></li>
-            </ul>
+            <div class="hero__search__phone__text">
+              <h5>+62</h5>
+              <span>support 24/7 time</span>
+            </div>
           </div>
         </div>
-        <div class="col-lg-9">
-          <div class="hero__search">
-            <div class="hero__search__form">
-              <form action="#">
-                <div class="hero__search__categories">
-                  All Categories
-                  <span class="arrow_carrot-down"></span>
-                </div>
-                <input type="text" placeholder="What do yo u need?" />
-                <button type="submit" class="site-btn">SEARCH</button>
-              </form>
-            </div>
-            <div class="hero__search__phone">
-              <div class="hero__search__phone__icon">
-                <i class="fa fa-phone"></i>
-              </div>
-              <div class="hero__search__phone__text">
-                <h5>+65 11.188.888</h5>
-                <span>support 24/7 time</span>
-              </div>
-            </div>
+        <!-- Optional Content for index.html -->
+        <div
+          th:if="${showExtraContent}"
+          class="hero__item set-bg"
+          data-setbg="user/img/hero/bg-banner.png"
+          th:data-setbg="@{user/img/hero/bg-banner.png}"
+        >
+          <div class="hero__text">
+            <h5>Scenthears Studio</h5>
+            <h2>Purely Handmade, <br />from Our Heart to Yours</h2>
+            <p>Free Pickup and Delivery Available</p>
+            <a th:href="@{/scenthearts-studio}" class="primary-btn">SHOP NOW</a>
           </div>
         </div>
       </div>
     </div>
-  </section>
-</html>
+  </div>
+</section>

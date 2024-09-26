@@ -11,57 +11,62 @@ public class MainController {
 
     @GetMapping("/scenthearts-studio")
     public String loadHomePage() {
-        return "/user/index";
+        return "user/index";
+    }
+
+    @GetMapping("/member")
+    public String loadMemberPage() {
+        return "user/member";
     }
 
     @GetMapping("/login")
     public String loadLogin() {
-        return "/auth/login";
+        return "auth/login";
     }
 
     @GetMapping("/register")
     public String loadRegister() {
-        return "/auth/register";
+        return "auth/register";
     }
 
     @GetMapping("/forgot-password")
     public String loadForgotPassword() {
-        return "/auth/forgot-password";
+        return "auth/forgot-password";
     }
     
     @GetMapping("/products")
     public String loadProducts() {
-        return "/user/shop-grid";
+        return "user/shop-grid";
     }
 
     @GetMapping("/product-detail")
     public String loadDetailProduct() {
-        return "/user/shop-details";
+        return "user/shop-details";
     }
     
     @GetMapping("/checkout")
     public String loadCheckout() {
-        return "/user/checkout";
+        return "user/checkout";
     }
 
     @GetMapping("/shopping-cart")
     public String loadShoppingCart() {
-        return "/user/shoping-cart";
+        return "user/shoping-cart";
     }
 
     @GetMapping("/blog")
     public String loadBlog() {
-        return "/user/blog";
+        return "user/blog";
     }
 
     @GetMapping("/blog-details")
     public String loadBlogDetail() {
-        return "/user/blog-details";
+        return "user/blog-details";
     }
 
     @GetMapping("/contact")
     public String loadContact() {
-        return "/user/contact";
+        return "user/contact";
     }
 
     // ADMIN
@@ -69,6 +74,18 @@ public class MainController {
     public String loadAdminHomePage() {
         return "admin/admin-index";
     }
+
+    // @GetMapping("/admin-profile")
+    // public String loadAdminProfile(HttpServletRequest request, Model model){
+    //     String uri = request.getRequestURI();
+    //     model.addAttribute("currentUri", uri);
+    //     if (uri.equals("/admin-profile-account")) {
+    //         return "admin/admin-profile/admin-profile-account";
+    //     } else if (uri.equals("/admin-profile-change-password")) {
+    //         return "admin/admin-profile/admin-profile-change-password";
+    //     }
+    //     return "admin/admin-profile";
+    // }
 
     @GetMapping("/admin-profile")
     public String loadAdminProfile() {
@@ -95,6 +112,4 @@ public class MainController {
     public String loadAdminCategoryProducts() {
         return "admin/admin-category-products/index-category-products.html";
     }
-
-    
 }
