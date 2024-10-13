@@ -22,11 +22,6 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <!-- <link
-      rel="icon"
-      type="image/x-icon"
-      href="../admin/img/favicon/ss-logo.ico"
-    /> -->
     <link
       rel="shortcut icon"
       type="image/png"
@@ -65,8 +60,7 @@
 
     <!-- Helpers -->
     <script src="../admin/vendor/js/helpers.js"></script>
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <!-- Config -->
     <script src="../admin/js/config.js"></script>
   </head>
 
@@ -84,7 +78,10 @@
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a th:href="@{/admin-login}" class="app-brand-link gap-2">
+                <a
+                  th:href="@{/scenthearts-studio}"
+                  class="app-brand-link gap-2"
+                >
                   <span class="app-brand-logo demo">
                     <img src="../admin/img/ss-logo2.png" alt="" />
                   </span>
@@ -108,7 +105,11 @@
                     placeholder="Enter your email"
                     autofocus
                   />
+                  <div class="mt-2" id="err-email">
+                    <!-- <p class="text-danger">Email can not Empty</p> -->
+                  </div>
                 </div>
+
                 <div class="mb-6 form-password-toggle">
                   <label class="form-label" for="password">Password</label>
                   <div class="input-group input-group-merge">
@@ -123,6 +124,9 @@
                     <span class="input-group-text cursor-pointer"
                       ><i class="bx bx-hide"></i
                     ></span>
+                  </div>
+                  <div class="mt-2" id="err-password">
+                    <!-- <p class="text-danger">Password can not Empty</p> -->
                   </div>
                 </div>
                 <div class="mb-8">
@@ -162,6 +166,9 @@
           </div>
           <!-- /Register -->
         </div>
+        <!-- Toast with Placements -->
+        <div th:replace="~{/utils/toast-success :: toast-success}"></div>
+        <!-- Toast with Placements -->
       </div>
     </div>
 
@@ -182,7 +189,7 @@
 
     <!-- Main JS -->
     <script src="../admin/js/main.js"></script>
-
+    <script src="../admin/js/utils.js"></script>
     <!-- Page JS -->
 
     <!-- Place this tag before closing body tag for github widget button. -->
@@ -207,9 +214,11 @@
         return $.ajax(settings);
       }
 
-      function loginSuccessAPI(user_id) {
+      async function loginSuccessAPI(user_id, token, role) {
         var form = new FormData();
         form.append("user_id", user_id);
+        form.append("token", token);
+        form.append("role", role);
 
         var settings = {
           url: "/login/success",
@@ -226,37 +235,113 @@
     </script>
     <script>
       $(document).ready(function () {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         $("#formAuthentication").on("submit", async function (e) {
           e.preventDefault();
-          const email = $("#email").val();
-          // console.log(email);
-          const password = $("#password").val();
-          // console.log(password);
+          $("#err-email").html();
+          $("#err-password").html();
 
-          if (!email || !password) {
-            alert("Email and Password cannot be empty.");
+          const email = $("#email").val().trim();
+          // console.log(email);
+          if (email == null || email == "") {
+            $("#err-email").html(
+              `<p class="text-danger">Email cannot be empty!</p>`
+            );
             return;
+          }
+
+          const password = $("#password").val().trim();
+          // console.log(password);
+          const passwordErrors = validatePassword(password);
+          if (passwordErrors.length > 0) {
+            $("#err-password").html(
+              passwordErrors
+                .map((err) => `<p class='text-danger'>${err}</p>`)
+                .join("")
+            );
           }
 
           try {
             const res = await loginAPI(email, password);
+            console.log(res);
             const response = JSON.parse(res);
             console.log(response);
 
             if (response.code == 200) {
-              // Set token to local storage
-              localStorage.setItem("token", response.data.token);
+              toastSuccess("Login successful!");
+              const userId = response.data.user_id;
+              console.log(userId);
+              const token = response.data.token;
+              console.log(token);
+              const role = response.data.role.toUpperCase();
+              console.log(role);
               // Redirect to dashboard
-              loginSuccessAPI(response.data.user_id);
-              window.location.href = "/scenthearts-studio";
+              await loginSuccessAPI(userId, token, role);
+
+              if (role === "ADMIN") {
+                window.location.href = "/admin-dashboard";
+              } else if (role === "USER") {
+                window.location.href = "/scenthearts-studio";
+              }
+
+              $("#formAuthentication")[0].reset();
             } else {
-              alert(response.message);
+              let errorMsg = `<p class="text-danger fw-bold">${response.message}</p>`;
+              $("#err-password").html(errorMsg);
             }
           } catch (error) {
-            console.error("Error:", error);
-            alert("Login gagal! Silakan coba lagi.");
+            // console.error("Error:", error);
+            $("#err-password").html(
+              `<p class="text-danger">Login gagal! Silakan coba lagi.</p>`
+            );
           }
         });
+      });
+
+      function validatePassword(password) {
+        let errMessagePass = [];
+
+        if (password.length == 0) {
+          errMessagePass.push("Password cannot be empty.");
+        }
+
+        if (password.length < 8 || password > 16) {
+          errMessagePass.push("Password must be between 8 and 16 characters.");
+        }
+
+        if (!/(?=.*[a-z])/.test(password)) {
+          errMessagePass.push(
+            "Password must contain at least one lowercase letter."
+          );
+        }
+        if (!/(?=.*[A-Z])/.test(password)) {
+          errMessagePass.push(
+            "Password must contain at least one uppercase letter."
+          );
+        }
+        if (!/(?=.*\d)/.test(password)) {
+          errMessagePass.push("Password must contain at least one number.");
+        }
+
+        return errMessagePass;
+      }
+
+      // Event listener untuk input password secara realtime
+      $("#password").on("input", function () {
+        const password = $(this).val().trim();
+        const errors = validatePassword(password);
+        if (errors.length > 0) {
+          $("#err-password").html(
+            errors.map((err) => `<p class='text-danger'>${err}</p>`).join("")
+          );
+        } else {
+          $("#err-password").html("");
+        }
+      });
+
+      // Event listener untuk focusout pada input password
+      $("#password").on("focusout", function () {
+        $("#err-password").html("");
       });
     </script>
   </body>

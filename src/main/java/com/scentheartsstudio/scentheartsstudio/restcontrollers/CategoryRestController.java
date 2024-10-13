@@ -26,19 +26,19 @@ public class CategoryRestController {
     @Autowired
     private UploadImageCategoryService uics;
 
-//    @GetMapping("/category")
-//    public Resp<List<InterCategoryDTO>> getAllCategories() {
-//        Resp<List<InterCategoryDTO>> response = new Resp<>();
-//        response.setCode(200);
-//        response.setMessage("OK");
-//
-//        List<InterCategoryDTO> data = cs.getAllCategories();
-//        response.setData(data);
-//        return response;
-//    }
+   @GetMapping("/category")
+   public Resp<List<InterCategoryDTO>> getAllCategories() {
+       Resp<List<InterCategoryDTO>> response = new Resp<>();
+       response.setCode(200);
+       response.setMessage("OK");
+
+       List<InterCategoryDTO> data = cs.getAllCategories();
+       response.setData(data);
+       return response;
+   }
 
     // get all categories with pagination, sorting , and search
-    @GetMapping("/category")
+    @GetMapping("/category/pss")
     public Resp<Paging<List<InterCategoryDTO>>> getAllCategories(@RequestParam("keyword") String keyword,
                                                                  @RequestParam("page") Integer page,
                                                                  @RequestParam("sortBy") String sortBy,

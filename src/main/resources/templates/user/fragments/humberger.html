@@ -22,17 +22,26 @@
         <div class="header__cart__price">item: <span>$150.00</span></div>
       </div>
       <div class="humberger__menu__widget">
-        <div class="header__top__right__language">
-          <img th:src="@{/user/img/language.png}" alt="" src="" />
-          <div>English</div>
-          <span class="arrow_carrot-down"></span>
-          <ul>
-            <li><a th:href="@{/}">Spanis</a></li>
-            <li><a th:href="@{/}">English</a></li>
-          </ul>
-        </div>
-        <div class="header__top__right__auth">
-          <a th:href="@{/}"><i class="fa fa-user"></i> Login</a>
+        <div id="user-auth" class="header__top__right__auth">
+          <a id="login-link-humberger" th:href="@{/login}">
+            <i class="fa fa-user"></i>Login
+          </a>
+
+          <!-- User Fullname with Dropdown -->
+          <div id="user-login-humberger" class="dropdown" style="display: none">
+            <a href="javascript:void(0)">
+              <img id="user-img-humberger" src="" alt="" class="user-avatar" />
+              <span id="user-fullname-humberger">
+                <!-- response.data.fullname -->
+              </span>
+            </a>
+
+            <!-- Dropdown Menu -->
+            <ul class="dropdown-menu">
+              <li><a href="/profile-account">Profile Account</a></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+          </div>
         </div>
       </div>
       <nav class="humberger__menu__nav mobile-menu">

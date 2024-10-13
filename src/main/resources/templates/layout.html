@@ -6,7 +6,64 @@
 >
   <!--Head Begin-->
   <head>
-    <th:block th:replace="~{/user/fragments/head :: head}"></th:block>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Scenthears Studio Jewelry Shop" />
+    <meta
+      name="keywords"
+      content="Jewelry, gold, silver, rings, necklaces, bracelets, pendants, 925"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      th:href="@{/user/img/ss-logo2.png}"
+    />
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Css Styles -->
+    <link
+      rel="stylesheet"
+      th:href="@{/user/css/bootstrap.min.css}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/user/css/font-awesome.min.css}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/user/css/elegant-icons.css}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/user/css/nice-select.css}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/user/css/jquery-ui.min.css}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/user/css/owl.carousel.min.css}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/user/css/slicknav.min.css}"
+      type="text/css"
+    />
+    <link rel="stylesheet" th:href="@{/user/css/style.css}" type="text/css" />
   </head>
   <!--Head End-->
   <body>
@@ -22,6 +79,7 @@
     <header th:replace="~{/user/fragments/header :: header}"></header>
     <!-- Header Section End -->
 
+    <!-- Main Content -->
     <div layout:fragment="content"></div>
 
     <!-- Footer Section Begin -->
@@ -29,6 +87,14 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <th:block th:replace="~{/user/fragments/scripts :: scripts}"></th:block>
+    <script th:src="@{/user/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/user/js/bootstrap.min.js}"></script>
+    <script th:src="@{/user/js/jquery.nice-select.min.js}"></script>
+    <script th:src="@{/user/js/jquery-ui.min.js}"></script>
+    <script th:src="@{/user/js/jquery.slicknav.js}"></script>
+    <script th:src="@{/user/js/mixitup.min.js}"></script>
+    <script th:src="@{/user/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/user/js/main.js}"></script>
+    <script th:src="@{/user/js/landingpage.js}"></script>
   </body>
 </html>

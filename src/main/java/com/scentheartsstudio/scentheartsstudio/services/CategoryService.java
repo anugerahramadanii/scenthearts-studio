@@ -21,92 +21,93 @@ import com.scentheartsstudio.scentheartsstudio.repositories.CategoryRepository;
 @Service
 public class CategoryService {
 
-    @Autowired
-    private CategoryRepository cr;
+	@Autowired
+	private CategoryRepository cr;
 
-//    public List<InterCategoryDTO> getAllCategories() {
-//        return cr.getAllCategories();
-//    }
+	public List<InterCategoryDTO> getAllCategories() {
+		return cr.getAllCategories();
+	}
 
-    // get all categories with pagination, sorting asc, and search
-    public Paging<List<InterCategoryDTO>> getAllCategories(String keyword, Integer page, String sortBy, String sortOrder) {
-        Integer limit = 5;
-        Integer offset = (page - 1) * limit;
-        Integer totalData = cr.getTotalData();
-        Integer totalPage = (int) Math.ceil((double) totalData /limit);
+	// get all categories with pagination, sorting asc, and search
+	public Paging<List<InterCategoryDTO>> getAllCategories(String keyword, Integer page, String sortBy, String sortOrder) {
+		Integer limit = 5;
+		Integer offset = (page - 1) * limit;
+		Integer totalData = cr.getTotalData();
+		Integer totalPage = (int) Math.ceil((double) totalData / limit);
 
-        List<InterCategoryDTO> dataList = cr.searchPaginateCategories(keyword, offset, limit);
-        if (sortBy.equalsIgnoreCase("NAME") && sortOrder.equalsIgnoreCase("ASC")){
-            dataList = cr.searchPaginateCategoriesAsc(keyword, offset, limit);
-        } else if (sortBy.equalsIgnoreCase("NAME") && sortOrder.equalsIgnoreCase("DESC")) {
-            dataList = cr.searchPaginateCategoriesDesc(keyword, offset, limit);
-        }
+		List<InterCategoryDTO> dataList = cr.searchPaginateCategories(keyword, offset, limit);
+		if (sortBy.equalsIgnoreCase("NAME") && sortOrder.equalsIgnoreCase("ASC")) {
+			dataList = cr.searchPaginateCategoriesAsc(keyword, offset, limit);
+		} else if (sortBy.equalsIgnoreCase("NAME") && sortOrder.equalsIgnoreCase("DESC")) {
+			dataList = cr.searchPaginateCategoriesDesc(keyword, offset, limit);
+		}
 
-        Paging<List<InterCategoryDTO>> paging = new Paging<>();
-        paging.setPage(page);
-        paging.setTotal_data(totalData);
-        paging.setTotal_page(totalPage);
-        paging.setList(dataList);
+		Paging<List<InterCategoryDTO>> paging = new Paging<>();
+		paging.setPage(page);
+		paging.setTotal_data(totalData);
+		paging.setTotal_page(totalPage);
+		paging.setList(dataList);
 
-        return paging;
-    }
+		return paging;
+	}
 
 
-    public void insertCategory(PostCategoryDTO postCategoryDTO) throws CustomException {
-        Boolean isNameExists = cr.isNameExists(postCategoryDTO.getName());
-        if (isNameExists) {
-            throw new CustomException(452, "Category Name " + postCategoryDTO.getName() + " Already Exists");
-        }
+	public void insertCategory(PostCategoryDTO postCategoryDTO) throws CustomException {
+		Boolean isNameExists = cr.isNameExists(postCategoryDTO.getName());
+		if (isNameExists) {
+			throw new CustomException(452, "Category Name " + postCategoryDTO.getName() + " Already Exists");
+		}
 
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setName(postCategoryDTO.getName());
-        categoryEntity.setActive(postCategoryDTO.getActive());
-        categoryEntity.setCreated_by(postCategoryDTO.getUser_id());
-        categoryEntity.setCreated_on(new Date());
+		CategoryEntity categoryEntity = new CategoryEntity();
+		categoryEntity.setName(postCategoryDTO.getName());
+		categoryEntity.setUrl(postCategoryDTO.getUrl());
+		categoryEntity.setActive(postCategoryDTO.getActive());
+		categoryEntity.setCreated_by(postCategoryDTO.getUser_id());
+		categoryEntity.setCreated_on(new Date());
 
-        cr.save(categoryEntity);
-//        Long categoryId = categoryEntity.getId();
-//
-//        String image = uploadImageCategory(categoryId, file);
-//        categoryEntity.setImage_path(image);
-//        cr.save(categoryEntity);
+		cr.save(categoryEntity);
+		//        Long categoryId = categoryEntity.getId();
+		//
+		//        String image = uploadImageCategory(categoryId, file);
+		//        categoryEntity.setImage_path(image);
+		//        cr.save(categoryEntity);
 
-//        imageSequenceNumber++;
-    }
+		//        imageSequenceNumber++;
+	}
 
-    public void updateCategory(PostCategoryDTO postCategoryDTO) throws CustomException {
-        CategoryEntity categoryEntity = cr.getReferenceById(postCategoryDTO.getId());
+	public void updateCategory(PostCategoryDTO postCategoryDTO) throws CustomException {
+		CategoryEntity categoryEntity = cr.getReferenceById(postCategoryDTO.getId());
 
-        Boolean isNameExistUpdate = cr.isNameExistsUpdate(postCategoryDTO.getName(), categoryEntity.getName());
-        if(isNameExistUpdate){
-            throw new CustomException(453, "Category Name " + postCategoryDTO.getName() + "  Already Exists");
-        }
+		Boolean isNameExistUpdate = cr.isNameExistsUpdate(postCategoryDTO.getName(), categoryEntity.getName());
+		if (isNameExistUpdate) {
+			throw new CustomException(453, "Category Name " + postCategoryDTO.getName() + "  Already Exists");
+		}
 
-        categoryEntity.setId(postCategoryDTO.getId());
-        categoryEntity.setName(postCategoryDTO.getName());
-        categoryEntity.setActive(postCategoryDTO.getActive());
-        categoryEntity.setModified_by(1L);
-        categoryEntity.setModified_on(new Date());
+		categoryEntity.setId(postCategoryDTO.getId());
+		categoryEntity.setName(postCategoryDTO.getName());
+		categoryEntity.setUrl(postCategoryDTO.getUrl());
+		categoryEntity.setActive(postCategoryDTO.getActive());
+		categoryEntity.setModified_by(1L);
+		categoryEntity.setModified_on(new Date());
 
-        cr.save(categoryEntity);
-    }
+		cr.save(categoryEntity);
+	}
 
-    public void deleteCategory(PostCategoryDTO postCategoryDTO) throws IOException {
-        CategoryEntity categoryEntity= cr.getReferenceById(postCategoryDTO.getId());
+	public void deleteCategory(PostCategoryDTO postCategoryDTO) throws IOException {
+		CategoryEntity categoryEntity = cr.getReferenceById(postCategoryDTO.getId());
 
-        String imagePath = categoryEntity.getImage_path();
-        categoryEntity.setIs_delete(true);
-        categoryEntity.setDeleted_by(1L);
-        categoryEntity.setDeleted_on(new Date());
+		String imagePath = categoryEntity.getImage_path();
+		categoryEntity.setIs_delete(true);
+		categoryEntity.setDeleted_by(1L);
+		categoryEntity.setDeleted_on(new Date());
 
-        cr.delete(categoryEntity);
+		cr.delete(categoryEntity);
 
-        if (imagePath != null) {
-            String basePath = new FileSystemResource("").getFile().getAbsolutePath();
-            String fullImagePath = basePath + File.separator + "uploads" + File.separator + "categories" + File.separator
-                        + new File(imagePath).getName();
-            Files.delete(Path.of(fullImagePath));
-        }
-    }
+		if (imagePath != null) {
+			String basePath = new FileSystemResource("").getFile().getAbsolutePath();
+			String fullImagePath = basePath + File.separator + "uploads" + File.separator + "categories" + File.separator + new File(imagePath).getName();
+			Files.delete(Path.of(fullImagePath));
+		}
+	}
 }
 

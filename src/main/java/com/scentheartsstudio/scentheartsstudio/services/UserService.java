@@ -42,12 +42,16 @@ public class UserService {
             throw new CustomException(401, "Email atau Password Salah!");
         }
 
+        // Get Role By UserId
+        String role = ur.getRoleByUserId(dataUser.getId());
+
         SecurityContextHolder.getContext().setAuthentication(auth);
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String token = jwtTokenUtil.generateToken(userDetails);
 
         LoginDTO loginDTO = new LoginDTO();
         loginDTO.setUser_id(dataUser.getId());
+        loginDTO.setRole(role);
         loginDTO.setToken(token);
         return loginDTO;
     }

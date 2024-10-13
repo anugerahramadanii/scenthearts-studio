@@ -11,7 +11,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,21 +33,28 @@ public class SecurityConfig {
         return new AuthTokenFilter();
     }
 
-    //"/api/category/**", "/api/product/**", "/api/productSize/**",
+    //
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers( "/api/cart/**",
-                                "/api/profile/**").authenticated()
-                        .anyRequest().permitAll())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPointJwt))
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(authorize -> authorize
+            // Endpoint yang tidak memerlukan otorisasi
+            .requestMatchers("/api/category", "/api/category/image", "/api/product").permitAll()
+                .requestMatchers("/category/pss","/api/category/insert", "/api/category/update", "/api/category/delete",
+                 "/api/product/pss", "/api/product/insert", "/api/product/update", "/api/product/delete",
+                 "/api/productSize/**", "/api/cart/**", "/api/profile/**").authenticated()
+                // others endpoints that don't need authorization
+                .anyRequest().permitAll())
+            .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPointJwt))
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){

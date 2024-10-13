@@ -7,6 +7,7 @@ public interface InterProductDTO {
 	String getSize_name();
 	String getDescription();
 	String getImage_path();
+	String getSizes_with_stock();
 	Integer getStock();
 	Double getPrice();
 	Long getCategory_id();

@@ -25,6 +25,17 @@ public class ProductRestController {
 	private UploadImageProductService uips;
 
 	@GetMapping("product")
+    public Resp<List<InterProductDTO>> getAllProducts(){
+		Resp<List<InterProductDTO>> response = new Resp<>();
+		response.setCode(200);
+		response.setMessage("OK");
+		
+        List<InterProductDTO> data = ps.getAllProducts();
+		response.setData(data);
+		return response;
+	}
+
+	@GetMapping("product/pss")
 	public Resp<Paging<List<InterProductDTO>>> getAllProducts(@RequestParam("keyword") String keyword,
 	                                                          @RequestParam("page") Integer page,
 	                                                          @RequestParam("sortBy") String sortBy,

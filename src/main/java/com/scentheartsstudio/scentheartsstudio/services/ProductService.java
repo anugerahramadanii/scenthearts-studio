@@ -23,6 +23,10 @@ public class ProductService {
 	@Autowired
 	private ProductRepository pr;
 
+	public List<InterProductDTO> getAllProducts(){
+        return pr.getAllProducts();
+    }
+
 	public Paging<List<InterProductDTO>> getAllProducts(String keyword, Integer page, String sortBy, String sortOrder){
 		Integer limit = 5;
 		Integer offset = (page - 1) * limit;

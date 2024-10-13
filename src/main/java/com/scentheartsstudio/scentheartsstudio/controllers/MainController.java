@@ -3,6 +3,8 @@ package com.scentheartsstudio.scentheartsstudio.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -14,20 +16,55 @@ public class MainController {
         return "user/index";
     }
 
-    @GetMapping("/member")
-    public String loadMemberPage() {
-        return "user/member";
+    @GetMapping("/register")
+    public String loadRegister(HttpServletRequest servlet) {
+        Long userId = (Long) servlet.getSession().getAttribute("user_id");
+        if (userId != null) {
+            return "redirect:/scenthearts-studio";
+        } else {
+            return "auth/register";
+        }
     }
 
     @GetMapping("/login")
-    public String loadLogin() {
-        return "auth/login";
+    public String loadLogin(HttpServletRequest servlet) {
+        Long userId = (Long) servlet.getSession().getAttribute("user_id");
+        if (userId != null) {
+            return "redirect:/scenthearts-studio";
+        } else{
+            return "auth/login";
+        }
     }
 
-    @GetMapping("/register")
-    public String loadRegister() {
-        return "auth/register";
+    @PostMapping("/login/success")
+    public String loadLoginSuccess(
+        HttpServletRequest servlet, 
+        @RequestParam("user_id") Long user_id, 
+        @RequestParam("token") String token,
+        @RequestParam("role") String role) {
+        
+        // save data to session (temp data)
+        servlet.getSession().setAttribute("user_id", user_id);
+        servlet.getSession().setAttribute("token", token);
+        servlet.getSession().setAttribute("role", role);
+
+        if (role.equalsIgnoreCase("admin")) {
+            return "redirect:/admin-dashboard";
+        } else {
+            return "redirect:/scenthearts-studio";
+        }
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest servlet) {
+        servlet.getSession().setAttribute("user_id", null);
+        servlet.getSession().setAttribute("token", null);
+        servlet.getSession().setAttribute("role", null);
+
+        return "redirect:/scenthearts-studio";
+    }
+    
+    
 
     @GetMapping("/forgot-password")
     public String loadForgotPassword() {

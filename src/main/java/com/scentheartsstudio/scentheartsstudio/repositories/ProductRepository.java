@@ -13,6 +13,44 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
 	@Query(nativeQuery = true,
+	value = "WITH ProductSizes AS (\n" + //
+				"    SELECT \n" + //
+				"        p.id AS product_id,\n" + //
+				"        p.name AS product_name,\n" + //
+				"        p.category_id,\n" + //
+				"        c.name AS category_name,\n" + //
+				"        p.description,\n" + //
+				"        p.image_path,\n" + //
+				"        p.price,\n" + //
+				"        ps.size_name,\n" + //
+				"        ps.stock\n" + //
+				"    FROM \n" + //
+				"        t_product p\n" + //
+				"    LEFT JOIN \n" + //
+				"        t_product_size ps ON p.id = ps.product_id\n" + //
+				"    INNER JOIN \n" + //
+				"        t_category c ON p.category_id = c.id\n" + //
+				"    WHERE \n" + //
+				"        p.is_delete = false\n" + //
+				")\n" + //
+				"SELECT \n" + //
+				"    product_id,\n" + //
+				"    product_name,\n" + //
+				"    category_id,\n" + //
+				"    category_name,\n" + //
+				"    description,\n" + //
+				"    image_path,\n" + //
+				"    price,\n" + //
+				"    STRING_AGG(size_name || ' (' || stock || ')', ', ' ORDER BY size_name) AS sizes_with_stock\n" + //
+				"FROM \n" + //
+				"    ProductSizes\n" + //
+				"GROUP BY \n" + //
+				"    product_id, product_name, category_id, category_name, description, image_path, price\n" + //
+				"ORDER BY \n" + //
+				"    product_name")
+public List<InterProductDTO> getAllProducts();
+
+	@Query(nativeQuery = true,
 			value = "select count(*) from t_product where is_delete = false")
 	public Integer getTotalData();
 
@@ -51,7 +89,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 	                                                    @Param("limit") Integer limit);
 	/* Product Name Sorting End */
 
-
 	/* Product Category Sorting Begin */
 	@Query(nativeQuery = true,
 			value = "select p.id, ps.id as product_size_id, p.name as product_name, ps.size_name,\n"
@@ -76,23 +113,42 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 	                                                        @Param("limit") Integer limit);
 	/* Product Category Sorting End*/
 
-//	@Query(nativeQuery = true,
-//			value = "select p.id, ps.id as product_size_id, p.name as product_name, ps.size_name,\n"
-//					+ "p.category_id as category_id, c.name as category_name, p.description, p.image_path, \n"
-//					+ "ps.stock, p.price\n" + "from t_product p\n"
-//					+ "left join t_product_size ps\n" + "on p.id = ps.product_id\n"
-//					+ "inner join t_category c\n" + "on p.category_id = c.id\n"
-//					+ "where p.is_delete = false ORDER BY p.id asc")
-//	public List<InterProductDTO> getAllProducts();
-
-
 	@Query(nativeQuery = true,
-	value = "select p.id, ps.id as product_size_id, p.name as product_name, ps.size_name,\n"
-			+ "p.category_id as category_id, c.name as category_name, p.description, p.image_path, \n"
-			+ "ps.stock, p.price\n" + "from t_product p\n"
-			+ "left join t_product_size ps\n" + "on p.id = ps.product_id\n"
-			+ "inner join t_category c\n" + "on p.category_id = c.id\n"
-			+ "where p.category_id = :categoryId and p.is_delete = false ORDER BY p.id asc")
+	value = "WITH ProductSizes AS (\n" + //
+				"    SELECT \n" + //
+				"        p.id AS product_id,\n" + //
+				"        p.name AS product_name,\n" + //
+				"        p.category_id,\n" + //
+				"        c.name AS category_name,\n" + //
+				"        p.description,\n" + //
+				"        p.image_path,\n" + //
+				"        p.price,\n" + //
+				"        ps.size_name,\n" + //
+				"        ps.stock\n" + //
+				"    FROM \n" + //
+				"        t_product p\n" + //
+				"    LEFT JOIN \n" + //
+				"        t_product_size ps ON p.id = ps.product_id\n" + //
+				"    INNER JOIN \n" + //
+				"        t_category c ON p.category_id = c.id\n" + //
+				"    WHERE \n" + //
+				"        p.category_id = :categoryId and p.is_delete = false\n" + //
+				")\n" + //
+				"SELECT \n" + //
+				"    product_id,\n" + //
+				"    product_name,\n" + //
+				"    category_id,\n" + //
+				"    category_name,\n" + //
+				"    description,\n" + //
+				"    image_path,\n" + //
+				"    price,\n" + //
+				"    STRING_AGG(size_name || ' (' || stock || ')', ', ' ORDER BY size_name) AS sizes_with_stock\n" + //
+				"FROM \n" + //
+				"    ProductSizes\n" + //
+				"GROUP BY \n" + //
+				"    product_id, product_name, category_id, category_name, description, image_path, price\n" + //
+				"ORDER BY \n" + //
+				"    product_name")
 	public List<InterProductDTO> getAllProductsByCategoryId(@Param("categoryId")Long category_id);
 
 	@Query(nativeQuery = true,

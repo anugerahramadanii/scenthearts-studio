@@ -26,9 +26,6 @@ public class UploadImageCategoryService {
 	@Autowired
 	private CategoryRepository cr;
 
-	@Autowired
-	private UserRepository ur;
-
 	private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpg", "image/jpeg", "image/png");
 	private static final long MAX_FILE_SIZE = 1024 * 1024 * 2;
 
@@ -71,8 +68,6 @@ public class UploadImageCategoryService {
 		String resultUpload = ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("/images/").path(fileName).toUriString();
 
-		// get userId
-		UserEntity userEntity = ur.getReferenceById(userId);
 		//data category image id
 		categoryEntity.setImage_path(resultUpload);
 		categoryEntity.setModified_by(userId);

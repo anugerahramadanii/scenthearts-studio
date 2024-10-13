@@ -9,6 +9,7 @@ public class PostCategoryDTO {
 private Long id;
 private String name;
 private String image_path;
+private String url;
 private Boolean active;
 private Long user_id;
 }

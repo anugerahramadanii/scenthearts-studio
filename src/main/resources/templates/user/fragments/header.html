@@ -6,7 +6,7 @@
           <div class="header__top__left">
             <ul>
               <li>
-                <i class="fa fa-envelope"></i> scenthearsstudio@rocket.co.id
+                <i class="fa fa-envelope"></i>scenthearsstudio@rocket.co.id
               </li>
               <li>Free Shipping for all Order of $99</li>
             </ul>
@@ -28,17 +28,26 @@
                 ><i class="fa fa-pinterest-p"></i
               ></a>
             </div>
-            <div class="header__top__right__language">
-              <img th:src="@{/user/img/language.png}" alt="" src="" />
-              <div>English</div>
-              <span class="arrow_carrot-down"></span>
-              <ul>
-                <li><a th:href="@{/scenthearts-studio}">Spanis</a></li>
-                <li><a th:href="@{/scenthearts-studio}">English</a></li>
-              </ul>
-            </div>
             <div id="user-auth" class="header__top__right__auth">
-              <a th:href="@{/login}"><i class="fa fa-user"></i> Login</a>
+              <a id="login-link" th:href="@{/login}">
+                <i class="fa fa-user"></i>Login
+              </a>
+
+              <!-- User Fullname with Dropdown -->
+              <div id="user-login" class="dropdown" style="display: none">
+                <a href="javascript:void(0)">
+                  <img id="user-img" src="" alt="" class="user-avatar" />
+                  <span id="user-fullname">
+                    <!-- response.data.fullname -->
+                  </span>
+                </a>
+
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu">
+                  <li><a href="/profile-account">Profile Account</a></li>
+                  <li><a href="/logout">Logout</a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
